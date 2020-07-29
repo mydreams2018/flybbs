@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="APP_Name" value="flybbs" />
+    <contextName>${APP_Name}</contextName>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+            <!--<charset>UTF-8</charset>-->
+        </encoder>
+        <target>:System.out</target>
+    </appender>
+
+    <logger name="cn.kungreat.bbs.mapper" level="ERROR" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="console" />
+    </root>
+
+</configuration>
