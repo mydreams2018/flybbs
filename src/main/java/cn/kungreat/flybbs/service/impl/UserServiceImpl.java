@@ -6,7 +6,7 @@ import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.CategoryTotal;
 import cn.kungreat.flybbs.vo.QueryResult;
-import com.alibaba.druid.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;

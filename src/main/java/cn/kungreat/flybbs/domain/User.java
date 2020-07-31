@@ -1,8 +1,8 @@
 package cn.kungreat.flybbs.domain;
 
-import com.alibaba.druid.util.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 

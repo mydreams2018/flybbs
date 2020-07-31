@@ -20,6 +20,12 @@ public class BeanConfig {
     @ConfigurationProperties(prefix = "datasource1")
     public DruidDataSource initDruid(){
         DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.clearFilters();
+        druidDataSource.setMaxActive(20);
+        druidDataSource.setTimeBetweenLogStatsMillis(60000);
+        druidDataSource.setPoolPreparedStatements(true);
+        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
+        druidDataSource.setMaxWait(60000);
         return druidDataSource;
     }
 
