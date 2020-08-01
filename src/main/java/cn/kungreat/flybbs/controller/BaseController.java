@@ -8,13 +8,8 @@ import java.util.Map;
 
 @RestController
 public class BaseController {
-
-    @RequestMapping(value = "/")
-    public Map index(){
-        return Collections.emptyMap();
-    }
     @RequestMapping(value = "/index")
-    public Map ix(){
+    public Map index(){
         return Collections.emptyMap();
     }
 }
