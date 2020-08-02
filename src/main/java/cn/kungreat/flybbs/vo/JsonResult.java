@@ -7,12 +7,16 @@ import lombok.Setter;
 @Getter
 public class JsonResult {
     private boolean result = true;
-    private String message;
-    private String path;
-    public JsonResult(boolean result, String message,String path) {
+    private String msg;
+    private String action;
+    private int status = 0;
+    private String id;
+    public JsonResult(boolean result, String msg,String path,int sta,String id) {
         this.result = result;
-        this.message = message;
-        this.path = path;
+        this.msg = msg;
+        this.action = path;
+        this.status = sta;
+        this.id = id;
     }
     public JsonResult(){}
 }

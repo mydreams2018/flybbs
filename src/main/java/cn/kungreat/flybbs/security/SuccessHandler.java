@@ -39,7 +39,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
             response.sendRedirect(path);
         }else{
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),path)));
+            response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),path,0,"")));
         }
     }
 }

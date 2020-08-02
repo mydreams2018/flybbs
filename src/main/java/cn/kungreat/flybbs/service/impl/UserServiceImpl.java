@@ -29,8 +29,6 @@ public class UserServiceImpl implements UserService {
         String s = record.validMessage();
         Assert.isTrue(StringUtils.isEmpty(s),s);
         Assert.isTrue(userMapper.selectByPrimaryKey(record.getAccount())==null,"用户名已经存在");
-        record.setRegisterTime(new Date());
-        record.setIsVip(false);
         Calendar c = Calendar.getInstance();
         record.setRegisterYear(c.get(Calendar.YEAR));
         record.setPassword(bCryptPasswordEncoder.encode(record.getPassword()));

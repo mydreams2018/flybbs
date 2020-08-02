@@ -21,6 +21,9 @@ public class BeanConfig {
     public DruidDataSource initDruid(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.clearFilters();
+        druidDataSource.setMinEvictableIdleTimeMillis(300000);
+        druidDataSource.setMinIdle(5);
+        druidDataSource.setInitialSize(5);
         druidDataSource.setMaxActive(20);
         druidDataSource.setTimeBetweenLogStatsMillis(60000);
         druidDataSource.setPoolPreparedStatements(true);

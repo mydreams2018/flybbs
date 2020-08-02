@@ -27,7 +27,7 @@ public class ImageFilter extends OncePerRequestFilter {
                 if(isAuth != null && !"anonymousUser".equals(isAuth)){
                     re.getSession().removeAttribute("image_code");
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write(JSON.toJSONString(new JsonResult(false,"已经存在用户,请先退出","/home.html")));
+                    response.getWriter().write(JSON.toJSONString(new JsonResult(false,"已经存在用户,请先退出","/home.html",1,"")));
                     return ;
                 }
             }
@@ -53,7 +53,7 @@ public class ImageFilter extends OncePerRequestFilter {
             if(code == null || seconds > 80000 || !code.equals(request.getParameter("img-code"))){
                 re.getSession().removeAttribute("image_code");
                 response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(JSON.toJSONString(new JsonResult(false,"验证码错误-或者超时","/register.html")));
+                response.getWriter().write(JSON.toJSONString(new JsonResult(false,"验证码错误-或者超时","/register.html",1,"")));
                 return ;
             }
         }

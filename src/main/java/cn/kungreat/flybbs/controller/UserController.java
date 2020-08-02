@@ -45,9 +45,9 @@ public class UserController {
                 String[] st = listPermission.trim().split(",");
                 permissionMappingService.insertBatch(Arrays.asList(st),account);
             }
-            jsonResult.setMessage("success");
+            jsonResult.setMsg("success");
         }catch (Exception e){
-            jsonResult.setMessage(e.getMessage());
+            jsonResult.setMsg(e.getMessage());
             jsonResult.setResult(false);
         }
         return jsonResult;
