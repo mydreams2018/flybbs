@@ -16,6 +16,6 @@ public class LogoutHandler implements LogoutSuccessHandler {
         if(session != null){
             session.invalidate();
         }
-        response.sendRedirect("/out.html");
+        response.sendRedirect("/api/outClear");
     }
 }

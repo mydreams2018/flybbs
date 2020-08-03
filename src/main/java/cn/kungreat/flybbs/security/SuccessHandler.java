@@ -33,7 +33,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         UserContext.setCurrentName(SecurityContextHolder.getContext().getAuthentication().getName());
         SavedRequest cache = requestCache.getRequest(request, response);
-        String path = (cache==null?"/home.html":cache.getRedirectUrl());
+        String path = (cache==null?"/index.html":cache.getRedirectUrl());
         String accept = request.getHeader("Accept");
         if(accept.contains("text/html")){
             response.sendRedirect(path);

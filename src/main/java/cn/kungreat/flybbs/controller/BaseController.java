@@ -5,6 +5,9 @@ import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.JsonResult;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +23,12 @@ public class BaseController {
     @RequestMapping(value = "/index")
     public Map index(){
         return Collections.emptyMap();
+    }
+
+    @RequestMapping(value = "/getCurrentUser")
+    public Authentication getCurrentUser(){
+        SecurityContext context = SecurityContextHolder.getContext();
+        return context.getAuthentication();
     }
 
     @RequestMapping(value = "/image")

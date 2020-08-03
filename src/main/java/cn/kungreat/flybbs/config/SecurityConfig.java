@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // 接口层要获取认证对象的时候  不要在这里放行 这里 不会封装认证对象过来
         web.ignoring().antMatchers(
-                "/image","/index","/register","/userImg/**");
+                "/image","/register","/userImg/**");
     }
 
     @Override
@@ -61,12 +61,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new ImageFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .anyRequest().authenticated().and()
-                .formLogin().loginPage("/index").loginProcessingUrl("/defaultLogin")
+                .formLogin().loginPage("/index").loginProcessingUrl("/defaultLogin").permitAll()
                 .successHandler(successHandler)
                 .failureHandler(faliureHandler)
                 .and()
                 .logout().logoutUrl("/clearAll").clearAuthentication(true)
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID","remember-me")
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .logoutSuccessHandler(new LogoutHandler())
                 .and()
                 .rememberMe().tokenRepository(tokenRepository)
