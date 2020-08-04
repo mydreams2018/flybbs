@@ -21,9 +21,12 @@ public class User {
     private String description;
     private String originFrom="default";
     private Date registerTime = new Date();
-    private String icon="/userImg/bbsIcon/defaultMember.gif";
+    private Integer vipLevel=0;
     private Integer registerYear;
     private Integer accumulatePoints=0;
+    private Byte isManager=0;
+    private String fromCity;
+    private String authenticate;
 
     public String validMessage(){
         StringBuilder builder = new StringBuilder();

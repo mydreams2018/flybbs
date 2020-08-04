@@ -13,18 +13,19 @@
     <result column="email" property="email" />
     <result column="description" property="description" />
     <result column="register_time"  property="registerTime" />
-    <result column="icon"  property="icon" />
+    <result column="vip_level"  property="vipLevel" />
     <result column="origin_from"  property="originFrom" />
     <result column="register_year"  property="registerYear" />
     <result column="accumulate_points"  property="accumulatePoints" />
+    <result column="is_manager"  property="isManager" />
+    <result column="from_city"  property="fromCity" />
+    <result column="authenticate"  property="authenticate" />
   </resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.User" useGeneratedKeys="true">
-    insert into user (account, password, alias, 
-      phone, img, is_vip, state, 
-      email, description, register_time, icon, origin_from, register_year, accumulate_points)
+    insert into user (account, password, alias, img, is_vip, state, register_time, vip_level,register_year,accumulate_points)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=BIGINT}, #{img,jdbcType=VARCHAR}, #{isVip,jdbcType=BIT}, #{state,jdbcType=TINYINT}, 
-      #{email,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{registerTime}, #{icon}, #{originFrom},
+      #{img,jdbcType=VARCHAR}, #{isVip,jdbcType=BIT}, #{state,jdbcType=TINYINT},
+      #{registerTime}, #{vipLevel},
             #{registerYear}, #{accumulatePoints})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.User">
@@ -50,15 +51,15 @@
   </update>
 
   <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon,
-      origin_from, register_year, accumulate_points
+    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, vip_level,
+      origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
     from user
     where account = #{0}
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email,
-      description, register_time, icon, origin_from, register_year, accumulate_points
+    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, vip_level,
+    origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
     from user
     <include refid="baseQuery"/>
     ORDER BY register_time DESC
@@ -66,8 +67,8 @@
   </select>
 
     <select id="selectByAccounts" resultMap="BaseResultMap">
-      select id, account, password, alias, phone, img, is_vip, state, email, description,
-      register_time, icon, origin_from, register_year, accumulate_points
+      select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, vip_level,
+      origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
       from user
       where account IN
       <foreach collection="acts"  item="as" separator="," close=")"  open="(">
