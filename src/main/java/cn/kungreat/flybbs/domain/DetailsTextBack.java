@@ -22,8 +22,9 @@ public class DetailsTextBack {
     private Boolean deleteFlag;
 
     private String detailsText;
-
+    //标记字段
     private Integer classId;
+    private Integer portIsauth;
     public String getTableName(){
         String rt = "";
         switch (classId){

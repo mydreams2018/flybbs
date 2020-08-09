@@ -30,7 +30,7 @@
     values (#{name,jdbcType=VARCHAR}, #{datatype,jdbcType=VARCHAR}, #{dataversion,jdbcType=VARCHAR}, 
       #{useides,jdbcType=VARCHAR}, #{experience,jdbcType=TINYINT}, #{userAccount},
       '未结',
-      0, 0, #{createTime,jdbcType=DATE}, 0)
+      0, 0, #{createTime,jdbcType=DATE}, 1)
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.ReportBack">
     update ${tableName}

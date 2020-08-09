@@ -7,6 +7,7 @@ import cn.kungreat.flybbs.mapper.ReportMapper;
 import cn.kungreat.flybbs.service.ReportService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,8 @@ public class ReportServiceImpl implements ReportService {
     private ReportMapper reportMapper;
     @Autowired
     private DetailsTextMapper detailsTextMapper;
+    @Value("${port.isauth}")
+    private Integer portIsauth;
     @Override
     public int deleteByPrimaryKey(Long id) {
         return 0;

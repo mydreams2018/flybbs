@@ -20,7 +20,7 @@
       user_account, create_data, delete_flag, 
       details_text)
     values (0, #{portId},
-      #{userAccount}, #{createData}, 0,
+      #{userAccount}, #{createData}, 1,
       #{detailsText})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.DetailsTextBack">

@@ -39,6 +39,7 @@ public class ReportBack {
     private String detailsText;
     //标记字段
     private Integer classId;
+    private Integer portIsauth;
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
         if(StringUtils.isEmpty(name) || StringUtils.isEmpty(datatype)
