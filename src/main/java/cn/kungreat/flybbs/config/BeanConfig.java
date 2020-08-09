@@ -21,6 +21,8 @@ public class BeanConfig {
     public DruidDataSource initDruid(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.clearFilters();
+        druidDataSource.setTestWhileIdle(true);
+        druidDataSource.setValidationQuery("SELECT 1");
         druidDataSource.setMinEvictableIdleTimeMillis(300000);
         druidDataSource.setMinIdle(5);
         druidDataSource.setInitialSize(5);
