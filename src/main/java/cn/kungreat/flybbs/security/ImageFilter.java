@@ -24,7 +24,7 @@ public class ImageFilter extends OncePerRequestFilter {
             SecurityContext context = SecurityContextHolder.getContext();
             if(context.getAuthentication() != null){
                 String isAuth = context.getAuthentication().getName();
-                if(isAuth != null && !"anonymousUser".equals(isAuth)){
+                if(isAuth != null && isAuth.length()!=0 && !"anonymousUser".equals(isAuth)){
                     re.getSession().removeAttribute("image_code");
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(JSON.toJSONString(new JsonResult(false,"已经存在用户,请先退出",null,1,"imgCode")));
@@ -32,7 +32,7 @@ public class ImageFilter extends OncePerRequestFilter {
                 }
             }
         }
-        if("/api/defaultLogin".equals(requestURI)){
+        if("/api/defaultLogin".equals(requestURI) || "/api/reportBack/insert".equals(requestURI)){
             Object code = re.getSession().getAttribute("image_code");
             Object obj = re.getSession().getAttribute("time");
             re.getSession().removeAttribute("image_code");

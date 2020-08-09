@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -24,11 +23,6 @@ public class UserController {
     private PermissionService permissionService;
     @Autowired
     private PermissionMappingService permissionMappingService;
-
-    @RequestMapping(value = "/categoryNames")
-    public List<String> categoryNames(){
-        return userService.categoryNames();
-    }
 
     @RequestMapping(value = "/list")
     public QueryResult list(UserQuery query){

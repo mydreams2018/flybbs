@@ -14,7 +14,7 @@ public interface UserMapper {
     User selectByPrimaryKey(String account);
 
     List<User> selectAll(UserQuery query);
-    long selectCount(UserQuery query);
+    int selectCount(UserQuery query);
 
     List<User> selectByAccounts(@Param("acts") List<String> acts);
     int updateByPrimaryKey(User record);
@@ -24,6 +24,4 @@ public interface UserMapper {
     int updateImg(@Param("account") String account, @Param("path") String path);
 
     List<CategoryTotal> selectCategoryTotal(UserQuery query);
-
-    List<String> categoryNames();
 }

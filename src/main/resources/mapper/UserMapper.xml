@@ -81,11 +81,7 @@
       GROUP BY ${groupField}
     </select>
 
-  <select id="categoryNames" resultType="java.lang.String">
-      select origin_from FROM user GROUP BY origin_from
-  </select>
-
-  <select id="selectCount" resultType="java.lang.Long">
+  <select id="selectCount" resultType="java.lang.Integer">
      select count(*) from user
      <include refid="baseQuery"/>
   </select>

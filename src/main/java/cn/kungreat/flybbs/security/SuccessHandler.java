@@ -22,7 +22,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
     //重定向工具类
 //    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     //缓存上一次的重定向地址
-    private RequestCache requestCache = new HttpSessionRequestCache();
+//    private RequestCache requestCache = new HttpSessionRequestCache();
 
     /*
      *  spring 默认的处理器  SavedRequestAwareAuthenticationSuccessHandler 可以继承 默认的处理器
@@ -31,8 +31,10 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
      **/
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        UserContext.setCurrentName(SecurityContextHolder.getContext().getAuthentication().getName());
-        SavedRequest cache = requestCache.getRequest(request, response);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),"/index.html",0,"")));
+
+   /*     SavedRequest cache = requestCache.getRequest(request, response);
         String path = (cache==null?"/index.html":cache.getRedirectUrl());
         String accept = request.getHeader("Accept");
         if(accept.contains("text/html")){
@@ -40,6 +42,6 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
         }else{
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),path,0,"")));
-        }
+        }*/
     }
 }

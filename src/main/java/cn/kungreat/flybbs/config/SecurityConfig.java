@@ -2,6 +2,8 @@ package cn.kungreat.flybbs.config;
 
 import cn.kungreat.flybbs.security.*;
 import cn.kungreat.flybbs.util.UserContext;
+import cn.kungreat.flybbs.vo.JsonResult;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.servlet.ServletException;
@@ -74,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(myUserDetails).authenticationSuccessHandler(new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                UserContext.setCurrentName(SecurityContextHolder.getContext().getAuthentication().getName());
+                String path = request.getRequestURI().substring(4);
+                request.getRequestDispatcher(path).forward(request,response);
             }
         });
 

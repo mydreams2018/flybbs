@@ -58,13 +58,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> categoryNames() {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        Assert.isTrue(manager.contains(name),"没有权限访问");
-        return userMapper.categoryNames();
-    }
-
-    @Override
     public int updateAccumulatePoints(int number, String account) {
         User user = userMapper.selectByPrimaryKey(account);
         int current = user.getAccumulatePoints() + number;
@@ -75,7 +68,7 @@ public class UserServiceImpl implements UserService {
     public QueryResult query(UserQuery query) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(manager.contains(name),"没有权限访问");
-        long count = userMapper.selectCount(query);
+        Integer count = userMapper.selectCount(query);
         List list  = Collections.emptyList();
         if (count >  0){
             list = userMapper.selectAll(query);

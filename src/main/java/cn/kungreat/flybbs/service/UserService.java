@@ -15,8 +15,6 @@ public interface UserService {
     int updateByPrimaryKey(User record);
     int updateImg(String account,String path);
     List<CategoryTotal> selectCategoryTotal(UserQuery query);
-
-    List<String> categoryNames();
     int updateAccumulatePoints(int number,String account);
     QueryResult query(UserQuery query);
 }
