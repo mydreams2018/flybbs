@@ -3,16 +3,21 @@ package cn.kungreat.flybbs.controller;
 import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.JsonResult;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Collections;
 import java.util.Map;
 
@@ -20,6 +25,9 @@ import java.util.Map;
 public class BaseController {
     @Autowired
     private UserService userService;
+    @Value("${user.imgPath}")
+    private String path;
+
     @RequestMapping(value = "/index")
     public Map index(){
         return Collections.emptyMap();
@@ -72,6 +80,29 @@ public class BaseController {
             jsonResult.setId("imgCode");
             jsonResult.setMsg(e.getMessage());
             jsonResult.setAction("/user/reg.html");
+        }
+        return jsonResult;
+    }
+
+    @RequestMapping(value = "/uploadImg")
+    public JsonResult jsonResult(MultipartFile file){
+        JsonResult jsonResult = new JsonResult();
+        try{
+//            spring.servlet.multipart.max-file-size=1MB  默认的文件上传大小是1m
+//            Assert.isTrue(imgPath.getSize() < 1048576,"上传文件不能大于1M");
+            Assert.isTrue("image/jpeg".equals(file.getContentType())
+                    ||"image/gif".equals(file.getContentType())
+                    || "image/jpg".equals(file.getContentType()),"只支持jpg或gif格式的图片");
+            String type = file.getContentType().split("/")[1];
+            String rans = RandomStringUtils.randomAlphabetic(8)+"."+type;
+            String img = path +"userImg/"+rans;
+            file.transferTo(new File(img));
+            String path = "/api/userImg/"+rans;
+            jsonResult.setAction(path);
+        }catch (Exception e){
+            jsonResult.setResult(false);
+            jsonResult.setStatus(1);
+            jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
     }

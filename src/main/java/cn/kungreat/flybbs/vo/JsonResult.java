@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class JsonResult {
     private boolean result = true;
-    private String msg;
+    private String msg="success";
     private String action;
     private int status = 0;
     private String id;
