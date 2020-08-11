@@ -56,13 +56,13 @@ public class ReportBack {
                 rt= "report_back";
                 break;
             case 2:
-                rt= "report_back";
+                rt= "report_front";
                 break;
             case 3:
-                rt= "report_back";
+                rt= "report_data";
                 break;
             case 4:
-                rt= "report_back";
+                rt= "report_talk";
         }
         return rt;
     }

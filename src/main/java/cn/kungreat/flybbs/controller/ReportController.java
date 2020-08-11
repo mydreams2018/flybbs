@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/reportBack")
+@RequestMapping(value = "/report")
 public class ReportController {
     @Autowired
     private ReportService reportService;

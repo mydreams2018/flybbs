@@ -32,13 +32,13 @@ public class DetailsTextBack {
                 rt= "details_text_back";
                 break;
             case 2:
-                rt= "details_text_back";
+                rt= "details_text_front";
                 break;
             case 3:
-                rt= "details_text_back";
+                rt= "details_text_data";
                 break;
             case 4:
-                rt= "details_text_back";
+                rt= "details_text_talk";
         }
         return rt;
     }
