@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +34,7 @@ public class BaseController {
         return Collections.emptyMap();
     }
 
-    @RequestMapping(value = "/getCurrentUser")
+    @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
     public Authentication getCurrentUser(){
         SecurityContext context = SecurityContextHolder.getContext();
         return context.getAuthentication();

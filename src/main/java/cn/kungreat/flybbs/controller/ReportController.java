@@ -5,6 +5,7 @@ import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,7 +14,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @RequestMapping(value = "/insert")
+    @RequestMapping(value = "/insert",method = RequestMethod.POST)
     public JsonResult insert(ReportBack record){
         JsonResult jsonResult = new JsonResult();
         try{
