@@ -16,7 +16,7 @@ public class ExceptionsController {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Map<String,String> accessDeniedException(AccessDeniedException ex){
         HashMap<String, String> map = new HashMap<>();
-        map.put("error",ex.getMessage());
+        map.put("msg",ex.getMessage());
         return map;
     }
 

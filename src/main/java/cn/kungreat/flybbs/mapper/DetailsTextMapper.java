@@ -1,16 +1,16 @@
 package cn.kungreat.flybbs.mapper;
 
-import cn.kungreat.flybbs.domain.DetailsTextBack;
+import cn.kungreat.flybbs.domain.DetailsText;
 import java.util.List;
 
 public interface DetailsTextMapper {
     int deleteByPrimaryKey(Long id);
 
-    long insert(DetailsTextBack record);
+    long insert(DetailsText record);
 
-    DetailsTextBack selectByPrimaryKey(Long id);
+    DetailsText selectByPrimaryKey(Long id);
 
-    List<DetailsTextBack> selectAll();
+    List<DetailsText> selectAll();
 
-    int updateByPrimaryKey(DetailsTextBack record);
+    int updateByPrimaryKey(DetailsText record);
 }

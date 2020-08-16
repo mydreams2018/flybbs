@@ -1,6 +1,5 @@
 package cn.kungreat.flybbs.social.config;
 
-import cn.kungreat.flybbs.util.UserContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -13,7 +12,6 @@ public class MySuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        UserContext.setCurrentName(authentication.getName());
-        response.sendRedirect("https://www.kungreat.cn/home.html");
+        response.sendRedirect("/index.html");
     }
 }

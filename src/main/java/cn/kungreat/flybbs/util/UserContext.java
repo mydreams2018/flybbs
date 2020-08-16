@@ -14,18 +14,4 @@ public class UserContext {
 		ServletRequestAttributes ServletRequestAttributes = (ServletRequestAttributes) attributes;
 		return ServletRequestAttributes.getRequest().getSession();
 	}
-	
-	public static void setCurrentName(String currentName){
-		if (currentName != null){
-			getSession().setAttribute("KUN_CURRENT_NAME",currentName);
-		}
-	}
-	
-	public static String getCurrentName(){
-		Object obj = getSession().getAttribute("KUN_CURRENT_NAME");
-		if(obj != null){
-			return obj.toString();
-		}
-		return "";
-	}
 }

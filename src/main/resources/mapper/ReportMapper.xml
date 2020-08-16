@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.kungreat.flybbs.mapper.ReportMapper">
-  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.ReportBack">
+  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.Report">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="port_title" jdbcType="VARCHAR" property="name" />
     <result column="dataType" jdbcType="VARCHAR" property="datatype" />
@@ -16,23 +16,30 @@
     <result column="look_number" jdbcType="TINYINT" property="lookNumber" />
     <result column="create_time" jdbcType="DATE" property="createTime" />
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
+
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+    <result column="img" jdbcType="VARCHAR" property="userImg" />
+    <result column="is_vip" property="isVip" />
+    <result column="vip_level"  property="vipLevel"/>
+    <result column="authenticate"  property="authenticate" />
+    <result column="is_manager"  property="isManager" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ${tableName}
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.ReportBack" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.Report" useGeneratedKeys="true">
     insert into ${tableName} (port_title, dataType, dataVersion,
       useides, experience, user_account,
       port_state,
       reply_number, look_number, create_time, 
-      delete_flag)
+      delete_flag,is_essence,is_top)
     values (#{name,jdbcType=VARCHAR}, #{datatype,jdbcType=VARCHAR}, #{dataversion,jdbcType=VARCHAR}, 
       #{useides,jdbcType=VARCHAR}, #{experience,jdbcType=TINYINT}, #{userAccount},
       '未结',
-      0, 0, #{createTime,jdbcType=DATE}, 1)
+      0, 0, #{createTime,jdbcType=DATE}, 0,0,0)
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.ReportBack">
+  <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report">
     update ${tableName}
     set port_title = #{name,jdbcType=VARCHAR},
       dataType = #{datatype,jdbcType=VARCHAR},
@@ -48,9 +55,42 @@
     from ${tableName}
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
-    port_state, is_top, reply_number, look_number, create_time, delete_flag
-    from ${tableName}
+
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(id) from ${tableName}
+    <include refid="baseQuery"/>
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+    port_state, is_top, reply_number, look_number, create_time, delete_flag
+    from ${tableName} <include refid="baseQuery"/> <include refid="baseOrder"/> limit #{start},#{pageSize})
+    as port Inner join user us on port.user_account = us.account
+  </select>
+
+  <sql id="baseQuery">
+    <where>
+      <if test="datatype != null and datatype != ''">
+        and dataType = #{datatype}
+      </if>
+      <if test="portState != null and portState != ''">
+        and port_state = #{portState}
+      </if>
+      <if test="isEssence != null">
+        and is_essence = 1
+      </if>
+      <if test="portIsauth != 0">
+        and delete_flag = 1
+      </if>
+      <if test="name != null and name != ''">
+        and port_title like concat("%",#{name},"%")
+      </if>
+    </where>
+  </sql>
+
+  <sql id="baseOrder">
+    <if test="orderType != null and orderType != ''">
+        ORDER BY ${orderType} DESC
+    </if>
+  </sql>
 </mapper>

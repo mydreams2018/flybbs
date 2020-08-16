@@ -1,16 +1,18 @@
 package cn.kungreat.flybbs.mapper;
 
-import cn.kungreat.flybbs.domain.ReportBack;
+import cn.kungreat.flybbs.domain.Report;
+import cn.kungreat.flybbs.query.ReportQuery;
+
 import java.util.List;
 
 public interface ReportMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(ReportBack record);
+    int insert(Report record);
 
-    ReportBack selectByPrimaryKey(Long id);
+    Report selectByPrimaryKey(Long id);
+    int updateByPrimaryKey(Report record);
 
-    List<ReportBack> selectAll();
-
-    int updateByPrimaryKey(ReportBack record);
+    Integer selectCount(ReportQuery query);
+    List<Report> selectAll(ReportQuery query);
 }

@@ -1,13 +1,17 @@
 package cn.kungreat.flybbs.service;
 
-import cn.kungreat.flybbs.domain.ReportBack;
+import cn.kungreat.flybbs.domain.Report;
+import cn.kungreat.flybbs.query.ReportQuery;
+import cn.kungreat.flybbs.vo.QueryResult;
 
 import java.util.List;
 
 public interface ReportService {
     int deleteByPrimaryKey(Long id);
-    long insert(ReportBack record);
-    int updateByPrimaryKey(ReportBack record);
-    ReportBack selectByPrimaryKey(Long id);
-    List<ReportBack> selectAll();
+    long insert(Report record);
+    int updateByPrimaryKey(Report record);
+    Report selectByPrimaryKey(Long id);
+    List<Report> selectAll();
+
+    QueryResult queryReport(ReportQuery query);
 }

@@ -24,9 +24,9 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.User" useGeneratedKeys="true">
     insert into user (account, password, alias, img, is_vip, state, register_time, vip_level,register_year,accumulate_points)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
-      #{img,jdbcType=VARCHAR}, #{isVip,jdbcType=BIT}, #{state,jdbcType=TINYINT},
-      #{registerTime}, #{vipLevel},
-            #{registerYear}, #{accumulatePoints})
+      #{img,jdbcType=VARCHAR}, 0, 1,
+      #{registerTime}, 0,
+            #{registerYear}, 0)
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.User">
     update user
@@ -74,11 +74,6 @@
       <foreach collection="acts"  item="as" separator="," close=")"  open="(">
           #{as}
       </foreach>
-    </select>
-
-    <select id="selectCategoryTotal" resultType="cn.kungreat.flybbs.vo.CategoryTotal">
-      SELECT count(*) as number , ${groupField} as categoryName  FROM user
-      GROUP BY ${groupField}
     </select>
 
   <select id="selectCount" resultType="java.lang.Integer">

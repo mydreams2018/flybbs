@@ -1,8 +1,10 @@
 package cn.kungreat.flybbs.controller;
 
-import cn.kungreat.flybbs.domain.ReportBack;
+import cn.kungreat.flybbs.domain.Report;
+import cn.kungreat.flybbs.query.ReportQuery;
 import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.vo.JsonResult;
+import cn.kungreat.flybbs.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +17,7 @@ public class ReportController {
     private ReportService reportService;
 
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    public JsonResult insert(ReportBack record){
+    public JsonResult insert(Report record){
         JsonResult jsonResult = new JsonResult();
         try{
             reportService.insert(record);
@@ -28,5 +30,10 @@ public class ReportController {
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
+    }
+
+    @RequestMapping(value = "/queryReport",method = RequestMethod.POST)
+    public QueryResult queryReport(ReportQuery query){
+        return reportService.queryReport(query);
     }
 }

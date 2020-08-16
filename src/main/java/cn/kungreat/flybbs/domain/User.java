@@ -8,21 +8,22 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class User {
+public class User{
     private Long id;
     private String account;
     private String password;
     private String alias;
     private Long phone;
-    private String img="/userImg/default.jpg";
+    private String img="/api/userImg/default.jpg";
     private Boolean isVip = false;
-    private Byte state=1;
+    private Byte state;
     private String email;
     private String description;
     private String originFrom="default";
     private Date registerTime = new Date();
     private Integer vipLevel=0;
     private Integer registerYear;
+    //积分
     private Integer accumulatePoints=0;
     private Byte isManager=0;
     private String fromCity;
@@ -33,6 +34,9 @@ public class User {
         if(StringUtils.isEmpty(account) || account.getBytes().length < 6 || account.getBytes().length > 12
             || StringUtils.isEmpty(password) || password.getBytes().length < 6 || password.getBytes().length > 12){
             builder.append("用户密码必须6-12位,");
+        }
+        if(StringUtils.isNotEmpty(alias) && alias.length()>6){
+            builder.append("别名只能6位,");
         }
         byte[] bytes = account.getBytes();
         byte[] ps = password.getBytes();
@@ -48,7 +52,7 @@ public class User {
             if(ps[x] > 47 && ps[x] < 58
                     || ps[x] > 96 && ps[x] < 123 || ps[x] > 64 && ps[x] < 91){
             }else{
-                builder.append("密码只能是字母和数字,");
+                builder.append("密码只能是字母和数字");
                 break;
             }
         }

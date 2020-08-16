@@ -6,10 +6,10 @@ import lombok.Setter;
 import java.util.Date;
 @Setter
 @Getter
-public class DetailsTextBack {
+public class DetailsText {
     private Long id;
 
-    private Boolean isAdoption;
+    private Boolean isAdoption=false;
 
     private Integer likeNumber;
 
@@ -24,22 +24,21 @@ public class DetailsTextBack {
     private String detailsText;
     //标记字段
     private Integer classId;
-    private Integer portIsauth;
+    private String tableName;
     public String getTableName(){
-        String rt = "";
         switch (classId){
             case 1:
-                rt= "details_text_back";
+                tableName= "report_back";
                 break;
             case 2:
-                rt= "details_text_front";
+                tableName= "report_front";
                 break;
             case 3:
-                rt= "details_text_data";
+                tableName= "report_data";
                 break;
             case 4:
-                rt= "details_text_talk";
+                tableName= "report_talk";
         }
-        return rt;
+        return tableName;
     }
 }
