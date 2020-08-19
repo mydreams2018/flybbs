@@ -14,6 +14,7 @@ public class ReportQuery extends Paging{
     private String name;
     private Integer portIsauth;
     private String tableName;
+    private Boolean isTop;
     public String getTableName(){
         switch (classId){
             case 1:

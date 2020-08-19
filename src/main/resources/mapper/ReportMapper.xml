@@ -79,6 +79,9 @@
       <if test="isEssence != null">
         and is_essence = 1
       </if>
+      <if test="isTop != null">
+        and is_top = 1
+      </if>
       <if test="portIsauth != 0">
         and delete_flag = 1
       </if>
