@@ -28,16 +28,16 @@ public class DetailsText {
     public String getTableName(){
         switch (classId){
             case 1:
-                tableName= "report_back";
+                tableName= "details_text_back";
                 break;
             case 2:
-                tableName= "report_front";
+                tableName= "details_text_front";
                 break;
             case 3:
-                tableName= "report_data";
+                tableName= "details_text_data";
                 break;
             case 4:
-                tableName= "report_talk";
+                tableName= "details_text_talk";
         }
         return tableName;
     }

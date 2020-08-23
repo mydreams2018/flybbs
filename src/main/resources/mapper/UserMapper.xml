@@ -8,7 +8,6 @@
     <result column="alias" property="alias" />
     <result column="phone" property="phone" />
     <result column="img" property="img" />
-    <result column="is_vip" property="isVip" />
     <result column="state" property="state" />
     <result column="email" property="email" />
     <result column="description" property="description" />
@@ -22,11 +21,11 @@
     <result column="authenticate"  property="authenticate" />
   </resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.User" useGeneratedKeys="true">
-    insert into user (account, password, alias, img, is_vip, state, register_time, vip_level,register_year,accumulate_points)
+    insert into user (account, password, alias, img, state, register_time, vip_level,register_year,accumulate_points,is_manager,origin_from)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
-      #{img,jdbcType=VARCHAR}, 0, 1,
+      #{img,jdbcType=VARCHAR}, 1,
       #{registerTime}, 0,
-            #{registerYear}, 0)
+            #{registerYear}, 0, 0, #{originFrom})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.User">
     update user
@@ -51,14 +50,14 @@
   </update>
 
   <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, vip_level,
+    select id, account, password, alias, img, state, email, description, register_time, vip_level,
       origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
     from user
     where account = #{0}
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, vip_level,
+    select id, account, password, alias, phone, img, state, email, description, register_time, vip_level,
     origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
     from user
     <include refid="baseQuery"/>
@@ -67,7 +66,7 @@
   </select>
 
     <select id="selectByAccounts" resultMap="BaseResultMap">
-      select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, vip_level,
+      select id, account, password, alias, phone, img, state, email, description, register_time, vip_level,
       origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
       from user
       where account IN

@@ -1,5 +1,6 @@
 package cn.kungreat.flybbs.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -11,11 +12,11 @@ import java.util.Date;
 public class User{
     private Long id;
     private String account;
+    @JsonIgnore
     private String password;
     private String alias;
     private Long phone;
     private String img="/api/userImg/default.jpg";
-    private Boolean isVip = false;
     private Byte state;
     private String email;
     private String description;

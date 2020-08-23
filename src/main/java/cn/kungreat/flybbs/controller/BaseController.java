@@ -7,7 +7,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
@@ -35,9 +34,9 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
-    public Authentication getCurrentUser(){
+    public User getCurrentUser(){
         SecurityContext context = SecurityContextHolder.getContext();
-        return context.getAuthentication();
+        return userService.selectByPrimaryKey(context.getAuthentication().getName());
     }
 
     @RequestMapping(value = "/image")

@@ -53,8 +53,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateAccumulatePoints(int number, String account) {
         User user = userMapper.selectByPrimaryKey(account);
-        int current = user.getAccumulatePoints() + number;
-        return userMapper.updateAccumulatePoints(current,user.getAccumulatePoints(),account);
+        Integer accumulatePoints = user.getAccumulatePoints();
+        int current = accumulatePoints + number;
+        Assert.isTrue(current >= 0,"飞吻数据不足");
+        return userMapper.updateAccumulatePoints(current, accumulatePoints,account);
     }
 
     @Override

@@ -6,6 +6,7 @@ import cn.kungreat.flybbs.mapper.DetailsTextMapper;
 import cn.kungreat.flybbs.mapper.ReportMapper;
 import cn.kungreat.flybbs.query.ReportQuery;
 import cn.kungreat.flybbs.service.ReportService;
+import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 @Service
 public class ReportServiceImpl implements ReportService {
+    @Autowired
+    private UserService userService;
     @Autowired
     private ReportMapper reportMapper;
     @Autowired
@@ -36,6 +39,9 @@ public class ReportServiceImpl implements ReportService {
         String s = record.validMessage();
         Assert.isTrue(StringUtils.isEmpty(s),s);
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(record.getExperience() != null && record.getExperience() > 0){
+            userService.updateAccumulatePoints(-record.getExperience(),name);
+        }
         record.setUserAccount(name);
         Date date = new Date();
         record.setCreateTime(date);
