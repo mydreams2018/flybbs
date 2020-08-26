@@ -10,8 +10,7 @@ public interface ReportService {
     int deleteByPrimaryKey(Long id);
     long insert(Report record);
     int updateByPrimaryKey(Report record);
-    Report selectByPrimaryKey(Long id);
-    List<Report> selectAll();
+    Report selectByPrimaryKey(Report record);
 
     QueryResult queryReport(ReportQuery query);
 }

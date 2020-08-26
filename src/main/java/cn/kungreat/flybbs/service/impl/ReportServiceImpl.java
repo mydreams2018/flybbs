@@ -47,6 +47,7 @@ public class ReportServiceImpl implements ReportService {
         record.setCreateTime(date);
         reportMapper.insert(record);
         DetailsText details = new DetailsText();
+        details.setIsPort(true);
         details.setCreateData(date);
         details.setPortId(record.getId());
         details.setDetailsText(record.getDetailsText());
@@ -62,13 +63,17 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report selectByPrimaryKey(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<Report> selectAll() {
-        return null;
+    public Report selectByPrimaryKey(Report record) {
+        Assert.isTrue(record.getClassId()!=null&&record.getClassId()>=1&&record.getClassId()<5,"类型ID异常");
+        Assert.isTrue(record.getId() != null,"ID异常");
+        Report report = reportMapper.selectByPrimaryKey(record);
+        if(report != null){
+            DetailsText de = new DetailsText();
+            de.setPortId(record.getId());
+            de.setClassId(record.getClassId());
+            report.setDetails(detailsTextMapper.selectByPort(de));
+        }
+        return report;
     }
 
     @Override

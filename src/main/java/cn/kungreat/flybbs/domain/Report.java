@@ -46,6 +46,7 @@ public class Report {
     private Integer vipLevel;
     private String authenticate;
     private Byte isManager;
+    private DetailsText details;
 
     public String validMessage(){
         StringBuilder builder = new StringBuilder();

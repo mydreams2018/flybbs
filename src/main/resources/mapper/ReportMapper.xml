@@ -49,11 +49,12 @@
       create_time = #{createTime,jdbcType=DATE}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+
+  <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
+    SELECT * FROM (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, delete_flag
     from ${tableName}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}) as port Inner join user us on port.user_account = us.account
   </select>
 
 

@@ -10,7 +10,7 @@ public interface ReportMapper {
 
     int insert(Report record);
 
-    Report selectByPrimaryKey(Long id);
+    Report selectByPrimaryKey(Report record);
     int updateByPrimaryKey(Report record);
 
     Integer selectCount(ReportQuery query);

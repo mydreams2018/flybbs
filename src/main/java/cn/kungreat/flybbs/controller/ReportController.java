@@ -36,4 +36,10 @@ public class ReportController {
     public QueryResult queryReport(ReportQuery query){
         return reportService.queryReport(query);
     }
+
+    @RequestMapping(value = "/selectByPrimaryKey",method = RequestMethod.POST)
+    public Report selectByPrimaryKey(Report record){
+        return reportService.selectByPrimaryKey(record);
+    }
+
 }
