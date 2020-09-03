@@ -15,11 +15,10 @@
     <result column="reply_number" jdbcType="TINYINT" property="replyNumber" />
     <result column="look_number" jdbcType="TINYINT" property="lookNumber" />
     <result column="create_time" jdbcType="DATE" property="createTime" />
-    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
+    <result column="auth_flag" jdbcType="BIT" property="authFlag" />
 
     <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="img" jdbcType="VARCHAR" property="userImg" />
-    <result column="is_vip" property="isVip" />
     <result column="vip_level"  property="vipLevel"/>
     <result column="authenticate"  property="authenticate" />
     <result column="is_manager"  property="isManager" />
@@ -33,7 +32,7 @@
       useides, experience, user_account,
       port_state,
       reply_number, look_number, create_time, 
-      delete_flag,is_essence,is_top)
+      auth_flag,is_essence,is_top)
     values (#{name,jdbcType=VARCHAR}, #{datatype,jdbcType=VARCHAR}, #{dataversion,jdbcType=VARCHAR}, 
       #{useides,jdbcType=VARCHAR}, #{experience,jdbcType=TINYINT}, #{userAccount},
       '未结',
@@ -52,9 +51,13 @@
 
   <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
     SELECT * FROM (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
-    port_state, is_top, reply_number, look_number, create_time, delete_flag
+    port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}
-    where id = #{id}) as port Inner join user us on port.user_account = us.account
+    where id = #{id}
+    <if test="portIsauth != 0">
+      and auth_flag = 1
+    </if>
+    ) as port Inner join user us on port.user_account = us.account
   </select>
 
 
@@ -64,7 +67,7 @@
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select * from (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
-    port_state, is_top, reply_number, look_number, create_time, delete_flag
+    port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName} <include refid="baseQuery"/> <include refid="baseOrder"/> limit #{start},#{pageSize})
     as port Inner join user us on port.user_account = us.account
   </select>
@@ -84,7 +87,7 @@
         and is_top = 1
       </if>
       <if test="portIsauth != 0">
-        and delete_flag = 1
+        and auth_flag = 1
       </if>
       <if test="name != null and name != ''">
         and port_title like concat("%",#{name},"%")

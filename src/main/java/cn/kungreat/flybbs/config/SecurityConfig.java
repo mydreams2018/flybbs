@@ -45,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // 接口层要获取认证对象的时候  不要在这里放行 这里 不会封装认证对象过来
         web.ignoring().antMatchers(
-                "/image","/register","/userImg/**","/report/queryReport","/report/selectByPrimaryKey");
+                "/image","/register","/userImg/**"
+                ,"/report/queryReport","/report/selectByPrimaryKey","/detailsText/queryDetails");
     }
 
     @Override

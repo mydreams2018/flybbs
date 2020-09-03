@@ -66,11 +66,13 @@ public class ReportServiceImpl implements ReportService {
     public Report selectByPrimaryKey(Report record) {
         Assert.isTrue(record.getClassId()!=null&&record.getClassId()>=1&&record.getClassId()<5,"类型ID异常");
         Assert.isTrue(record.getId() != null,"ID异常");
+        record.setPortIsauth(portIsauth);
         Report report = reportMapper.selectByPrimaryKey(record);
         if(report != null){
             DetailsText de = new DetailsText();
             de.setPortId(record.getId());
             de.setClassId(record.getClassId());
+            de.setPortIsauth(portIsauth);
             report.setDetails(detailsTextMapper.selectByPort(de));
         }
         return report;

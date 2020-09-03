@@ -1,36 +1,15 @@
-package cn.kungreat.flybbs.domain;
+package cn.kungreat.flybbs.query;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 @Setter
 @Getter
-public class DetailsText {
-    private Long id;
-
-    private Boolean isAdoption=false;
-
-    private Integer likeNumber;
-
+public class DetailsTextQuery extends Paging{
     private Long portId;
-
-    private String userAccount;
-
-    private Date createData;
-
-    private Boolean authFlag;
-
-    private String detailsText;
-    private Boolean isPort;
-    //标记字段
+    private String orderType;
     private Integer classId;
     private String tableName;
-    private String alias;
-    private String userImg;
-    private Integer vipLevel;
-    private String authenticate;
-    private Byte isManager;
     private Integer portIsauth;
     public String getTableName(){
         if(classId != null){

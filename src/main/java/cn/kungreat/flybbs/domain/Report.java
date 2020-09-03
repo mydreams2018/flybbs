@@ -35,18 +35,18 @@ public class Report {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
 
-    private Boolean deleteFlag;
+    private Boolean authFlag;
 
     private Integer classId;
     private String tableName;
     private String detailsText;
     private String alias;
     private String userImg;
-    private Boolean isVip;
     private Integer vipLevel;
     private String authenticate;
     private Byte isManager;
     private DetailsText details;
+    private Integer portIsauth;
 
     public String validMessage(){
         StringBuilder builder = new StringBuilder();

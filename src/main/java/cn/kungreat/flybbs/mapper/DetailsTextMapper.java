@@ -1,7 +1,7 @@
 package cn.kungreat.flybbs.mapper;
 
 import cn.kungreat.flybbs.domain.DetailsText;
-import cn.kungreat.flybbs.domain.Report;
+import cn.kungreat.flybbs.query.DetailsTextQuery;
 
 import java.util.List;
 
@@ -13,7 +13,8 @@ public interface DetailsTextMapper {
     DetailsText selectByPrimaryKey(Long id);
     DetailsText selectByPort(DetailsText record);
 
-    List<DetailsText> selectAll();
+    Integer selectCount(DetailsTextQuery query);
+    List<DetailsText> selectAll(DetailsTextQuery query);
 
     int updateByPrimaryKey(DetailsText record);
 }
