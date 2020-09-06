@@ -1,15 +1,19 @@
 package cn.kungreat.flybbs.service.impl;
 
+import cn.kungreat.flybbs.domain.DetailsText;
 import cn.kungreat.flybbs.mapper.DetailsTextMapper;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.service.DetailsTextService;
 import cn.kungreat.flybbs.vo.QueryResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,5 +38,16 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         result.setDatas(list);
         result.setPage(query);
         return result;
+    }
+
+    @Override
+    public long insert(DetailsText record) {
+        String s = record.validMessage();
+        Assert.isTrue(StringUtils.isEmpty(s),s);
+        record.setIsPort(false);
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        record.setUserAccount(name);
+        record.setCreateData(new Date());
+        return detailsTextMapper.insert(record);
     }
 }

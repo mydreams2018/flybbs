@@ -26,7 +26,7 @@
     insert into ${tableName} (like_number,is_adoption ,port_id,
       user_account, create_data, auth_flag,
       details_text, is_port)
-    values (0, #{isAdoption},#{portId},
+    values (0, 0,#{portId},
       #{userAccount}, #{createData}, 0,
       #{detailsText}, #{isPort})
   </insert>

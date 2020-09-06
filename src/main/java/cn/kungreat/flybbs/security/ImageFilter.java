@@ -32,7 +32,8 @@ public class ImageFilter extends OncePerRequestFilter {
                 }
             }
         }
-        if("/api/defaultLogin".equals(requestURI) || "/api/report/insert".equals(requestURI)){
+        if("/api/defaultLogin".equals(requestURI) || "/api/report/insert".equals(requestURI)
+            || "/api/detailsText/sendReply".equals(requestURI)){
             Object code = re.getSession().getAttribute("image_code");
             Object obj = re.getSession().getAttribute("time");
             re.getSession().removeAttribute("image_code");

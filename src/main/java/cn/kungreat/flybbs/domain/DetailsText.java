@@ -3,6 +3,7 @@ package cn.kungreat.flybbs.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 @Setter
@@ -33,6 +34,13 @@ public class DetailsText {
     private String authenticate;
     private Byte isManager;
     private Integer portIsauth;
+    public String validMessage(){
+        if(StringUtils.isEmpty(detailsText) ||
+                portId == null || classId == null){
+            return "标题,类型,内容不能为空";
+        }
+        return null;
+    }
     public String getTableName(){
         if(classId != null){
             switch (classId){
