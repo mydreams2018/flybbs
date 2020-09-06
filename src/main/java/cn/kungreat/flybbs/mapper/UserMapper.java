@@ -21,4 +21,6 @@ public interface UserMapper {
     int updateAccumulatePoints(@Param("current") int current, @Param("original") int original, @Param("account") String account);
 
     int updateImg(@Param("account") String account, @Param("path") String path);
+
+    User selectByunique(@Param("account") String account, @Param("alias") String alias);
 }

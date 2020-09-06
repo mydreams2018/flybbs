@@ -36,7 +36,9 @@ public class User{
             || StringUtils.isEmpty(password) || password.getBytes().length < 6 || password.getBytes().length > 12){
             builder.append("用户密码必须6-12位,");
         }
-        if(StringUtils.isNotEmpty(alias) && alias.length()>6){
+        if(StringUtils.isEmpty(alias)){
+            builder.append("别名不能为空,");
+        }else if(alias.length() > 6){
             builder.append("别名只能6位,");
         }
         byte[] bytes = account.getBytes();

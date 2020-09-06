@@ -80,7 +80,14 @@
      <include refid="baseQuery"/>
   </select>
 
-  <sql id="baseQuery">
+    <select id="selectByunique" resultMap="BaseResultMap">
+    select id, account, password, alias, img, state, email, description, register_time, vip_level,
+      origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
+    from user
+     where account = #{account} or alias = #{alias}
+    </select>
+
+    <sql id="baseQuery">
     <where>
       <if test="category != null and category != '' ">
         and origin_from = #{category}

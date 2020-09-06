@@ -2,6 +2,7 @@ package cn.kungreat.flybbs.social;
 
 import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
@@ -23,7 +24,13 @@ public class MyConnectionSignUp implements ConnectionSignUp {
         user.setOriginFrom(connection.getKey().getProviderId());
         user.setPassword("yjssaje");
         user.setImg(connection.getImageUrl());
-        user.setAlias(connection.getDisplayName());
+        if(StringUtils.isEmpty(connection.getDisplayName())){
+            user.setAlias(s.substring(0, 6));
+        }else if(connection.getDisplayName().length() > 6){
+            user.setAlias(connection.getDisplayName().substring(0, 6));
+        }else{
+            user.setAlias(connection.getDisplayName());
+        }
         userService.insert(user);
         return s;
     }
