@@ -1,9 +1,11 @@
 package cn.kungreat.flybbs.service.impl;
 
 import cn.kungreat.flybbs.domain.DetailsText;
+import cn.kungreat.flybbs.domain.Report;
 import cn.kungreat.flybbs.mapper.DetailsTextMapper;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.service.DetailsTextService;
+import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import java.util.List;
 public class DetailsTextServiceImpl implements DetailsTextService {
     @Autowired
     private DetailsTextMapper detailsTextMapper;
+    @Autowired
+    private ReportService reportService;
     @Value("${port.isauth}")
     private Integer portIsauth;
 
@@ -48,6 +52,11 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setUserAccount(name);
         record.setCreateData(new Date());
-        return detailsTextMapper.insert(record);
+        detailsTextMapper.insert(record);
+        Report report = new Report();
+        report.setClassId(record.getClassId());
+        report.setId(record.getPortId());
+        reportService.updateReplyNumber(report);
+        return 1;
     }
 }

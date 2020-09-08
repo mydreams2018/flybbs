@@ -93,4 +93,9 @@ public class ReportServiceImpl implements ReportService {
         result.setPage(query);
         return result;
     }
+
+    @Override
+    public void updateReplyNumber(Report port) {
+        reportMapper.updateReplyNumber(port);
+    }
 }

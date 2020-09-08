@@ -15,4 +15,6 @@ public interface ReportMapper {
 
     Integer selectCount(ReportQuery query);
     List<Report> selectAll(ReportQuery query);
+
+    void updateReplyNumber(Report port);
 }

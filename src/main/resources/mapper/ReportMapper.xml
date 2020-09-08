@@ -49,7 +49,11 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
+    <update id="updateReplyNumber">
+      update ${tableName} set reply_number = reply_number + 1 where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
     SELECT * FROM (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}
