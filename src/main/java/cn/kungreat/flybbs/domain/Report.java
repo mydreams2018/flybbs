@@ -1,6 +1,7 @@
 package cn.kungreat.flybbs.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +21,7 @@ public class Report {
     private String useides;
 //飞吻
     private Byte experience;
-
+    @JsonIgnore
     private String userAccount;
 
     private Boolean isEssence=false;

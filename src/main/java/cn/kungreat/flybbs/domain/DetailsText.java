@@ -1,6 +1,7 @@
 package cn.kungreat.flybbs.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +17,7 @@ public class DetailsText {
     private Integer likeNumber;
 
     private Long portId;
-
+    @JsonIgnore
     private String userAccount;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createData;

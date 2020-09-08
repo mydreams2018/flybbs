@@ -11,6 +11,7 @@ import java.util.Date;
 @Getter
 public class User{
     private Long id;
+    @JsonIgnore
     private String account;
     @JsonIgnore
     private String password;
