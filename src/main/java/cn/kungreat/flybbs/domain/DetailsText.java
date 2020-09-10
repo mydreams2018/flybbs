@@ -19,6 +19,8 @@ public class DetailsText {
     private Long portId;
     @JsonIgnore
     private String userAccount;
+    @JsonIgnore
+    private String likeAccount;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createData;
 

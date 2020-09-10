@@ -1,5 +1,6 @@
 package cn.kungreat.flybbs.query;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ public class ReportQuery extends Paging{
     private Boolean isEssence;
     private String orderType;
     private Integer classId;
+    @JsonIgnore
     private String name;
     private Integer portIsauth;
     private String tableName;

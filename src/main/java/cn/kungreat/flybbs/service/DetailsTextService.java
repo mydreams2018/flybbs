@@ -7,4 +7,6 @@ import cn.kungreat.flybbs.vo.QueryResult;
 public interface DetailsTextService {
     QueryResult queryReport(DetailsTextQuery query);
     long insert(DetailsText record);
+
+    void likeAccount(DetailsTextQuery query);
 }

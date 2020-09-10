@@ -1,11 +1,16 @@
 package cn.kungreat.flybbs.query;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 public class DetailsTextQuery extends Paging{
+    private Long id;
+    @JsonIgnore
+    private String likeAccount;
+    private Integer likeNumber;
     private Long portId;
     private String orderType;
     private Integer classId;

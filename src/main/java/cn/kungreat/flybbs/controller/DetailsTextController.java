@@ -35,4 +35,17 @@ public class DetailsTextController {
         }
         return jsonResult;
     }
+
+    @RequestMapping(value = "/likeAccount",method = RequestMethod.POST)
+    public JsonResult likeAccount(DetailsTextQuery query){
+        JsonResult jsonResult = new JsonResult();
+        try{
+            detailsTextService.likeAccount(query);
+        }catch (Exception e){
+            jsonResult.setResult(false);
+            jsonResult.setStatus(1);
+            jsonResult.setMsg(e.getMessage());
+        }
+        return jsonResult;
+    }
 }

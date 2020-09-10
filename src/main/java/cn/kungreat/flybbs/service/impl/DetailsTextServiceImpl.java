@@ -59,4 +59,17 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         reportService.updateReplyNumber(report);
         return 1;
     }
+
+    @Override
+    public void likeAccount(DetailsTextQuery query) {
+        Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
+        Assert.isTrue(query.getId()!=null,"ID异常");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        DetailsText s = detailsTextMapper.selectLikeAccount(query);
+        Assert.isTrue(s!=null,"贴子异常");
+        Assert.isTrue(s.getLikeAccount()==null||!s.getLikeAccount().contains(name),"已经点过赞了");
+        query.setLikeAccount(s.getLikeAccount()+","+name);
+        query.setLikeNumber(s.getLikeNumber());
+        detailsTextMapper.updateLikeAccount(query);
+    }
 }
