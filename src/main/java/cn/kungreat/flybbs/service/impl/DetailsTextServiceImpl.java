@@ -2,7 +2,9 @@ package cn.kungreat.flybbs.service.impl;
 
 import cn.kungreat.flybbs.domain.DetailsText;
 import cn.kungreat.flybbs.domain.Report;
+import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.DetailsTextMapper;
+import cn.kungreat.flybbs.mapper.UserMapper;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.service.DetailsTextService;
 import cn.kungreat.flybbs.service.ReportService;
@@ -26,7 +28,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     private ReportService reportService;
     @Value("${port.isauth}")
     private Integer portIsauth;
-
+    @Autowired
+    private UserMapper userMapper;
     @Override
     public QueryResult queryReport(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
@@ -56,7 +59,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         Report report = new Report();
         report.setClassId(record.getClassId());
         report.setId(record.getPortId());
-        reportService.updateReplyNumber(report);
+        reportService.incrementNumber(report);
         return 1;
     }
 
@@ -71,5 +74,21 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         query.setLikeAccount(s.getLikeAccount()+","+name);
         query.setLikeNumber(s.getLikeNumber());
         detailsTextMapper.updateLikeAccount(query);
+    }
+
+    @Override
+    public int deleteReplyPort(DetailsTextQuery query) {
+        Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
+        Assert.isTrue(query.getId()!=null,"ID异常");
+        DetailsText detailsText = detailsTextMapper.selectByPrimaryKey(query);
+        Assert.isTrue(detailsText!=null,"贴子异常");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userMapper.selectByPrimaryKey(name);
+        Assert.isTrue(user.getIsManager()==1||detailsText.getUserAccount().equals(name),"没有删除权限");
+        Report port = new Report();
+        port.setClassId(query.getClassId());
+        port.setId(detailsText.getPortId());
+        reportService.decrementNumber(port);
+        return detailsTextMapper.deleteByPrimaryKey(query);
     }
 }

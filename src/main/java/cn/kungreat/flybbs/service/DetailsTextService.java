@@ -9,4 +9,6 @@ public interface DetailsTextService {
     long insert(DetailsText record);
 
     void likeAccount(DetailsTextQuery query);
+
+    int deleteReplyPort(DetailsTextQuery query);
 }

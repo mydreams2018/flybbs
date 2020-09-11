@@ -12,5 +12,6 @@ public interface ReportService {
 
     QueryResult queryReport(ReportQuery query);
 
-    void updateReplyNumber(Report port);
+    void incrementNumber(Report port);
+    void decrementNumber(Report port);
 }

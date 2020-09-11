@@ -95,7 +95,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void updateReplyNumber(Report port) {
-        reportMapper.updateReplyNumber(port);
+    public void incrementNumber(Report port) {
+        reportMapper.incrementNumber(port);
+    }
+
+    @Override
+    public void decrementNumber(Report port) {
+        reportMapper.decrementNumber(port);
     }
 }

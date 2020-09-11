@@ -6,11 +6,11 @@ import cn.kungreat.flybbs.query.DetailsTextQuery;
 import java.util.List;
 
 public interface DetailsTextMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(DetailsTextQuery query);
 
     long insert(DetailsText record);
 
-    DetailsText selectByPrimaryKey(Long id);
+    DetailsText selectByPrimaryKey(DetailsTextQuery query);
     DetailsText selectByPort(DetailsText record);
 
     Integer selectCount(DetailsTextQuery query);

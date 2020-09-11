@@ -48,4 +48,16 @@ public class DetailsTextController {
         }
         return jsonResult;
     }
+    @RequestMapping(value = "/deleteReplyPort",method = RequestMethod.POST)
+    public JsonResult deleteReplyPort(DetailsTextQuery query){
+        JsonResult jsonResult = new JsonResult();
+        try{
+            detailsTextService.deleteReplyPort(query);
+        }catch(Exception e){
+            jsonResult.setResult(false);
+            jsonResult.setStatus(1);
+            jsonResult.setMsg(e.getMessage());
+        }
+        return jsonResult;
+    }
 }
