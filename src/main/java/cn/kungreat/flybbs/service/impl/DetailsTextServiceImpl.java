@@ -129,4 +129,22 @@ public class DetailsTextServiceImpl implements DetailsTextService {
             userMapper.updateAccumulatePoints(user.getAccumulatePoints()+report.getExperience(),user.getAccumulatePoints(),detailsText.getUserAccount());
         }
     }
+
+    @Override
+    public DetailsText selectByPrimaryKey(DetailsTextQuery query){
+        Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
+        Assert.isTrue(query.getId()!=null,"ID异常");
+        return detailsTextMapper.selectByPrimaryKey(query);
+    }
+
+    @Override
+    public void updateByPrimaryKey(DetailsTextQuery query) {
+        Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
+        Assert.isTrue(query.getId()!=null,"ID异常");
+        DetailsText detailsText = detailsTextMapper.selectByPrimaryKey(query);
+        Assert.isTrue(detailsText!=null,"贴子异常");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(name.equals(detailsText.getUserAccount()),"无权限操作此贴");
+        detailsTextMapper.updateByPrimaryKey(query);
+    }
 }

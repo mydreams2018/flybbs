@@ -13,4 +13,8 @@ public interface DetailsTextService {
     int deleteReplyPort(DetailsTextQuery query);
 
     void acceptReply(DetailsTextQuery query);
+
+    DetailsText selectByPrimaryKey(DetailsTextQuery query);
+
+    void updateByPrimaryKey(DetailsTextQuery query);
 }

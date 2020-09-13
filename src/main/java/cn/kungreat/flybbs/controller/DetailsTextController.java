@@ -73,4 +73,22 @@ public class DetailsTextController {
         }
         return jsonResult;
     }
+
+    @RequestMapping(value = "/selectByPrimaryKey",method = RequestMethod.POST)
+    public DetailsText selectByPrimaryKey(DetailsTextQuery query){
+        return detailsTextService.selectByPrimaryKey(query);
+    }
+
+    @RequestMapping(value = "/updateByPrimaryKey",method = RequestMethod.POST)
+    public JsonResult updateByPrimaryKey(DetailsTextQuery query){
+        JsonResult jsonResult = new JsonResult();
+        try{
+            detailsTextService.updateByPrimaryKey(query);
+        }catch(Exception e){
+            jsonResult.setResult(false);
+            jsonResult.setStatus(1);
+            jsonResult.setMsg(e.getMessage());
+        }
+        return jsonResult;
+    }
 }

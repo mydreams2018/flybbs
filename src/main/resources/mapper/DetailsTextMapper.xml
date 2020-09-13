@@ -30,7 +30,7 @@
       #{userAccount}, #{createData}, 0,
       #{detailsText}, #{isPort})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.DetailsText">
+  <update id="updateByPrimaryKey">
     update ${tableName}
     set
       details_text = #{detailsText,jdbcType=LONGVARCHAR}
