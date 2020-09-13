@@ -23,13 +23,14 @@ public class BeanConfig {
         druidDataSource.setTestWhileIdle(true);
         druidDataSource.setValidationQuery("SELECT 1");
         druidDataSource.setMinEvictableIdleTimeMillis(300000);
-        druidDataSource.setMinIdle(5);
-        druidDataSource.setInitialSize(5);
-        druidDataSource.setMaxActive(20);
+        druidDataSource.setInitialSize(2);
+        druidDataSource.setMinIdle(2);
+        druidDataSource.setMaxActive(10);
         druidDataSource.setTimeBetweenLogStatsMillis(60000);
-        druidDataSource.setPoolPreparedStatements(true);
-        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
         druidDataSource.setMaxWait(60000);
+        //是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭
+//        druidDataSource.setPoolPreparedStatements(false);
+//        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
         return druidDataSource;
     }
 
