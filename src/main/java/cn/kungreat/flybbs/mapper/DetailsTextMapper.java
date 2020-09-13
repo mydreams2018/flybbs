@@ -21,4 +21,5 @@ public interface DetailsTextMapper {
     DetailsText selectLikeAccount(DetailsTextQuery query);
 
     int updateLikeAccount(DetailsTextQuery query);
+    int updateAdoption(DetailsTextQuery query);
 }

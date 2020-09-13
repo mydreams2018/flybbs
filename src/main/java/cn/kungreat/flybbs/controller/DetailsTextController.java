@@ -60,4 +60,17 @@ public class DetailsTextController {
         }
         return jsonResult;
     }
+
+    @RequestMapping(value = "/acceptReply",method = RequestMethod.POST)
+    public JsonResult acceptReply(DetailsTextQuery query){
+        JsonResult jsonResult = new JsonResult();
+        try{
+            detailsTextService.acceptReply(query);
+        }catch(Exception e){
+            jsonResult.setResult(false);
+            jsonResult.setStatus(1);
+            jsonResult.setMsg(e.getMessage());
+        }
+        return jsonResult;
+    }
 }

@@ -55,6 +55,9 @@ public class Report {
                 ||StringUtils.isEmpty(detailsText) || classId == null){
             builder.append("标题,类型,内容不能为空");
         }
+        if(experience != null && experience < 0){
+            builder.append("飞吻不能为负值");
+        }
         return builder.toString();
     }
 

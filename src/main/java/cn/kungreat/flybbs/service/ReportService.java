@@ -8,6 +8,7 @@ public interface ReportService {
     int deleteByPrimaryKey(Long id);
     long insert(Report record);
     int updateByPrimaryKey(Report record);
+    int updateBystate(Report record);
     Report selectByPrimaryKey(Report record);
 
     QueryResult queryReport(ReportQuery query);

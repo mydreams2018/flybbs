@@ -11,4 +11,6 @@ public interface DetailsTextService {
     void likeAccount(DetailsTextQuery query);
 
     int deleteReplyPort(DetailsTextQuery query);
+
+    void acceptReply(DetailsTextQuery query);
 }

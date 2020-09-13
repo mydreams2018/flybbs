@@ -4,6 +4,7 @@ import cn.kungreat.flybbs.domain.DetailsText;
 import cn.kungreat.flybbs.domain.Report;
 import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.DetailsTextMapper;
+import cn.kungreat.flybbs.mapper.ReportMapper;
 import cn.kungreat.flybbs.mapper.UserMapper;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.service.DetailsTextService;
@@ -26,6 +27,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     private DetailsTextMapper detailsTextMapper;
     @Autowired
     private ReportService reportService;
+    @Autowired
+    private ReportMapper reportMapper;
     @Value("${port.isauth}")
     private Integer portIsauth;
     @Autowired
@@ -89,6 +92,41 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         port.setClassId(query.getClassId());
         port.setId(detailsText.getPortId());
         reportService.decrementNumber(port);
+        if(detailsText.getIsAdoption()){
+            port.setPortState("未结");
+            reportService.updateBystate(port);
+            Report report = reportMapper.selectById(port);
+            if(report.getExperience() != null && report.getExperience() > 0){
+                if(detailsText.getUserAccount().equals(name)){
+                    userMapper.updateAccumulatePoints(user.getAccumulatePoints()-report.getExperience(),user.getAccumulatePoints(),name);
+                }else{
+                    User user1 = userMapper.selectByPrimaryKey(detailsText.getUserAccount());
+                    userMapper.updateAccumulatePoints(user1.getAccumulatePoints()-report.getExperience(),user1.getAccumulatePoints(),detailsText.getUserAccount());
+                }
+            }
+        }
         return detailsTextMapper.deleteByPrimaryKey(query);
+    }
+
+    @Override
+    public void acceptReply(DetailsTextQuery query) {
+        Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
+        Assert.isTrue(query.getId()!=null,"ID异常");
+        DetailsText detailsText = detailsTextMapper.selectByPrimaryKey(query);
+        Assert.isTrue(detailsText!=null,"贴子异常");
+        Report port = new Report();
+        port.setClassId(query.getClassId());
+        port.setId(detailsText.getPortId());
+        Report report = reportMapper.selectById(port);
+        Assert.isTrue(report.getPortState().equals("未结"),"此贴已结");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(name.equals(report.getUserAccount()),"无权限操作此贴");
+        port.setPortState("已结");
+        reportService.updateBystate(port);
+        detailsTextMapper.updateAdoption(query);
+        if(report.getExperience() != null && report.getExperience() > 0){
+            User user = userMapper.selectByPrimaryKey(detailsText.getUserAccount());
+            userMapper.updateAccumulatePoints(user.getAccumulatePoints()+report.getExperience(),user.getAccumulatePoints(),detailsText.getUserAccount());
+        }
     }
 }

@@ -56,7 +56,11 @@
       update ${tableName} set reply_number = reply_number - 1 where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
+  <update id="updateBystate">
+    update ${tableName} set port_state = #{portState,jdbcType=VARCHAR}  where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
     SELECT * FROM (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}
@@ -77,6 +81,13 @@
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName} <include refid="baseQuery"/> <include refid="baseOrder"/> limit #{start},#{pageSize})
     as port Inner join user us on port.user_account = us.account
+  </select>
+
+  <select id="selectById" resultMap="BaseResultMap">
+    select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+    port_state, is_top, reply_number, look_number, create_time, auth_flag
+    from ${tableName}
+    where id = #{id}
   </select>
 
   <sql id="baseQuery">

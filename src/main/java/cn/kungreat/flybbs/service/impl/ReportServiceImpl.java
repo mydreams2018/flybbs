@@ -63,6 +63,11 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public int updateBystate(Report record) {
+        return reportMapper.updateBystate(record);
+    }
+
+    @Override
     public Report selectByPrimaryKey(Report record) {
         Assert.isTrue(record.getClassId()!=null&&record.getClassId()>=1&&record.getClassId()<5,"类型ID异常");
         Assert.isTrue(record.getId() != null,"ID异常");

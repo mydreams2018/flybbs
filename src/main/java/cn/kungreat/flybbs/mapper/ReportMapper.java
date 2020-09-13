@@ -18,4 +18,8 @@ public interface ReportMapper {
 
     void incrementNumber(Report port);
     void decrementNumber(Report port);
+
+    int updateBystate(Report record);
+
+    Report selectById(Report port);
 }

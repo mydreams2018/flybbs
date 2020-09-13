@@ -45,7 +45,14 @@
     where id = #{id,jdbcType=BIGINT} and like_number=#{likeNumber}
     </update>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+  <update id="updateAdoption">
+    update ${tableName}
+    set
+      is_adoption = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
     select id, is_adoption, like_number, port_id, user_account, create_data, auth_flag,
     details_text, is_port
     from ${tableName}
