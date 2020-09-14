@@ -59,7 +59,21 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public int updateByPrimaryKey(Report record) {
-        return 0;
+        Assert.isTrue(record.getClassId()!=null&&record.getClassId()>=1&&record.getClassId()<5,"类型ID异常");
+        Assert.isTrue(record.getId() != null,"ID异常");
+        Assert.isTrue(StringUtils.isNotEmpty(record.getName()),"标题不能为空");
+        Assert.isTrue(StringUtils.isNotEmpty(record.getDetailsText()),"内容不能为空");
+        Report port = reportMapper.selectById(record);
+        Assert.isTrue(port != null,"贴子异常");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(name.equals(port.getUserAccount()),"没有权限操作");
+        reportMapper.updateByPrimaryKey(record);
+        DetailsText detailsText = new DetailsText();
+        detailsText.setClassId(record.getClassId());
+        detailsText.setPortId(record.getId());
+        detailsText.setDetailsText(record.getDetailsText());
+        detailsTextMapper.updateByPortId(detailsText);
+        return 1;
     }
 
     @Override

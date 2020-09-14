@@ -22,4 +22,6 @@ public interface DetailsTextMapper {
 
     int updateLikeAccount(DetailsTextQuery query);
     int updateAdoption(DetailsTextQuery query);
+
+    int updateByPortId(DetailsText detailsText);
 }

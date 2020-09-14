@@ -32,6 +32,21 @@ public class ReportController {
         return jsonResult;
     }
 
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public JsonResult update(Report record){
+        JsonResult jsonResult = new JsonResult();
+        try{
+            reportService.updateByPrimaryKey(record);
+            jsonResult.setAction("/jie/detail.html?classId="+record.getClassId()+"&id="+record.getId());
+        }catch(Exception e){
+            jsonResult.setResult(false);
+            jsonResult.setStatus(1);
+            jsonResult.setId("imgCode");
+            jsonResult.setMsg(e.getMessage());
+        }
+        return jsonResult;
+    }
+
     @RequestMapping(value = "/queryReport",method = RequestMethod.POST)
     public QueryResult queryReport(ReportQuery query){
         return reportService.queryReport(query);

@@ -40,12 +40,7 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report">
     update ${tableName}
-    set port_title = #{name,jdbcType=VARCHAR},
-      dataType = #{datatype,jdbcType=VARCHAR},
-      dataVersion = #{dataversion,jdbcType=VARCHAR},
-      useides = #{useides,jdbcType=VARCHAR},
-      port_state = #{portState,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=DATE}
+    set port_title = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 

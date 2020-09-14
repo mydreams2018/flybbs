@@ -37,6 +37,13 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+  <update id="updateByPortId">
+    update ${tableName}
+    set
+      details_text = #{detailsText,jdbcType=LONGVARCHAR}
+    where port_id = #{portId,jdbcType=BIGINT} and is_port=1
+  </update>
+
     <update id="updateLikeAccount">
        update ${tableName}
     set
