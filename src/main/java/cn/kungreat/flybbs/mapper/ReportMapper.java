@@ -22,4 +22,6 @@ public interface ReportMapper {
     int updateBystate(Report record);
 
     Report selectById(Report port);
+
+    List<Report> lastSendPort(Report query);
 }

@@ -4,7 +4,6 @@ import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.UserMapper;
 import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.service.UserService;
-import cn.kungreat.flybbs.vo.CategoryTotal;
 import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,7 @@ public class UserServiceImpl implements UserService {
         String s = record.validMessage();
         Assert.isTrue(StringUtils.isEmpty(s),s);
         Assert.isTrue(userMapper.selectByunique(record.getAccount(),record.getAlias())==null,"用户或别名已经存在");
+        record.setRegisterTime(new Date());
         Calendar c = Calendar.getInstance();
         record.setRegisterYear(c.get(Calendar.YEAR));
         record.setPassword(bCryptPasswordEncoder.encode(record.getPassword()));
@@ -73,5 +73,10 @@ public class UserServiceImpl implements UserService {
         result.setDatas(list);
         result.setPage(query);
         return result;
+    }
+
+    @Override
+    public User selectByunique(String account, String alias) {
+        return userMapper.selectByunique(account,alias);
     }
 }

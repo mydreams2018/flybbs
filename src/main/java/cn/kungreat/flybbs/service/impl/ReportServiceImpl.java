@@ -2,9 +2,11 @@ package cn.kungreat.flybbs.service.impl;
 
 import cn.kungreat.flybbs.domain.DetailsText;
 import cn.kungreat.flybbs.domain.Report;
+import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.DetailsTextMapper;
 import cn.kungreat.flybbs.mapper.ReportMapper;
 import cn.kungreat.flybbs.query.ReportQuery;
+import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.QueryResult;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -121,5 +124,43 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void decrementNumber(Report port) {
         reportMapper.decrementNumber(port);
+    }
+
+    @Override
+    public List<Report> lastSendPort(Report query){
+        Assert.isTrue(StringUtils.isNotEmpty(query.getAlias()),"用户为空");
+        User user = userService.selectByunique(null, query.getAlias());
+        Assert.isTrue(user!=null,"用户为空");
+        query.setUserAccount(user.getAccount());
+        query.setPortIsauth(portIsauth);
+        List<Report> ports = new ArrayList<>(40);
+        for(int x=1;x<5;x++){
+            query.setClassId(x);
+            List<Report> temp = reportMapper.lastSendPort(query);
+            if(temp != null &&temp.size()>0){
+                ports.addAll(temp);
+            }
+        }
+        if(ports.size() > 1){
+            order(ports);
+        }
+        return ports;
+    }
+
+    private void order(List<Report> reports){
+        int size = reports.size();
+        Report temp;
+        for(int x = 0;x < size-1;x++){
+            if(x==10){
+               return;
+            }
+            for(int y=x+1;y<size;y++){
+                if(reports.get(x).getCreateTime().before(reports.get(y).getCreateTime())){
+                    temp = reports.get(x);
+                    reports.set(x,reports.get(y));
+                    reports.set(y,temp);
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package cn.kungreat.flybbs.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,8 @@ public class User{
     private String email;
     private String description;
     private String originFrom="default";
-    private Date registerTime = new Date();
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date registerTime;
     private Integer vipLevel=0;
     private Integer registerYear;
     //积分
@@ -41,6 +43,8 @@ public class User{
             builder.append("别名不能为空,");
         }else if(alias.length() > 6){
             builder.append("别名只能6位,");
+        }else if(alias.equals("游客")){
+            builder.append("别名不能用游客,");
         }
         byte[] bytes = account.getBytes();
         byte[] ps = password.getBytes();

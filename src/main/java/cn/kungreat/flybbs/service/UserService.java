@@ -13,4 +13,6 @@ public interface UserService {
     int updateImg(String account,String path);
     int updateAccumulatePoints(int number,String account);
     QueryResult query(UserQuery query);
+
+    User selectByunique(String account, String alias);
 }

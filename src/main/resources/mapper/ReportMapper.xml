@@ -16,7 +16,7 @@
     <result column="look_number" jdbcType="TINYINT" property="lookNumber" />
     <result column="create_time" jdbcType="DATE" property="createTime" />
     <result column="auth_flag" jdbcType="BIT" property="authFlag" />
-
+    <result column="class_id" property="classId" />
     <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="img" jdbcType="VARCHAR" property="userImg" />
     <result column="vip_level"  property="vipLevel"/>
@@ -83,6 +83,18 @@
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}
     where id = #{id}
+  </select>
+
+  <select id="lastSendPort" resultMap="BaseResultMap">
+    select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+    port_state, is_top, reply_number, look_number, create_time, auth_flag, ${classId} as class_id
+    from ${tableName}
+    where user_account = #{userAccount}
+    <if test="portIsauth != 0">
+      and auth_flag = 1
+    </if>
+    ORDER BY create_time DESC
+    limit 0,10
   </select>
 
   <sql id="baseQuery">
