@@ -5,13 +5,11 @@ import cn.kungreat.flybbs.social.config.SocialProperties;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.web.context.request.RequestContextListener;
 
 @Configuration
 public class BeanConfig {
@@ -48,13 +46,13 @@ public class BeanConfig {
         return registration;
     }
 
-    @Bean
+   /* @Bean   RequestContextListener 可以不用?
     public ServletListenerRegistrationBean<RequestContextListener> requestContextListener(){
-        ServletListenerRegistrationBean<RequestContextListener> listener = new ServletListenerRegistrationBean<RequestContextListener>();
+        ServletListenerRegistrationBean<RequestContextListener> listener = new ServletListenerRegistrationBean<>();
         listener.setListener(new RequestContextListener());
         listener.setOrder(1);
         return listener;
-    }
+    }*/
 
     @Bean
     @ConfigurationProperties(prefix = "cn.kungreat.social")
