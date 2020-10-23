@@ -99,6 +99,9 @@
 
   <sql id="baseQuery">
     <where>
+      <if test="userAccount != null and userAccount != ''">
+        and user_account = #{userAccount}
+      </if>
       <if test="datatype != null and datatype != ''">
         and dataType = #{datatype}
       </if>
