@@ -6,6 +6,7 @@ import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.vo.JsonResult;
 import cn.kungreat.flybbs.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +50,12 @@ public class ReportController {
 
     @RequestMapping(value = "/queryReport",method = RequestMethod.POST)
     public QueryResult queryReport(ReportQuery query){
+        return reportService.queryReport(query);
+    }
+
+    @RequestMapping(value = "/myQueryReport",method = RequestMethod.POST)
+    public QueryResult myQueryReport(ReportQuery query){
+        query.setUserAccount(SecurityContextHolder.getContext().getAuthentication().getName());
         return reportService.queryReport(query);
     }
 
