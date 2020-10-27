@@ -23,7 +23,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.UserReplyPort">
     update user_reply_port
     set reply_number = reply_number+1
-    where user_account = #{userAccount}
+    where id = #{id}
   </update>
 
   <select id="selectAll" resultMap="BaseResultMap">
@@ -31,5 +31,10 @@
     from user_reply_port
     where reply_year=#{replyYear} and reply_week=#{replyWeek} ORDER BY reply_number DESC
     limit 0,12) as user_answer Inner join user us on user_answer.user_account = us.account
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select id, user_account, reply_year, reply_week, reply_number from user_reply_port
+    where reply_year=#{replyYear} and reply_week=#{replyWeek} and user_account=#{userAccount}
   </select>
 </mapper>

@@ -9,6 +9,7 @@ import cn.kungreat.flybbs.mapper.UserMapper;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.service.DetailsTextService;
 import cn.kungreat.flybbs.service.ReportService;
+import cn.kungreat.flybbs.service.UserReplyPortService;
 import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     private Integer portIsauth;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserReplyPortService userReplyPortService;
+
     @Override
     public QueryResult queryReport(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
@@ -63,6 +67,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         report.setClassId(record.getClassId());
         report.setId(record.getPortId());
         reportService.incrementNumber(report);
+        userReplyPortService.updateByPrimaryKey();//用户回贴统计
         return 1;
     }
 

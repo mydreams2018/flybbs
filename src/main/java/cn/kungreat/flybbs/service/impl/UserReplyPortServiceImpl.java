@@ -4,6 +4,7 @@ import cn.kungreat.flybbs.domain.UserReplyPort;
 import cn.kungreat.flybbs.mapper.UserReplyPortMapper;
 import cn.kungreat.flybbs.service.UserReplyPortService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -12,11 +13,6 @@ import java.util.List;
 public class UserReplyPortServiceImpl implements UserReplyPortService {
     @Autowired
     private UserReplyPortMapper userReplyPortMapper;
-
-    @Override
-    public int insert(UserReplyPort record) {
-        return 0;
-    }
 
     @Override
     public List<UserReplyPort> selectAll() {
@@ -28,7 +24,19 @@ public class UserReplyPortServiceImpl implements UserReplyPortService {
     }
 
     @Override
-    public int updateByPrimaryKey(UserReplyPort record) {
-        return 0;
+    public int updateByPrimaryKey(){
+        UserReplyPort record = new UserReplyPort();
+        Calendar instance = Calendar.getInstance();
+        record.setReplyYear(instance.get(Calendar.YEAR));
+        record.setReplyWeek(instance.get(Calendar.WEEK_OF_YEAR));
+        record.setUserAccount(SecurityContextHolder.getContext().getAuthentication().getName());
+        UserReplyPort replyPort = userReplyPortMapper.selectByPrimaryKey(record);
+        if(replyPort == null){
+            record.setReplyNumber(1);
+            userReplyPortMapper.insert(record);
+        }else{
+            userReplyPortMapper.updateByPrimaryKey(replyPort);
+        }
+        return 1;
     }
 }

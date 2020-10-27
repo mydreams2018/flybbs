@@ -10,4 +10,6 @@ public interface UserReplyPortMapper {
     List<UserReplyPort> selectAll(UserReplyPort record);
 
     int updateByPrimaryKey(UserReplyPort record);
+
+    UserReplyPort selectByPrimaryKey(UserReplyPort replyPort);
 }
