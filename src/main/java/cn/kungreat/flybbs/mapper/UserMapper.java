@@ -18,7 +18,8 @@ public interface UserMapper {
     List<User> selectByAccounts(@Param("acts") List<String> acts);
     int updateByPrimaryKey(User record);
 
-    int updateAccumulatePoints(@Param("current") int current, @Param("original") int original, @Param("account") String account);
+    int updateAccumulatePoints(@Param("current") int current, @Param("original") int original,
+                               @Param("account") String account,@Param("vipLevel") int vipLevel);
 
     int updateImg(@Param("account") String account, @Param("path") String path);
 

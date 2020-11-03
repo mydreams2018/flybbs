@@ -10,6 +10,7 @@ import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.service.DetailsTextService;
 import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.service.UserReplyPortService;
+import cn.kungreat.flybbs.util.UserAccumulate;
 import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,10 +104,10 @@ public class DetailsTextServiceImpl implements DetailsTextService {
             Report report = reportMapper.selectById(port);
             if(report.getExperience() != null && report.getExperience() > 0){
                 if(detailsText.getUserAccount().equals(name)){
-                    userMapper.updateAccumulatePoints(user.getAccumulatePoints()-report.getExperience(),user.getAccumulatePoints(),name);
+                    userMapper.updateAccumulatePoints(user.getAccumulatePoints()-report.getExperience(),user.getAccumulatePoints(),name, UserAccumulate.countVipLevel(user.getAccumulatePoints()-report.getExperience()));
                 }else{
                     User user1 = userMapper.selectByPrimaryKey(detailsText.getUserAccount());
-                    userMapper.updateAccumulatePoints(user1.getAccumulatePoints()-report.getExperience(),user1.getAccumulatePoints(),detailsText.getUserAccount());
+                    userMapper.updateAccumulatePoints(user1.getAccumulatePoints()-report.getExperience(),user1.getAccumulatePoints(),detailsText.getUserAccount(),UserAccumulate.countVipLevel(user1.getAccumulatePoints()-report.getExperience()));
                 }
             }
         }
@@ -131,7 +132,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         detailsTextMapper.updateAdoption(query);
         if(report.getExperience() != null && report.getExperience() > 0){
             User user = userMapper.selectByPrimaryKey(detailsText.getUserAccount());
-            userMapper.updateAccumulatePoints(user.getAccumulatePoints()+report.getExperience(),user.getAccumulatePoints(),detailsText.getUserAccount());
+            userMapper.updateAccumulatePoints(user.getAccumulatePoints()+report.getExperience(),user.getAccumulatePoints(),detailsText.getUserAccount(),UserAccumulate.countVipLevel(user.getAccumulatePoints()+report.getExperience()));
         }
     }
 

@@ -45,13 +45,14 @@
 
   <update id="updateAccumulatePoints">
     update user
-    set accumulate_points = #{current}
+    set accumulate_points = #{current},
+        vip_level = #{vipLevel}
     where account = #{account} and accumulate_points =  #{original}
   </update>
 
   <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
     select id, account, password, alias, img, state, email, description, register_time, vip_level,
-      origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
+    origin_from, register_year, accumulate_points, is_manager, from_city, authenticate
     from user
     where account = #{0}
   </select>

@@ -57,6 +57,7 @@ public class UserSignServiceImpl implements UserSignService {
         UserSign userSign = selectByPrimaryKey();
         if(userSign == null){
             insert(new UserSign());
+            userService.updateAccumulatePoints(5,SecurityContextHolder.getContext().getAuthentication().getName());
         }else{
             Assert.isTrue(!userSign.getCurrentSign(),"今天已经签到了");
             userSign.setLastSignTime(new Date());

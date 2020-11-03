@@ -4,6 +4,7 @@ import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.UserMapper;
 import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.service.UserService;
+import cn.kungreat.flybbs.util.UserAccumulate;
 import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
         Integer accumulatePoints = user.getAccumulatePoints();
         int current = accumulatePoints + number;
         Assert.isTrue(current >= 0,"飞吻数据不足");
-        return userMapper.updateAccumulatePoints(current, accumulatePoints,account);
+        return userMapper.updateAccumulatePoints(current, accumulatePoints,account, UserAccumulate.countVipLevel(current));
     }
 
     @Override
