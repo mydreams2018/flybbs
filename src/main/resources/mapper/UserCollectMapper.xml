@@ -7,6 +7,7 @@
     <result column="class_id" jdbcType="INTEGER" property="classId" />
     <result column="port_id" jdbcType="BIGINT" property="portId" />
     <result column="collect_time" jdbcType="DATE" property="collectTime" />
+    <result column="port_title" jdbcType="VARCHAR" property="portTitle" />
   </resultMap>
   <delete id="deleteByPrimaryKey">
     delete from user_collect
@@ -24,8 +25,14 @@
     where user_account = #{userAccount} and class_id = #{classId}
             and port_id=#{portId}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_account, class_id, port_id, collect_time
-    from user_collect
+   select * from (select id, user_account, class_id, port_id, collect_time
+    from user_collect where user_account=#{userAccount} and class_id=#{classId} limit #{start},#{pageSize}) as usercol
+    Inner join ${tableName} curPort on usercol.port_id = curPort.id order by usercol.id DESC
   </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(id)  from user_collect where user_account=#{userAccount} and class_id=#{classId}
+    </select>
 </mapper>

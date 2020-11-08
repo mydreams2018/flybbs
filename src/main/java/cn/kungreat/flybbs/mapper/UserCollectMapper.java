@@ -1,6 +1,7 @@
 package cn.kungreat.flybbs.mapper;
 
 import cn.kungreat.flybbs.domain.UserCollect;
+import cn.kungreat.flybbs.query.UserCollectQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,5 +13,7 @@ public interface UserCollectMapper {
 
     UserCollect selectByPrimaryKey(UserCollect collect);
 
-    List<UserCollect> selectAll();
+    List<UserCollect> selectAll(UserCollectQuery query);
+
+    Integer selectCount(UserCollectQuery query);
 }

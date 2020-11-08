@@ -77,7 +77,7 @@
     </select>
 
   <select id="selectCount" resultType="java.lang.Integer">
-     select count(*) from user
+     select count(id) from user
      <include refid="baseQuery"/>
   </select>
 
