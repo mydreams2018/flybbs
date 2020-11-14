@@ -43,6 +43,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateByPrimaryKey(User record) {
+        Assert.isTrue(StringUtils.isNotEmpty(record.getEmail())
+                && StringUtils.isNotEmpty(record.getFromCity())
+                && StringUtils.isNotEmpty(record.getDescription()),"必要数据为空");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        record.setAccount(name);
+        if(StringUtils.isNotEmpty(selectByPrimaryKey(name).getEmail())){
+            record.setEmail(null);
+        }else{
+            record.setEmail(bCryptPasswordEncoder.encode(record.getEmail()));
+        }
         return userMapper.updateByPrimaryKey(record);
     }
 
@@ -79,5 +89,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectByunique(String account, String alias) {
         return userMapper.selectByunique(account,alias);
+    }
+
+    @Override
+    public void rePass(User user) {
+        String s = user.validPass();
+        Assert.isTrue(StringUtils.isEmpty(s),s);
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        User origin = userMapper.selectByPrimaryKey(name);
+        Assert.isTrue(bCryptPasswordEncoder.matches(user.getPassword(),origin.getPassword()),"旧密码验证失败");
+        userMapper.repass(name,bCryptPasswordEncoder.encode(user.getRePass()));
     }
 }

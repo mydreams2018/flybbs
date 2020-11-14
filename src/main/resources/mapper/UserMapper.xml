@@ -29,9 +29,10 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.User">
     update user
-    set alias = #{alias,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=BIGINT},
+    set from_city = #{fromCity,jdbcType=VARCHAR},
+    <if test="email != null and email != ''">
       email = #{email,jdbcType=VARCHAR},
+    </if>
       description = #{description,jdbcType=VARCHAR}
     where account = #{account}
   </update>
@@ -48,6 +49,12 @@
     set accumulate_points = #{current},
         vip_level = #{vipLevel}
     where account = #{account} and accumulate_points =  #{original}
+  </update>
+
+  <update id="repass">
+      update user
+      set password = #{repass}
+      where account = #{account}
   </update>
 
   <select id="selectByPrimaryKey"  resultMap="BaseResultMap">

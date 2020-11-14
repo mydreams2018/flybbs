@@ -15,4 +15,6 @@ public interface UserService {
     QueryResult query(UserQuery query);
 
     User selectByunique(String account, String alias);
+
+    void rePass(User user);
 }

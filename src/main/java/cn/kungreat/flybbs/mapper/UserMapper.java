@@ -24,4 +24,6 @@ public interface UserMapper {
     int updateImg(@Param("account") String account, @Param("path") String path);
 
     User selectByunique(@Param("account") String account, @Param("alias") String alias);
+
+    int repass(@Param("account") String account, @Param("repass") String repass);
 }

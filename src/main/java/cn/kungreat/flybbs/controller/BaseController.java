@@ -85,7 +85,7 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/uploadImg")
-    public JsonResult jsonResult(MultipartFile file){
+    public JsonResult uploadImg(MultipartFile file){
         JsonResult jsonResult = new JsonResult();
         try{
 //            spring.servlet.multipart.max-file-size=1MB  默认的文件上传大小是1m

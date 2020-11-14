@@ -32,6 +32,7 @@ public class User{
     private Byte isManager=0;
     private String fromCity;
     private String authenticate;
+    private String rePass;
 
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
@@ -56,6 +57,23 @@ public class User{
                 break;
             }
         }
+        for(int x =0;x < ps.length; x++){
+            if(ps[x] > 47 && ps[x] < 58
+                    || ps[x] > 96 && ps[x] < 123 || ps[x] > 64 && ps[x] < 91){
+            }else{
+                builder.append("密码只能是字母和数字");
+                break;
+            }
+        }
+        return builder.toString();
+    }
+
+    public String validPass(){
+        StringBuilder builder = new StringBuilder();
+        if(StringUtils.isEmpty(rePass) || rePass.getBytes().length < 6 || rePass.getBytes().length > 12){
+            builder.append("密码必须6-12位,");
+        }
+        byte[] ps = rePass.getBytes();
         for(int x =0;x < ps.length; x++){
             if(ps[x] > 47 && ps[x] < 58
                     || ps[x] > 96 && ps[x] < 123 || ps[x] > 64 && ps[x] < 91){
