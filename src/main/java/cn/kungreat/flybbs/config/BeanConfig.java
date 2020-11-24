@@ -2,7 +2,7 @@ package cn.kungreat.flybbs.config;
 
 import cn.kungreat.flybbs.filter.AnotherImageFilter;
 import cn.kungreat.flybbs.social.config.SocialProperties;
-import com.alibaba.druid.pool.DruidDataSource;
+//import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -11,10 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class BeanConfig {
 
-    @Bean(initMethod = "init",destroyMethod = "close")
+  /*  @Bean(initMethod = "init",destroyMethod = "close")
     @ConfigurationProperties(prefix = "datasource1")
     public DruidDataSource initDruid(){
         DruidDataSource druidDataSource = new DruidDataSource();
@@ -30,7 +32,7 @@ public class BeanConfig {
 //        druidDataSource.setPoolPreparedStatements(false);
 //        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
         return druidDataSource;
-    }
+    }*/
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -61,7 +63,7 @@ public class BeanConfig {
     }
 
     @Bean
-    public PersistentTokenRepository persistentTokenRepository(DruidDataSource dataSource){
+    public PersistentTokenRepository persistentTokenRepository(DataSource dataSource){
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
         //启动创建 一个数据表用来存放token   只能用一次
