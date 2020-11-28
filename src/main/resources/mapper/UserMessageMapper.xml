@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kungreat.flybbs.mapper.UserMessageMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.UserMessage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="class_id" jdbcType="TINYINT" property="classId" />
+    <result column="port_id" jdbcType="BIGINT" property="portId" />
+    <result column="details_id" jdbcType="BIGINT" property="detailsId" />
+    <result column="src_alias" jdbcType="VARCHAR" property="srcAlias" />
+    <result column="receive_alias" jdbcType="VARCHAR" property="receiveAlias" />
+    <result column="receive_date" jdbcType="DATE" property="receiveDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByAccount">
+    delete from user_message
+    where receive_alias = #{alias}
+  </delete>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.UserMessage" useGeneratedKeys="true">
+    insert into user_message (class_id, port_id, details_id, 
+      src_alias, receive_alias, receive_date
+      )
+    values (#{classId,jdbcType=TINYINT}, #{portId,jdbcType=BIGINT}, #{detailsId,jdbcType=BIGINT}, 
+      #{srcAlias,jdbcType=VARCHAR}, #{receiveAlias,jdbcType=VARCHAR}, #{receiveDate,jdbcType=DATE}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, class_id, port_id, details_id, src_alias, receive_alias, receive_date
+    from user_message where receive_alias = #{alias} order by receive_date limit 0,5
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(id) from user_message where receive_alias = #{alias}
+  </select>
+</mapper>

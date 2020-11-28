@@ -4,7 +4,6 @@ import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.service.PermissionService;
 import cn.kungreat.flybbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,50 +31,14 @@ public class MyUserDetails implements UserDetailsService, SocialUserDetailsServi
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new UserDetails() {
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                Set<MyRole> roles = new HashSet<>();
-                List<String> ps = permissionService.selectPermissions(username);
-                if(ps != null && ps.size()>0){
-                    for(int x=0;x< ps.size();x++){
-                        roles.add(new MyRole("ROLE_"+ps.get(x)));
-                    }
-                }
-                return roles;
+        Set<MyRole> roles = new HashSet<>();
+        List<String> ps = permissionService.selectPermissions(username);
+        if(ps != null && ps.size()>0){
+            for(int x=0;x< ps.size();x++){
+                roles.add(new MyRole("ROLE_"+ps.get(x)));
             }
-
-            @Override
-            public String getPassword() {
-                return user==null?"":user.getPassword();
-            }
-
-            @Override
-            public String getUsername() {
-                return user==null?"":user.getAccount();
-            }
-
-            //下面4个返回 false 会抛异常 .可以用来作状态处理
-            @Override
-            public boolean isAccountNonExpired() {
-                return user.getState()==1;
-            }
-
-            @Override
-            public boolean isAccountNonLocked() {
-                return true;
-            }
-
-            @Override
-            public boolean isCredentialsNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        };
+        }
+        return new LoginUser(user,roles);
     }
 
     @Override
@@ -84,51 +47,13 @@ public class MyUserDetails implements UserDetailsService, SocialUserDetailsServi
         if (user == null) {
             throw new UsernameNotFoundException(userId);
         }
-        return new SocialUserDetails() {
-            @Override
-            public String getUserId() {
-                return user.getAccount();
+        Set<MyRole> roles = new HashSet<>();
+        List<String> ps = permissionService.selectPermissions(userId);
+        if(ps != null && ps.size()>0){
+            for(int x=0;x< ps.size();x++){
+                roles.add(new MyRole("ROLE_"+ps.get(x)));
             }
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                Set<MyRole> roles = new HashSet<>();
-                List<String> ps = permissionService.selectPermissions(userId);
-                if(ps != null && ps.size()>0){
-                    for(int x=0;x< ps.size();x++){
-                        roles.add(new MyRole("ROLE_"+ps.get(x)));
-                    }
-                }
-                return roles;
-            }
-            @Override
-            public String getPassword() {
-               return  null;
-            }
-
-            @Override
-            public String getUsername() {
-                return user==null?"":user.getAccount();
-            }
-
-            @Override
-            public boolean isAccountNonExpired() {
-                return user.getState() == 1;
-            }
-
-            @Override
-            public boolean isAccountNonLocked() {
-                return true;
-            }
-
-            @Override
-            public boolean isCredentialsNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        };
+        }
+        return new LoginUser(user,roles);
     }
 }
