@@ -42,7 +42,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     public QueryResult queryReport(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getPortId()!=null,"贴子ID异常");
-        query.setPortIsauth(portIsauth);
+        query.setPortIsauth(1);
         Integer count = detailsTextMapper.selectCount(query);
         List list  = Collections.emptyList();
         if (count >  0){
@@ -63,6 +63,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setUserAccount(name);
         record.setCreateData(new Date());
+        record.setAuthFlag(portIsauth.equals(1));
         detailsTextMapper.insert(record);
         Report report = new Report();
         report.setClassId(record.getClassId());
@@ -140,6 +141,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     public DetailsText selectByPrimaryKey(DetailsTextQuery query){
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
+        query.setPortIsauth(1);
         return detailsTextMapper.selectByPrimaryKey(query);
     }
 
@@ -151,6 +153,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         Assert.isTrue(detailsText!=null,"贴子异常");
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(name.equals(detailsText.getUserAccount()),"无权限操作此贴");
+        query.setAuthFlag(portIsauth.equals(1));
         detailsTextMapper.updateByPrimaryKey(query);
     }
 }

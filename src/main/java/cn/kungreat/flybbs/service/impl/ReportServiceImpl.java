@@ -6,7 +6,6 @@ import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.DetailsTextMapper;
 import cn.kungreat.flybbs.mapper.ReportMapper;
 import cn.kungreat.flybbs.query.ReportQuery;
-import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.QueryResult;
@@ -48,6 +47,7 @@ public class ReportServiceImpl implements ReportService {
         record.setUserAccount(name);
         Date date = new Date();
         record.setCreateTime(date);
+        record.setAuthFlag(portIsauth.equals(1));
         reportMapper.insert(record);
         DetailsText details = new DetailsText();
         details.setIsPort(true);
@@ -56,6 +56,7 @@ public class ReportServiceImpl implements ReportService {
         details.setDetailsText(record.getDetailsText());
         details.setUserAccount(name);
         details.setClassId(record.getClassId());
+        details.setAuthFlag(portIsauth.equals(1));
         detailsTextMapper.insert(details);
         return 1;
     }
@@ -70,11 +71,13 @@ public class ReportServiceImpl implements ReportService {
         Assert.isTrue(port != null,"贴子异常");
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(name.equals(port.getUserAccount()),"没有权限操作");
+        record.setAuthFlag(portIsauth.equals(1));
         reportMapper.updateByPrimaryKey(record);
         DetailsText detailsText = new DetailsText();
         detailsText.setClassId(record.getClassId());
         detailsText.setPortId(record.getId());
         detailsText.setDetailsText(record.getDetailsText());
+        detailsText.setAuthFlag(portIsauth.equals(1));
         detailsTextMapper.updateByPortId(detailsText);
         return 1;
     }
@@ -88,13 +91,13 @@ public class ReportServiceImpl implements ReportService {
     public Report selectByPrimaryKey(Report record) {
         Assert.isTrue(record.getClassId()!=null&&record.getClassId()>=1&&record.getClassId()<5,"类型ID异常");
         Assert.isTrue(record.getId() != null,"ID异常");
-        record.setPortIsauth(portIsauth);
+        record.setPortIsauth(1);
         Report report = reportMapper.selectByPrimaryKey(record);
         if(report != null){
             DetailsText de = new DetailsText();
             de.setPortId(record.getId());
             de.setClassId(record.getClassId());
-            de.setPortIsauth(portIsauth);
+            de.setPortIsauth(1);
             report.setDetails(detailsTextMapper.selectByPort(de));
         }
         return report;
@@ -103,7 +106,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public QueryResult queryReport(ReportQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
-        query.setPortIsauth(portIsauth);
+        query.setPortIsauth(1);
         Integer count = reportMapper.selectCount(query);
         List list  = Collections.emptyList();
         if (count >  0){
@@ -132,7 +135,7 @@ public class ReportServiceImpl implements ReportService {
         User user = userService.selectByunique(null, query.getAlias());
         Assert.isTrue(user!=null,"用户为空");
         query.setUserAccount(user.getAccount());
-        query.setPortIsauth(portIsauth);
+        query.setPortIsauth(1);
         List<Report> ports = new ArrayList<>(40);
         for(int x=1;x<5;x++){
             query.setClassId(x);

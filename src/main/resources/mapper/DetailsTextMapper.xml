@@ -27,21 +27,23 @@
       user_account, create_data, auth_flag,
       details_text, is_port)
     values (0, 0,#{portId},
-      #{userAccount}, #{createData}, 0,
+      #{userAccount}, #{createData}, #{authFlag},
       #{detailsText}, #{isPort})
   </insert>
   <update id="updateByPrimaryKey">
     update ${tableName}
     set
-      details_text = #{detailsText,jdbcType=LONGVARCHAR}
+      details_text = #{detailsText,jdbcType=LONGVARCHAR},
+      auth_flag = #{authFlag}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
   <update id="updateByPortId">
     update ${tableName}
     set
-      details_text = #{detailsText,jdbcType=LONGVARCHAR}
-    where port_id = #{portId,jdbcType=BIGINT} and is_port=1
+      details_text = #{detailsText,jdbcType=LONGVARCHAR},
+      auth_flag = #{authFlag}
+    where port_id = #{portId} and is_port=1
   </update>
 
     <update id="updateLikeAccount">
@@ -63,7 +65,7 @@
     select id, is_adoption, like_number, port_id, user_account, create_data, auth_flag,
     details_text, is_port
     from ${tableName}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT} and auth_flag = #{portIsauth}
   </select>
 
   <select id="selectByPort" parameterType="cn.kungreat.flybbs.domain.DetailsText" resultMap="BaseResultMap">

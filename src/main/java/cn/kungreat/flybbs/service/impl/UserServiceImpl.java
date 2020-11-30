@@ -70,6 +70,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateAccumulatePoints(current, accumulatePoints,account, UserAccumulate.countVipLevel(current));
     }
 
+    //现在没有使用
     @Override
     public QueryResult query(UserQuery query) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
