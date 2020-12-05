@@ -10,4 +10,6 @@ public interface UserMessageService {
     int selectCount(UserMessageQuery query);
     int deleteByPrimaryKey(Long id);
     int deleteByAccount(UserMessageQuery query);
+    int deleteByAll(UserMessageQuery query);
+    int insert(UserMessage record);
 }

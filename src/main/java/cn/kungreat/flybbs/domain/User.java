@@ -84,4 +84,8 @@ public class User{
         }
         return builder.toString();
     }
+
+    public String getAlias(){
+        return alias!=null?alias.trim():alias;
+    }
 }

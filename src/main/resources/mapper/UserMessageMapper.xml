@@ -9,6 +9,7 @@
     <result column="src_alias" jdbcType="VARCHAR" property="srcAlias" />
     <result column="receive_alias" jdbcType="VARCHAR" property="receiveAlias" />
     <result column="receive_date" jdbcType="DATE" property="receiveDate" />
+    <result column="auth_flag" jdbcType="BIT" property="authFlag" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user_message
@@ -19,20 +20,44 @@
     delete from user_message
     where receive_alias = #{alias}
   </delete>
+  <delete id="deleteByAll">
+    delete from user_message
+    <where>
+      <if test="receive_alias != null">
+        and receive_alias = #{alias}
+      </if>
+      <if test="class_id != null">
+        and class_id = #{classId}
+      </if>
+      <if test="details_id != null">
+        and details_id = #{detailsId}
+      </if>
+      <if test="port_id != null">
+        and port_id = #{portId}
+      </if>
+    </where>
+  </delete>
 
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.UserMessage" useGeneratedKeys="true">
     insert into user_message (class_id, port_id, details_id, 
-      src_alias, receive_alias, receive_date
+      src_alias, receive_alias, receive_date, auth_flag
       )
     values (#{classId,jdbcType=TINYINT}, #{portId,jdbcType=BIGINT}, #{detailsId,jdbcType=BIGINT}, 
       #{srcAlias,jdbcType=VARCHAR}, #{receiveAlias,jdbcType=VARCHAR}, #{receiveDate,jdbcType=DATE}
+      , #{authFlag,jdbcType=BIT}
       )
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, class_id, port_id, details_id, src_alias, receive_alias, receive_date
-    from user_message where receive_alias = #{alias} order by receive_date limit 0,5
+    select id, class_id, port_id, details_id, src_alias, receive_alias, receive_date, auth_flag
+    from user_message where receive_alias = #{alias} and auth_flag = 1
+    order by receive_date limit 0,5
   </select>
   <select id="selectCount" resultType="java.lang.Integer">
-    select count(id) from user_message where receive_alias = #{alias}
+    select count(id) from user_message where receive_alias = #{alias} and auth_flag = 1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select id, class_id, port_id, details_id, src_alias, receive_alias, receive_date, auth_flag
+    from user_message where id = #{id}
   </select>
 </mapper>

@@ -1,5 +1,10 @@
 package cn.kungreat.flybbs.util;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserAccumulate {
 
     public static int countVipLevel(int x){
@@ -20,6 +25,27 @@ public class UserAccumulate {
             rt = 2;
         }else if(x > 0){
             rt = 1;
+        }
+        return rt;
+    }
+
+    public static Set hasReplyAlias(String detailsText){
+        String st = detailsText;
+        Set<String> rt = new HashSet<>();
+        if(st.contains("@")){
+            int startIndex = 0;
+            for(int x = 0;x < st.length(); x++){
+                if('@'==st.charAt(x)){
+                    startIndex = x+1;
+                }
+                if(' '== st.charAt(x) && startIndex != 0){
+                    String temp = st.substring(startIndex,x);
+                    if(StringUtils.isNotEmpty(temp)){
+                        rt.add(temp);
+                    }
+                    startIndex=0;
+                }
+            }
         }
         return rt;
     }

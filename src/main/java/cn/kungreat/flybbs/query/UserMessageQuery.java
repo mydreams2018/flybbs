@@ -7,4 +7,7 @@ import lombok.Setter;
 @Getter
 public class UserMessageQuery {
     private String alias;
+    private Integer classId;
+    private Long detailsId;
+    private Long portId;
 }

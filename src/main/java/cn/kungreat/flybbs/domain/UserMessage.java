@@ -20,4 +20,6 @@ public class UserMessage {
     private String receiveAlias;
 
     private Date receiveDate;
+
+    private Boolean authFlag;
 }

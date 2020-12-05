@@ -8,6 +8,7 @@ import cn.kungreat.flybbs.service.UserMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 @Service
@@ -24,7 +25,7 @@ public class UserMessageServiceImpl implements UserMessageService {
     }
 
     @Override
-    public int selectCount(UserMessageQuery query) {
+    public int selectCount(UserMessageQuery query){
         LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserMessageQuery qs = new UserMessageQuery();
         qs.setAlias(loginUser.getAlias());
@@ -33,6 +34,11 @@ public class UserMessageServiceImpl implements UserMessageService {
 
     @Override
     public int deleteByPrimaryKey(Long id) {
+        Assert.isTrue(id != null,"ID异常");
+        UserMessage userMessage = userMessageMapper.selectByPrimaryKey(id);
+        Assert.isTrue(userMessage != null,"数据异常");
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Assert.isTrue(userMessage.getReceiveAlias().equals(loginUser.getAlias()),"没有权限删除");
         return userMessageMapper.deleteByPrimaryKey(id);
     }
 
@@ -42,5 +48,17 @@ public class UserMessageServiceImpl implements UserMessageService {
         UserMessageQuery qs = new UserMessageQuery();
         qs.setAlias(loginUser.getAlias());
         return userMessageMapper.deleteByAccount(qs);
+    }
+
+    @Override//管理员用
+    public int deleteByAll(UserMessageQuery query){
+        return userMessageMapper.deleteByAll(query);
+    }
+
+    @Override
+    public int insert(UserMessage record) {
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        record.setSrcAlias(loginUser.getAlias());
+        return userMessageMapper.insert(record);
     }
 }
