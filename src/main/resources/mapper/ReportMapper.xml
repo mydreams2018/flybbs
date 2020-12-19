@@ -60,10 +60,7 @@
     SELECT * FROM (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}
-    where id = #{id}
-    <if test="portIsauth != 0">
-      and auth_flag = 1
-    </if>
+    where id = #{id} and auth_flag = #{portIsauth}
     ) as port Inner join user us on port.user_account = us.account
   </select>
 
@@ -90,10 +87,7 @@
     select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag, ${classId} as class_id
     from ${tableName}
-    where user_account = #{userAccount}
-    <if test="portIsauth != 0">
-      and auth_flag = 1
-    </if>
+    where user_account = #{userAccount} and auth_flag = #{portIsauth}
     ORDER BY create_time DESC
     limit 0,10
   </select>

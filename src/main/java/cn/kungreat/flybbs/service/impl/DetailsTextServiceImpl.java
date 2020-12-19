@@ -90,6 +90,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     public int deleteReplyPort(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
+        query.setPortIsauth(1);
         DetailsText detailsText = detailsTextMapper.selectByPrimaryKey(query);
         Assert.isTrue(detailsText!=null,"贴子异常");
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -119,6 +120,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     public void acceptReply(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
+        query.setPortIsauth(1);
         DetailsText detailsText = detailsTextMapper.selectByPrimaryKey(query);
         Assert.isTrue(detailsText!=null,"贴子异常");
         Report port = new Report();
@@ -149,6 +151,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     public void updateByPrimaryKey(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
+        query.setPortIsauth(1);
         DetailsText detailsText = detailsTextMapper.selectByPrimaryKey(query);
         Assert.isTrue(detailsText!=null,"贴子异常");
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
