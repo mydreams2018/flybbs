@@ -9,7 +9,7 @@ public class JsonResult {
     private boolean result = true;
     private String msg="success";
     private String action;
-    private int status = 0;
+    private int status = 1;
     private String id;
     public JsonResult(boolean result, String msg,String path,int sta,String id) {
         this.result = result;

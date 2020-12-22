@@ -15,7 +15,7 @@ public class ExceptionsController {
     public JsonResult accessDeniedException(AccessDeniedException ex){
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(false);
-        jsonResult.setStatus(1);
+        jsonResult.setStatus(0);
         jsonResult.setMsg(ex.getMessage());
         return jsonResult;
     }
@@ -25,7 +25,7 @@ public class ExceptionsController {
     public JsonResult illegalArgumentException(IllegalArgumentException ex){
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(false);
-        jsonResult.setStatus(1);
+        jsonResult.setStatus(0);
         jsonResult.setMsg(ex.getMessage());
         return jsonResult;
     }

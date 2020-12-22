@@ -45,7 +45,7 @@ public class UserController {
             userService.updateByPrimaryKey(user);
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
@@ -70,7 +70,7 @@ public class UserController {
             userService.updateImg(name,path);
         }catch (Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
@@ -84,7 +84,7 @@ public class UserController {
             jsonResult.setMsg("设置成功,下次请使用新密码");
         }catch (Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;

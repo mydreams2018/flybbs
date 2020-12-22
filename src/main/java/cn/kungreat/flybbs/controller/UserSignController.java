@@ -27,7 +27,7 @@ public class UserSignController {
             jsonResult.setMsg("success");
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;

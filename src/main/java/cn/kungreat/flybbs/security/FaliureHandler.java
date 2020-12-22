@@ -31,7 +31,7 @@ public class FaliureHandler implements AuthenticationFailureHandler {
         SavedRequest cache = requestCache.getRequest(request, response);
         String path = (cache==null?"/index":cache.getRedirectUrl());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(JSON.toJSONString(new JsonResult(false,"用户或密码出错",path,1,"imgCode")));
+        response.getWriter().write(JSON.toJSONString(new JsonResult(false,"用户或密码出错",path,0,"imgCode")));
     /*    String accept = request.getHeader("Accept");
         if(accept.contains("text/html")){
             request.setAttribute("error",exception.getMessage());

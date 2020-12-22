@@ -32,7 +32,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),"/index.html",0,"")));
+        response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),"/index.html",1,"")));
 
    /*     SavedRequest cache = requestCache.getRequest(request, response);
         String path = (cache==null?"/index.html":cache.getRedirectUrl());
@@ -41,7 +41,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
             response.sendRedirect(path);
         }else{
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),path,0,"")));
+            response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),path,1,"")));
         }*/
     }
 }

@@ -26,7 +26,7 @@ public class ReportController {
             jsonResult.setAction("/jie/detail.html?classId="+record.getClassId()+"&id="+record.getId());
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setId("imgCode");
             jsonResult.setMsg(e.getMessage());
         }
@@ -41,7 +41,7 @@ public class ReportController {
             jsonResult.setAction("/jie/detail.html?classId="+record.getClassId()+"&id="+record.getId());
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setId("imgCode");
             jsonResult.setMsg(e.getMessage());
         }

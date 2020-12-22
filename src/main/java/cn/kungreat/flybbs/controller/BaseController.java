@@ -76,7 +76,7 @@ public class BaseController {
             jsonResult.setAction("/user/login.html");
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setId("imgCode");
             jsonResult.setMsg(e.getMessage());
             jsonResult.setAction("/user/reg.html");
@@ -101,7 +101,7 @@ public class BaseController {
             jsonResult.setAction(path);
         }catch (Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;

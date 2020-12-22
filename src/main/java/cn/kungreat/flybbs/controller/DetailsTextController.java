@@ -29,7 +29,7 @@ public class DetailsTextController {
             jsonResult.setId("imgCode");
         }catch (Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setId("imgCode");
             jsonResult.setMsg(e.getMessage());
         }
@@ -43,7 +43,7 @@ public class DetailsTextController {
             detailsTextService.likeAccount(query);
         }catch (Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
@@ -55,7 +55,7 @@ public class DetailsTextController {
             detailsTextService.deleteReplyPort(query);
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
@@ -68,7 +68,7 @@ public class DetailsTextController {
             detailsTextService.acceptReply(query);
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
@@ -86,7 +86,7 @@ public class DetailsTextController {
             detailsTextService.updateByPrimaryKey(query);
         }catch(Exception e){
             jsonResult.setResult(false);
-            jsonResult.setStatus(1);
+            jsonResult.setStatus(0);
             jsonResult.setMsg(e.getMessage());
         }
         return jsonResult;
