@@ -3,7 +3,7 @@
 <mapper namespace="cn.kungreat.flybbs.mapper.UserMessageMapper">
   <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.UserMessage">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="class_id" jdbcType="TINYINT" property="classId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
     <result column="port_id" jdbcType="BIGINT" property="portId" />
     <result column="details_id" jdbcType="BIGINT" property="detailsId" />
     <result column="src_alias" jdbcType="VARCHAR" property="srcAlias" />
@@ -23,29 +23,27 @@
   <delete id="deleteByAll">
     delete from user_message
     <where>
-      <if test="receive_alias != null">
+      <if test="alias != null">
         and receive_alias = #{alias}
       </if>
-      <if test="class_id != null">
+      <if test="classId != null">
         and class_id = #{classId}
       </if>
-      <if test="details_id != null">
+      <if test="detailsId != null">
         and details_id = #{detailsId}
       </if>
-      <if test="port_id != null">
+      <if test="portId != null">
         and port_id = #{portId}
       </if>
     </where>
   </delete>
 
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.UserMessage" useGeneratedKeys="true">
-    insert into user_message (class_id, port_id, details_id, 
-      src_alias, receive_alias, receive_date, auth_flag
-      )
-    values (#{classId,jdbcType=TINYINT}, #{portId,jdbcType=BIGINT}, #{detailsId,jdbcType=BIGINT}, 
-      #{srcAlias,jdbcType=VARCHAR}, #{receiveAlias,jdbcType=VARCHAR}, #{receiveDate,jdbcType=DATE}
-      , #{authFlag,jdbcType=BIT}
-      )
+  <insert id="insertBaych" parameterType="cn.kungreat.flybbs.domain.UserMessage">
+    insert into user_message (class_id, port_id, details_id,
+    src_alias, receive_alias, receive_date, auth_flag) values
+    <foreach collection="receiveAliasSet" item="var" separator=",">
+      (#{classId},#{portId},#{detailsId},#{srcAlias},#{var},#{receiveDate},#{authFlag})
+    </foreach>
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, class_id, port_id, details_id, src_alias, receive_alias, receive_date, auth_flag

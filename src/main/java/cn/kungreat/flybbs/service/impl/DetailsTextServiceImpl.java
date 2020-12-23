@@ -3,12 +3,15 @@ package cn.kungreat.flybbs.service.impl;
 import cn.kungreat.flybbs.domain.DetailsText;
 import cn.kungreat.flybbs.domain.Report;
 import cn.kungreat.flybbs.domain.User;
+import cn.kungreat.flybbs.domain.UserMessage;
 import cn.kungreat.flybbs.mapper.DetailsTextMapper;
 import cn.kungreat.flybbs.mapper.ReportMapper;
 import cn.kungreat.flybbs.mapper.UserMapper;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
+import cn.kungreat.flybbs.query.UserMessageQuery;
 import cn.kungreat.flybbs.service.DetailsTextService;
 import cn.kungreat.flybbs.service.ReportService;
+import cn.kungreat.flybbs.service.UserMessageService;
 import cn.kungreat.flybbs.service.UserReplyPortService;
 import cn.kungreat.flybbs.util.UserAccumulate;
 import cn.kungreat.flybbs.vo.QueryResult;
@@ -22,6 +25,7 @@ import org.springframework.util.Assert;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DetailsTextServiceImpl implements DetailsTextService {
@@ -37,7 +41,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     private UserMapper userMapper;
     @Autowired
     private UserReplyPortService userReplyPortService;
-
+    @Autowired
+    private UserMessageService userMessageService;
     @Override
     public QueryResult queryReport(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
@@ -62,7 +67,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         record.setIsPort(false);
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setUserAccount(name);
-        record.setCreateData(new Date());
+        Date date = new Date();
+        record.setCreateData(date);
         record.setAuthFlag(portIsauth.equals(1));
         detailsTextMapper.insert(record);
         Report report = new Report();
@@ -70,6 +76,18 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         report.setId(record.getPortId());
         reportService.incrementNumber(report);
         userReplyPortService.updateByPrimaryKey();//用户回贴统计
+        Set<String> set = UserAccumulate.hasReplyAlias(record.getDetailsText());
+        if(set.size() > 0){
+            UserMessage userMessage = new UserMessage();
+            userMessage.setSrcAlias(name);
+            userMessage.setAuthFlag(portIsauth.equals(1));
+            userMessage.setClassId(record.getClassId());
+            userMessage.setPortId(record.getPortId());
+            userMessage.setDetailsId(record.getId());
+            userMessage.setReceiveDate(date);
+            userMessage.setReceiveAliasSet(set);
+            userMessageService.insertBaych(userMessage);
+        }
         return 1;
     }
 
@@ -149,6 +167,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
 
     @Override
     public void updateByPrimaryKey(DetailsTextQuery query) {
+        Assert.isTrue(StringUtils.isNotEmpty(query.getDetailsText()),"贴子内容不能为空");
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
         query.setPortIsauth(1);
@@ -157,6 +176,22 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(name.equals(detailsText.getUserAccount()),"无权限操作此贴");
         query.setAuthFlag(portIsauth.equals(1));
+        UserMessageQuery messageQuery = new UserMessageQuery();
+        messageQuery.setClassId(query.getClassId());
+        messageQuery.setDetailsId(detailsText.getId());
+        userMessageService.deleteByAll(messageQuery);
+        Set<String> set = UserAccumulate.hasReplyAlias(query.getDetailsText());
+        if(set.size() > 0){
+            UserMessage userMessage = new UserMessage();
+            userMessage.setSrcAlias(name);
+            userMessage.setAuthFlag(portIsauth.equals(1));
+            userMessage.setClassId(query.getClassId());
+            userMessage.setPortId(detailsText.getPortId());
+            userMessage.setDetailsId(detailsText.getId());
+            userMessage.setReceiveDate(new Date());
+            userMessage.setReceiveAliasSet(set);
+            userMessageService.insertBaych(userMessage);
+        }
         detailsTextMapper.updateByPrimaryKey(query);
     }
 }

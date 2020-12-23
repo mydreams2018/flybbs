@@ -11,5 +11,5 @@ public interface UserMessageService {
     int deleteByPrimaryKey(Long id);
     int deleteByAccount(UserMessageQuery query);
     int deleteByAll(UserMessageQuery query);
-    int insert(UserMessage record);
+    void insertBaych(UserMessage userMessage);
 }

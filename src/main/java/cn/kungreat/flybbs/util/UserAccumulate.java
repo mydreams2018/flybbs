@@ -29,7 +29,7 @@ public class UserAccumulate {
         return rt;
     }
 
-    public static Set hasReplyAlias(String detailsText){
+    public static Set<String> hasReplyAlias(String detailsText){
         String st = detailsText;
         Set<String> rt = new HashSet<>();
         if(st.contains("@")){

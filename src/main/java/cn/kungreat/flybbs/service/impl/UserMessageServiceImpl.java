@@ -56,9 +56,7 @@ public class UserMessageServiceImpl implements UserMessageService {
     }
 
     @Override
-    public int insert(UserMessage record) {
-        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        record.setSrcAlias(loginUser.getAlias());
-        return userMessageMapper.insert(record);
+    public void insertBaych(UserMessage userMessage) {
+        userMessageMapper.insertBaych(userMessage);
     }
 }
