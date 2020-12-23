@@ -17,4 +17,6 @@ public interface UserService {
     User selectByunique(String account, String alias);
 
     void rePass(User user);
+
+    void resetPassword(User user);
 }

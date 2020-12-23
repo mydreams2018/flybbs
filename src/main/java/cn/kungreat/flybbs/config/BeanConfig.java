@@ -43,7 +43,7 @@ public class BeanConfig {
     public FilterRegistrationBean EKPSSOClientAuthentication() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new AnotherImageFilter());
-        registration.addUrlPatterns("/register");
+        registration.addUrlPatterns("/register","/user/resetPassword");
         registration.setName("anotherImageFilter");
         return registration;
     }

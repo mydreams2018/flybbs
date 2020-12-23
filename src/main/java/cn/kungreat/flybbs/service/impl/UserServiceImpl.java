@@ -101,4 +101,17 @@ public class UserServiceImpl implements UserService {
         Assert.isTrue(bCryptPasswordEncoder.matches(user.getPassword(),origin.getPassword()),"旧密码验证失败");
         userMapper.repass(name,bCryptPasswordEncoder.encode(user.getRePass()));
     }
+
+    @Override
+    public void resetPassword(User user) {
+        Assert.isTrue(StringUtils.isNotEmpty(user.getAccount())&&StringUtils.isNotEmpty(user.getEmail())
+                                &&StringUtils.isNotEmpty(user.getRePass()),"必要数据不能为空");
+        String s = user.validPass();
+        Assert.isTrue(StringUtils.isEmpty(s),s);
+        User origin = userMapper.selectByPrimaryKey(user.getAccount());
+        Assert.isTrue(origin!=null,"当前用户不存在");
+        Assert.isTrue(StringUtils.isNotEmpty(origin.getEmail()),"当前用户密保不存在");
+        Assert.isTrue(bCryptPasswordEncoder.matches(user.getEmail(),origin.getEmail()),"密保验证失败");
+        userMapper.repass(user.getAccount(),bCryptPasswordEncoder.encode(user.getRePass()));
+    }
 }

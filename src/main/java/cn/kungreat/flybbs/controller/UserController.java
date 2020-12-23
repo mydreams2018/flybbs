@@ -89,4 +89,19 @@ public class UserController {
         }
         return jsonResult;
     }
+
+    @RequestMapping(value = "/resetPassword",method = RequestMethod.POST)
+    public JsonResult resetPassword(User user){
+        JsonResult jsonResult = new JsonResult();
+        try{
+            userService.resetPassword(user);
+            jsonResult.setAction("/user/login.html");
+        }catch (Exception e){
+            jsonResult.setResult(false);
+            jsonResult.setId("imgCode");
+            jsonResult.setStatus(0);
+            jsonResult.setMsg(e.getMessage());
+        }
+        return jsonResult;
+    }
 }

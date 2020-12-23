@@ -13,7 +13,7 @@ public class AnotherImageFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest re =(HttpServletRequest) request;
-        if("/api/register".equals(re.getRequestURI())){
+        if("/api/register".equals(re.getRequestURI()) || "/api/user/resetPassword".equals(re.getRequestURI())){
             Object code = re.getSession().getAttribute("image_code");
             Object obj = re.getSession().getAttribute("time");
             re.getSession().removeAttribute("image_code");
