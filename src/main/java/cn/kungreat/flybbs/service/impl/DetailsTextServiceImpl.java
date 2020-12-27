@@ -9,6 +9,7 @@ import cn.kungreat.flybbs.mapper.ReportMapper;
 import cn.kungreat.flybbs.mapper.UserMapper;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.query.UserMessageQuery;
+import cn.kungreat.flybbs.security.LoginUser;
 import cn.kungreat.flybbs.service.DetailsTextService;
 import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.service.UserMessageService;
@@ -79,7 +80,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         Set<String> set = UserAccumulate.hasReplyAlias(record.getDetailsText());
         if(set.size() > 0){
             UserMessage userMessage = new UserMessage();
-            userMessage.setSrcAlias(name);
+            LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            userMessage.setSrcAlias(loginUser.getAlias());
             userMessage.setAuthFlag(portIsauth.equals(1));
             userMessage.setClassId(record.getClassId());
             userMessage.setPortId(record.getPortId());
@@ -183,7 +185,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         Set<String> set = UserAccumulate.hasReplyAlias(query.getDetailsText());
         if(set.size() > 0){
             UserMessage userMessage = new UserMessage();
-            userMessage.setSrcAlias(name);
+            LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            userMessage.setSrcAlias(loginUser.getAlias());
             userMessage.setAuthFlag(portIsauth.equals(1));
             userMessage.setClassId(query.getClassId());
             userMessage.setPortId(detailsText.getPortId());

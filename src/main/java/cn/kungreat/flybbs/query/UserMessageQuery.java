@@ -10,4 +10,5 @@ public class UserMessageQuery {
     private Integer classId;
     private Long detailsId;
     private Long portId;
+    private Integer deleteNum;
 }

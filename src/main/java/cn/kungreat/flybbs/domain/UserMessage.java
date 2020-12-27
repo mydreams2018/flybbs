@@ -1,5 +1,6 @@
 package cn.kungreat.flybbs.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,12 +17,11 @@ public class UserMessage {
     private Long portId;
 
     private Long detailsId;
-    //存account
     private String srcAlias;
 
     private String receiveAlias;
     private Set<String> receiveAliasSet;
-
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date receiveDate;
 
     private Boolean authFlag;

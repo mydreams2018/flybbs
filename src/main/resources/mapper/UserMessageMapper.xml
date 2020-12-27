@@ -18,7 +18,7 @@
 
   <delete id="deleteByAccount">
     delete from user_message
-    where receive_alias = #{alias}
+    where receive_alias = #{alias} and auth_flag = 1 ORDER BY receive_date LIMIT ${deleteNum}
   </delete>
   <delete id="deleteByAll">
     delete from user_message

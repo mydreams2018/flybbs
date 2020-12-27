@@ -19,17 +19,15 @@ public class UserMessageServiceImpl implements UserMessageService {
     @Override
     public List<UserMessage> selectAll(UserMessageQuery query) {
         LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserMessageQuery qs = new UserMessageQuery();
-        qs.setAlias(loginUser.getAlias());
-        return userMessageMapper.selectAll(qs);
+        query.setAlias(loginUser.getAlias());
+        return userMessageMapper.selectAll(query);
     }
 
     @Override
     public int selectCount(UserMessageQuery query){
         LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserMessageQuery qs = new UserMessageQuery();
-        qs.setAlias(loginUser.getAlias());
-        return userMessageMapper.selectCount(qs);
+        query.setAlias(loginUser.getAlias());
+        return userMessageMapper.selectCount(query);
     }
 
     @Override
@@ -45,9 +43,8 @@ public class UserMessageServiceImpl implements UserMessageService {
     @Override
     public int deleteByAccount(UserMessageQuery query) {
         LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserMessageQuery qs = new UserMessageQuery();
-        qs.setAlias(loginUser.getAlias());
-        return userMessageMapper.deleteByAccount(qs);
+        query.setAlias(loginUser.getAlias());
+        return userMessageMapper.deleteByAccount(query);
     }
 
     @Override//管理员用
