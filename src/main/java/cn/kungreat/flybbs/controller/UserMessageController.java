@@ -25,4 +25,9 @@ public class UserMessageController {
     public int deleteByAccount(UserMessageQuery query){
         return userMessageService.deleteByAccount(query);
     }
+
+    @RequestMapping(value = "/selectCount",method = RequestMethod.POST)
+    public int selectCount(UserMessageQuery query){
+        return userMessageService.selectCount(query);
+    }
 }
