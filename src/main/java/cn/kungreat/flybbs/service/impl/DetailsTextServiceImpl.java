@@ -133,6 +133,10 @@ public class DetailsTextServiceImpl implements DetailsTextService {
                 }
             }
         }
+        UserMessageQuery messageQuery = new UserMessageQuery();
+        messageQuery.setClassId(query.getClassId());
+        messageQuery.setDetailsId(query.getId());
+        userMessageService.deleteByAll(messageQuery);
         return detailsTextMapper.deleteByPrimaryKey(query);
     }
 
