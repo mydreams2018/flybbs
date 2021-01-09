@@ -1,13 +1,15 @@
 package cn.kungreat.flybbs.config;
 
 import cn.kungreat.flybbs.filter.AnotherImageFilter;
-import cn.kungreat.flybbs.social.config.SocialProperties;
 //import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -56,10 +58,24 @@ public class BeanConfig {
         return listener;
     }*/
 
+//    @Bean
+//    @ConfigurationProperties(prefix = "cn.kungreat.social")
+//    public SocialProperties configBean(){
+//        return new SocialProperties();
+//    }
     @Bean
-    @ConfigurationProperties(prefix = "cn.kungreat.social")
-    public SocialProperties configBean(){
-        return new SocialProperties();
+    public ClientRegistrationRepository MyClientRegistrationRepository(){
+        return new ClientRegistrationRepository(){
+            @Override
+            public ClientRegistration findByRegistrationId(String registrationId) {
+                return MyClientRegistrations.valueOf(registrationId.toUpperCase()).getClientRegistration();
+            }
+        };
+    }
+
+    @Bean
+    public DefaultOAuth2AuthorizationRequestResolver defaultOAuth2AuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository){
+        return new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository,"/authorization/login");
     }
 
     @Bean

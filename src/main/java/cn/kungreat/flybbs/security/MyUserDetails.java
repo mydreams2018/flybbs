@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.security.SocialUserDetails;
-import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
-public class MyUserDetails implements UserDetailsService, SocialUserDetailsService {
+public class MyUserDetails implements UserDetailsService {
     @Autowired
     private UserService userService;
     @Autowired
@@ -33,22 +31,6 @@ public class MyUserDetails implements UserDetailsService, SocialUserDetailsServi
         }
         Set<MyRole> roles = new HashSet<>();
         List<String> ps = permissionService.selectPermissions(username);
-        if(ps != null && ps.size()>0){
-            for(int x=0;x< ps.size();x++){
-                roles.add(new MyRole("ROLE_"+ps.get(x)));
-            }
-        }
-        return new LoginUser(user,roles);
-    }
-
-    @Override
-    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
-        User user = userService.selectByPrimaryKey(userId);
-        if (user == null) {
-            throw new UsernameNotFoundException(userId);
-        }
-        Set<MyRole> roles = new HashSet<>();
-        List<String> ps = permissionService.selectPermissions(userId);
         if(ps != null && ps.size()>0){
             for(int x=0;x< ps.size();x++){
                 roles.add(new MyRole("ROLE_"+ps.get(x)));

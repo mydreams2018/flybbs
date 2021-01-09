@@ -1,6 +1,5 @@
 package cn.kungreat.flybbs.security;
 
-import cn.kungreat.flybbs.util.UserContext;
 import cn.kungreat.flybbs.vo.JsonResult;
 import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.Authentication;

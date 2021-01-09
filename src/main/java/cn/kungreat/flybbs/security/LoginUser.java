@@ -2,11 +2,11 @@ package cn.kungreat.flybbs.security;
 
 import cn.kungreat.flybbs.domain.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.social.security.SocialUserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-public class LoginUser implements SocialUserDetails {
+public class LoginUser implements UserDetails {
     private Collection<? extends GrantedAuthority> grantedAuthorities;
     private User user;
     public LoginUser(User user,Collection<? extends GrantedAuthority> grantedAuthorities){
@@ -48,11 +48,6 @@ public class LoginUser implements SocialUserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String getUserId() {
-        return user.getAccount();
     }
 
     public String getAlias(){
