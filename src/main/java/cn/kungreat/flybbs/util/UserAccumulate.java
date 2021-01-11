@@ -2,6 +2,8 @@ package cn.kungreat.flybbs.util;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class UserAccumulate {
@@ -49,74 +51,36 @@ public class UserAccumulate {
         return rt;
     }
 
-    public static Map<String,Object> converterMap(String st){
+    public static Map<String,Object> getMapByString(String rt){
+        String[] split = rt.split("&");
         Map<String,Object> mp = new HashMap<>();
-        if(st != null && !st.isEmpty()){
-            String trim = st.trim();
-            int startIndex = 1;
-            int type = 0;
-            int typeMap = 0 ,typeAry =0,excuteType = 0;
-            String tempKey ="";
-            for(int x=1;x < trim.length()-1;x++){
-                if( type ==0 &&'=' == trim.charAt(x)){
-                    tempKey = trim.substring(startIndex, x);
-                    startIndex = x+1;
-                    while(' '==trim.charAt(startIndex)){
-                        startIndex++;
-                    }
-                    x=startIndex;
-                    if('{'==trim.charAt(startIndex)){
-                        type=1;
-                        typeMap++;
-                        excuteType=1;
-                    }else if('['==trim.charAt(startIndex)){
-                        type=2;
-                        typeAry++;
-                        excuteType=2;
-                    }
-                }else if(type ==1 &&'{' == trim.charAt(x) ){
-                    typeMap++;
-                }else if(type ==2 &&'[' == trim.charAt(x) ){
-                    typeAry++;
-                }
-                if(type ==0 &&',' == trim.charAt(x)){
-                    if(excuteType == 1){
-                        mp.put(tempKey.trim(),converterMap(trim.substring(startIndex, x)));
-                    }else if(excuteType == 2){
-                        mp.put(tempKey.trim(),getList(trim.substring(startIndex, x)));
-                    }else{
-                        mp.put(tempKey.trim(),trim.substring(startIndex, x).trim());
-                    }
-                    startIndex = x+1;
-                }else if(type == 1 &&'}'==trim.charAt(x)){
-                    typeMap--;
-                    if(typeMap == 0){
-                        type=0;
-                    }
-                }else if(type == 2 &&']'==trim.charAt(x)){
-                    typeAry--;
-                    if(typeAry == 0){
-                        type=0;
-                    }
-                }
-                if(x >= trim.length()-2){
-                    if(excuteType == 1){
-                        mp.put(tempKey.trim(),converterMap(trim.substring(startIndex,trim.length()-1)));
-                    }else if(excuteType == 2){
-                        mp.put(tempKey.trim(),getList(trim.substring(startIndex,trim.length()-1)));
-                    }else{
-                        mp.put(tempKey.trim(),trim.substring(startIndex,trim.length()-1).trim());
-                    }
-                    break;
-                }
-            }
+        for(int x=0;x<split.length;x++){
+            String[] split1 = split[x].split("=");
+            mp.put(split1[0],split1[1]);
         }
         return mp;
     }
 
-    private static List<String> getList(String st){
-        String trim = st.trim();
-        String[] split = trim.substring(1,trim.length()-1).split(",");
-        return Arrays.asList(split);
+    public static void beanTransforMap(Object bean,Map<String,Object> mp){
+        Field[] fields = bean.getClass().getDeclaredFields();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        try {
+            for(int x=0;x<fields.length;x++){
+                Field field = fields[x];
+                field.setAccessible(true);
+                if(field.getName() !="account" && field.getName() !="password"){
+                    if(field.getType() == Date.class){
+                        Object o = field.get(bean);
+                        mp.put(field.getName(),simpleDateFormat.format(o));
+                    }else{
+                        Object o = field.get(bean);
+                        mp.put(field.getName(),o);
+                    }
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

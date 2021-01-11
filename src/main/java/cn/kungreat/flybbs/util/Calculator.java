@@ -12,8 +12,7 @@ public final class Calculator {
 		
 		for(int x =0;x < bytes.length ;x++) {
 			if('+'==(char)bytes[x] || '-'==(char)bytes[x]
-					|| '*' == (char)bytes[x] || '/' == (char)bytes[x])
-			{
+					|| '*' == (char)bytes[x] || '/' == (char)bytes[x]) {
 				if(one == null) {
 					one = Integer.parseInt(new String(bytes,0,x));
 					symbol = String.valueOf((char)bytes[x]);

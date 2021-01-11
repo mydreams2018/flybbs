@@ -1,13 +1,13 @@
 package cn.kungreat.flybbs.controller;
 
 import cn.kungreat.flybbs.domain.User;
+import cn.kungreat.flybbs.security.LoginUser;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.JsonResult;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +35,8 @@ public class BaseController {
 
     @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
     public User getCurrentUser(){
-        SecurityContext context = SecurityContextHolder.getContext();
-        return userService.selectByPrimaryKey(context.getAuthentication().getName());
+        LoginUser loginUser=(LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return loginUser.getUser();
     }
 
     @RequestMapping(value = "/image")

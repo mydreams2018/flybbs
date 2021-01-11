@@ -1,7 +1,6 @@
 package cn.kungreat.flybbs.config;
 
 import cn.kungreat.flybbs.filter.AnotherImageFilter;
-//import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -17,24 +16,6 @@ import javax.sql.DataSource;
 
 @Configuration
 public class BeanConfig {
-
-  /*  @Bean(initMethod = "init",destroyMethod = "close")
-    @ConfigurationProperties(prefix = "datasource1")
-    public DruidDataSource initDruid(){
-        DruidDataSource druidDataSource = new DruidDataSource();
-        druidDataSource.setTestWhileIdle(true);
-        druidDataSource.setValidationQuery("SELECT 1");
-        druidDataSource.setMinEvictableIdleTimeMillis(300000);
-        druidDataSource.setInitialSize(2);
-        druidDataSource.setMinIdle(2);
-        druidDataSource.setMaxActive(10);
-        druidDataSource.setTimeBetweenLogStatsMillis(60000);
-        druidDataSource.setMaxWait(60000);
-        //是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭
-//        druidDataSource.setPoolPreparedStatements(false);
-//        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
-        return druidDataSource;
-    }*/
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){

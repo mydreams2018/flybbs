@@ -1,17 +1,28 @@
 package cn.kungreat.flybbs.security;
 
 import cn.kungreat.flybbs.domain.User;
+import cn.kungreat.flybbs.util.UserAccumulate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-public class LoginUser implements UserDetails {
+public class LoginUser implements UserDetails, OAuth2User {
     private Collection<? extends GrantedAuthority> grantedAuthorities;
     private User user;
+    private Map<String, Object> oauth2User = new HashMap<>();
     public LoginUser(User user,Collection<? extends GrantedAuthority> grantedAuthorities){
         this.user = user;
         this.grantedAuthorities = grantedAuthorities;
+        UserAccumulate.beanTransforMap(user,this.oauth2User);
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return oauth2User;
     }
 
     @Override
@@ -52,5 +63,14 @@ public class LoginUser implements UserDetails {
 
     public String getAlias(){
         return user.getAlias();
+    }
+
+    @Override
+    public String getName() {
+        return this.user.getAccount();
+    }
+
+    public User getUser(){
+        return this.user;
     }
 }
