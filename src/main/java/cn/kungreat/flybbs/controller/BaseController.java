@@ -35,8 +35,7 @@ public class BaseController {
 
     @RequestMapping(value = "/getCurrentUser",method = RequestMethod.GET)
     public User getCurrentUser(){
-        LoginUser loginUser=(LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return loginUser.getUser();
+        return userService.selectByPrimaryKey(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @RequestMapping(value = "/image")
