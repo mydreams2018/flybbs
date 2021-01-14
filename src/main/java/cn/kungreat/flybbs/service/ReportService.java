@@ -2,7 +2,6 @@ package cn.kungreat.flybbs.service;
 
 import cn.kungreat.flybbs.domain.Report;
 import cn.kungreat.flybbs.query.ReportQuery;
-import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.vo.QueryResult;
 
 import java.util.List;

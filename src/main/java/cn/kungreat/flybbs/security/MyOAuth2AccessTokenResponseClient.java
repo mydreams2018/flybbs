@@ -1,6 +1,5 @@
 package cn.kungreat.flybbs.security;
 
-
 import cn.kungreat.flybbs.util.UserAccumulate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;

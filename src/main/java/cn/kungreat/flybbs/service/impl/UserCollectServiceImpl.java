@@ -8,6 +8,7 @@ import cn.kungreat.flybbs.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Collections;
@@ -25,12 +26,12 @@ public class UserCollectServiceImpl implements UserCollectService {
         return userCollectMapper.selectByPrimaryKey(collect);
     }
 
-    @Override
+    @Transactional
     public int deleteByPrimaryKey(Long id) {
         return userCollectMapper.deleteByPrimaryKey(id,SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-    @Override
+    @Transactional
     public UserCollect sendCollect(UserCollect collect){
         if(collect.getId() == null){
             Assert.isTrue(collect.getClassId() != null && collect.getPortId() != null,"ID异常");

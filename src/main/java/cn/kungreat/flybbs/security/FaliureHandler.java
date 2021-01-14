@@ -18,7 +18,7 @@ import java.io.IOException;
 public class FaliureHandler implements AuthenticationFailureHandler {
     //重定向工具类
 //    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-    private RequestCache requestCache = new HttpSessionRequestCache();
+//    private RequestCache requestCache = new HttpSessionRequestCache();
 
     /*
     *  spring 默认的处理器  SimpleUrlAuthenticationFailureHandler 可以继承 默认的处理器
@@ -28,10 +28,10 @@ public class FaliureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        SavedRequest cache = requestCache.getRequest(request, response);
-        String path = (cache==null?"/index":cache.getRedirectUrl());
+//        SavedRequest cache = requestCache.getRequest(request, response);
+//        String path = (cache==null?"/index":cache.getRedirectUrl());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(JSON.toJSONString(new JsonResult(false,"用户或密码出错",path,0,"imgCode")));
+        response.getWriter().write(JSON.toJSONString(new JsonResult(false,"用户或密码出错","/user/login.html",0,"imgCode")));
     /*    String accept = request.getHeader("Accept");
         if(accept.contains("text/html")){
             request.setAttribute("error",exception.getMessage());

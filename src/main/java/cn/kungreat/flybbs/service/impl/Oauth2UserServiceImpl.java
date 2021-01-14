@@ -33,7 +33,7 @@ public class Oauth2UserServiceImpl implements Oauth2UserService {
         return null;
     }
 
-    @Override
+    @Transactional
     public int updateByPrimaryKey(Oauth2User record) {
         return oauth2UserMapper.updateByPrimaryKey(record);
     }

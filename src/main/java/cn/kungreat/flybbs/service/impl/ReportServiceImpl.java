@@ -61,7 +61,7 @@ public class ReportServiceImpl implements ReportService {
         return 1;
     }
 
-    @Override
+    @Transactional
     public int updateByPrimaryKey(Report record) {
         Assert.isTrue(record.getClassId()!=null&&record.getClassId()>=1&&record.getClassId()<5,"类型ID异常");
         Assert.isTrue(record.getId() != null,"ID异常");
@@ -82,7 +82,7 @@ public class ReportServiceImpl implements ReportService {
         return 1;
     }
 
-    @Override
+    @Transactional
     public int updateBystate(Report record) {
         return reportMapper.updateBystate(record);
     }
@@ -119,12 +119,12 @@ public class ReportServiceImpl implements ReportService {
         return result;
     }
 
-    @Override
+    @Transactional
     public void incrementNumber(Report port) {
         reportMapper.incrementNumber(port);
     }
 
-    @Override
+    @Transactional
     public void decrementNumber(Report port) {
         reportMapper.decrementNumber(port);
     }

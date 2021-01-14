@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.*;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private List<String> manager;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Override
+    @Transactional
     public int insert(User record) {
         String s = record.validMessage();
         Assert.isTrue(StringUtils.isEmpty(s),s);
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(account);
     }
 
-    @Override
+    @Transactional
     public int updateByPrimaryKey(User record) {
         Assert.isTrue(StringUtils.isNotEmpty(record.getEmail())
                 && StringUtils.isNotEmpty(record.getFromCity())
@@ -56,12 +57,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateByPrimaryKey(record);
     }
 
-    @Override
+    @Transactional
     public int updateImg(String account, String path) {
         return userMapper.updateImg(account,path);
     }
 
-    @Override
+    @Transactional
     public int updateAccumulatePoints(int number, String account) {
         User user = userMapper.selectByPrimaryKey(account);
         Integer accumulatePoints = user.getAccumulatePoints();
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByunique(account,alias);
     }
 
-    @Override
+    @Transactional
     public void rePass(User user) {
         String s = user.validPass();
         Assert.isTrue(StringUtils.isEmpty(s),s);
@@ -102,7 +103,7 @@ public class UserServiceImpl implements UserService {
         userMapper.repass(name,bCryptPasswordEncoder.encode(user.getRePass()));
     }
 
-    @Override
+    @Transactional
     public void resetPassword(User user) {
         Assert.isTrue(StringUtils.isNotEmpty(user.getAccount())&&StringUtils.isNotEmpty(user.getEmail())
                                 &&StringUtils.isNotEmpty(user.getRePass()),"必要数据不能为空");

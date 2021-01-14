@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Collections;
@@ -61,7 +62,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         return result;
     }
 
-    @Override
+    @Transactional
     public long insert(DetailsText record) {
         String s = record.validMessage();
         Assert.isTrue(StringUtils.isEmpty(s),s);
@@ -93,7 +94,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         return 1;
     }
 
-    @Override
+    @Transactional
     public void likeAccount(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
@@ -106,7 +107,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         detailsTextMapper.updateLikeAccount(query);
     }
 
-    @Override
+    @Transactional
     public int deleteReplyPort(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
@@ -140,7 +141,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         return detailsTextMapper.deleteByPrimaryKey(query);
     }
 
-    @Override
+    @Transactional
     public void acceptReply(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
@@ -171,7 +172,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         return detailsTextMapper.selectByPrimaryKey(query);
     }
 
-    @Override
+    @Transactional
     public void updateByPrimaryKey(DetailsTextQuery query) {
         Assert.isTrue(StringUtils.isNotEmpty(query.getDetailsText()),"贴子内容不能为空");
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");

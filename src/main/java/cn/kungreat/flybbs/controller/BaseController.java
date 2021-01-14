@@ -1,7 +1,6 @@
 package cn.kungreat.flybbs.controller;
 
 import cn.kungreat.flybbs.domain.User;
-import cn.kungreat.flybbs.security.LoginUser;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.JsonResult;
 import org.apache.commons.lang3.RandomStringUtils;

@@ -8,6 +8,7 @@ import cn.kungreat.flybbs.service.UserMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class UserMessageServiceImpl implements UserMessageService {
         return userMessageMapper.selectCount(query);
     }
 
-    @Override
+    @Transactional
     public int deleteByPrimaryKey(Long id) {
         Assert.isTrue(id != null,"ID异常");
         UserMessage userMessage = userMessageMapper.selectByPrimaryKey(id);
@@ -40,19 +41,19 @@ public class UserMessageServiceImpl implements UserMessageService {
         return userMessageMapper.deleteByPrimaryKey(id);
     }
 
-    @Override
+    @Transactional
     public int deleteByAccount(UserMessageQuery query) {
         LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         query.setAlias(loginUser.getAlias());
         return userMessageMapper.deleteByAccount(query);
     }
 
-    @Override//管理员用
+    @Transactional//管理员用
     public int deleteByAll(UserMessageQuery query){
         return userMessageMapper.deleteByAll(query);
     }
 
-    @Override
+    @Transactional
     public void insertBaych(UserMessage userMessage) {
         userMessageMapper.insertBaych(userMessage);
     }
