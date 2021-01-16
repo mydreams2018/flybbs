@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     public int insert(User record) {
         String s = record.validMessage();
         Assert.isTrue(StringUtils.isEmpty(s),s);
+        Assert.isTrue(!manager.contains(record.getAccount()),"此用户不能注册");
         Assert.isTrue(userMapper.selectByunique(record.getAccount(),record.getAlias())==null,"用户或别名已经存在");
         record.setRegisterTime(new Date());
         Calendar c = Calendar.getInstance();
