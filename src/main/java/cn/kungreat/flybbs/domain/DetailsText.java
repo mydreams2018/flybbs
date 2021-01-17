@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 public class DetailsText {
     private Long id;
-
+//采纳
     private Boolean isAdoption=false;
 
     private Integer likeNumber;

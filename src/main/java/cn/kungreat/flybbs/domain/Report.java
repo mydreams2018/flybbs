@@ -23,11 +23,11 @@ public class Report {
     private Byte experience;
     @JsonIgnore
     private String userAccount;
-
+//加精
     private Boolean isEssence=false;
 
     private String portState;
-
+//置顶
     private Boolean isTop=false;
 
     private Byte replyNumber;

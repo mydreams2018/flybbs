@@ -77,8 +77,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         report.setClassId(record.getClassId());
         report.setId(record.getPortId());
         reportService.incrementNumber(report);
-        userReplyPortService.updateByPrimaryKey();//用户回贴统计
-        Set<String> set = UserAccumulate.hasReplyAlias(record.getDetailsText());
+        userReplyPortService.updateByPrimaryKey();//用户周回贴统计
+        Set<String> set = UserAccumulate.hasReplyAlias(record.getDetailsText());//用户@信息
         if(set.size() > 0){
             UserMessage userMessage = new UserMessage();
             LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -98,9 +98,9 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     public void likeAccount(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");
         Assert.isTrue(query.getId()!=null,"ID异常");
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
         DetailsText s = detailsTextMapper.selectLikeAccount(query);
         Assert.isTrue(s!=null,"贴子异常");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(s.getLikeAccount()==null||!s.getLikeAccount().contains(name),"已经点过赞了");
         query.setLikeAccount(s.getLikeAccount()+","+name);
         query.setLikeNumber(s.getLikeNumber());
@@ -116,28 +116,23 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         Assert.isTrue(detailsText!=null,"贴子异常");
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userMapper.selectByPrimaryKey(name);
-        Assert.isTrue(user.getIsManager()==1||detailsText.getUserAccount().equals(name),"没有删除权限");
+        Assert.isTrue(detailsText.getUserAccount().equals(name),"没有删除权限");
         Report port = new Report();
         port.setClassId(query.getClassId());
         port.setId(detailsText.getPortId());
-        reportService.decrementNumber(port);
-        if(detailsText.getIsAdoption()){
+        reportService.decrementNumber(port);//删除回贴数量
+        if(detailsText.getIsAdoption()){//是否采纳
             port.setPortState("未结");
-            reportService.updateBystate(port);
+            reportService.updateBystate(port);//设为未结
             Report report = reportMapper.selectById(port);
-            if(report.getExperience() != null && report.getExperience() > 0){
-                if(detailsText.getUserAccount().equals(name)){
-                    userMapper.updateAccumulatePoints(user.getAccumulatePoints()-report.getExperience(),user.getAccumulatePoints(),name, UserAccumulate.countVipLevel(user.getAccumulatePoints()-report.getExperience()));
-                }else{
-                    User user1 = userMapper.selectByPrimaryKey(detailsText.getUserAccount());
-                    userMapper.updateAccumulatePoints(user1.getAccumulatePoints()-report.getExperience(),user1.getAccumulatePoints(),detailsText.getUserAccount(),UserAccumulate.countVipLevel(user1.getAccumulatePoints()-report.getExperience()));
-                }
+            if(report.getExperience() != null && report.getExperience() > 0){//删除自已飞吻
+                userMapper.updateAccumulatePoints(user.getAccumulatePoints()-report.getExperience(),user.getAccumulatePoints(),name, UserAccumulate.countVipLevel(user.getAccumulatePoints()-report.getExperience()));
             }
         }
         UserMessageQuery messageQuery = new UserMessageQuery();
         messageQuery.setClassId(query.getClassId());
         messageQuery.setDetailsId(query.getId());
-        userMessageService.deleteByAll(messageQuery);
+        userMessageService.deleteByAll(messageQuery);//删除@信息
         return detailsTextMapper.deleteByPrimaryKey(query);
     }
 
@@ -186,8 +181,8 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         UserMessageQuery messageQuery = new UserMessageQuery();
         messageQuery.setClassId(query.getClassId());
         messageQuery.setDetailsId(detailsText.getId());
-        userMessageService.deleteByAll(messageQuery);
-        Set<String> set = UserAccumulate.hasReplyAlias(query.getDetailsText());
+        userMessageService.deleteByAll(messageQuery);//删除@信息
+        Set<String> set = UserAccumulate.hasReplyAlias(query.getDetailsText());//查看是否有@信息
         if(set.size() > 0){
             UserMessage userMessage = new UserMessage();
             LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -198,7 +193,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
             userMessage.setDetailsId(detailsText.getId());
             userMessage.setReceiveDate(new Date());
             userMessage.setReceiveAliasSet(set);
-            userMessageService.insertBaych(userMessage);
+            userMessageService.insertBaych(userMessage);//添加@信息
         }
         detailsTextMapper.updateByPrimaryKey(query);
     }
