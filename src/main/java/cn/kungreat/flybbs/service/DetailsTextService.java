@@ -1,8 +1,11 @@
 package cn.kungreat.flybbs.service;
 
 import cn.kungreat.flybbs.domain.DetailsText;
+import cn.kungreat.flybbs.domain.Report;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 import cn.kungreat.flybbs.vo.QueryResult;
+
+import java.util.List;
 
 public interface DetailsTextService {
     QueryResult queryReport(DetailsTextQuery query);
@@ -17,4 +20,6 @@ public interface DetailsTextService {
     DetailsText selectByPrimaryKey(DetailsTextQuery query);
 
     void updateByPrimaryKey(DetailsTextQuery query);
+
+    List<Report> lastReplyPort(Report query);
 }

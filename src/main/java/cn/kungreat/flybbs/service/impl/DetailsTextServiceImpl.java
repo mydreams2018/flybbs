@@ -197,4 +197,14 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         }
         detailsTextMapper.updateByPrimaryKey(query);
     }
+//用户首页最近的回贴
+    @Override
+    public List<Report> lastReplyPort(Report query) {
+        Assert.isTrue(StringUtils.isNotEmpty(query.getAlias()),"用户为空");
+        User user = userMapper.selectByunique(null, query.getAlias());
+        Assert.isTrue(user!=null,"用户为空");
+        query.setUserAccount(user.getAccount());
+        query.setPortIsauth(1);
+        return detailsTextMapper.lastReplyPort(query);
+    }
 }

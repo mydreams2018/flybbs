@@ -1,6 +1,7 @@
 package cn.kungreat.flybbs.mapper;
 
 import cn.kungreat.flybbs.domain.DetailsText;
+import cn.kungreat.flybbs.domain.Report;
 import cn.kungreat.flybbs.query.DetailsTextQuery;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface DetailsTextMapper {
     int updateAdoption(DetailsTextQuery query);
 
     int updateByPortId(DetailsText detailsText);
+
+    List<Report> lastReplyPort(Report query);
 }

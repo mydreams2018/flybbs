@@ -11,7 +11,7 @@
         <target>:System.out</target>
     </appender>
 
-    <logger name="cn.kungreat.flybbs.mapper" level="DEBUG" additivity="false">
+    <logger name="cn.kungreat.flybbs.mapper" level="ERROR" additivity="false">
         <appender-ref ref="console" />
     </logger>
 

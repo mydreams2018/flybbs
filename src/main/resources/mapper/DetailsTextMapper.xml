@@ -30,7 +30,7 @@
       #{userAccount}, #{createData}, #{authFlag},
       #{detailsText}, #{isPort})
   </insert>
-  <update id="updateByPrimaryKey">
+    <update id="updateByPrimaryKey">
     update ${tableName}
     set
       details_text = #{detailsText,jdbcType=LONGVARCHAR},
@@ -88,6 +88,26 @@
 
   <select id="selectLikeAccount" resultMap="BaseResultMap">
     select like_account,like_number from ${tableName} where id=#{id}
+  </select>
+
+  <select id="lastReplyPort" resultMap="cn.kungreat.flybbs.mapper.ReportMapper.BaseResultMap">
+        select id, port_title,is_essence, reply_number, create_time, class_id,create_data from (
+        (select t2.id, t2.port_title,t2.is_essence, t2.reply_number, t2.create_time,t1.port_id,t1.create_data,'4' as class_id
+        from (select port_id,create_data from details_text_talk where user_account = #{userAccount} and auth_flag = #{portIsauth}
+          ORDER BY create_data DESC limit 0,10) t1 join report_talk t2 on t1.port_id = t2.id ORDER BY t1.create_data DESC )
+        UNION ALL
+        (select t2.id, t2.port_title,t2.is_essence, t2.reply_number, t2.create_time,t1.port_id,t1.create_data,'3' as class_id
+        from (select port_id,create_data from details_text_data where user_account = #{userAccount} and auth_flag = #{portIsauth}
+          ORDER BY create_data DESC limit 0,10) t1 join report_data t2 on t1.port_id = t2.id ORDER BY t1.create_data DESC )
+        UNION ALL
+         (select t2.id, t2.port_title,t2.is_essence, t2.reply_number, t2.create_time,t1.port_id,t1.create_data,'2' as class_id
+        from (select port_id,create_data from details_text_front where user_account = #{userAccount} and auth_flag = #{portIsauth}
+          ORDER BY create_data DESC limit 0,10) t1 join report_front t2 on t1.port_id = t2.id ORDER BY t1.create_data DESC )
+        UNION ALL
+         (select t2.id, t2.port_title,t2.is_essence, t2.reply_number, t2.create_time,t1.port_id,t1.create_data,'1' as class_id
+        from (select port_id,create_data from details_text_back where user_account = #{userAccount} and auth_flag = #{portIsauth}
+          ORDER BY create_data DESC limit 0,10) t1 join report_back t2 on t1.port_id = t2.id ORDER BY t1.create_data DESC )
+        ) rt ORDER BY rt.create_data DESC limit 0,10
   </select>
 
   <sql id="baseQuery">

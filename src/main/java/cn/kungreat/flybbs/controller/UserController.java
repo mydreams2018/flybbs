@@ -3,6 +3,7 @@ package cn.kungreat.flybbs.controller;
 import cn.kungreat.flybbs.domain.Report;
 import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.query.UserQuery;
+import cn.kungreat.flybbs.service.DetailsTextService;
 import cn.kungreat.flybbs.service.ReportService;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.vo.JsonResult;
@@ -25,6 +26,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ReportService reportService;
+    @Autowired
+    private DetailsTextService detailsTextService;
     @Value("${user.imgPath}")
     private String path;
 
@@ -36,6 +39,11 @@ public class UserController {
     @RequestMapping(value = "/lastSendPort",method = RequestMethod.POST)
     public List<Report> lastSendPort(Report query){
         return reportService.lastSendPort(query);
+    }
+
+    @RequestMapping(value = "/lastReplyPort",method = RequestMethod.POST)
+    public List<Report> lastReplyPort(Report query){
+        return detailsTextService.lastReplyPort(query);
     }
 
     @RequestMapping(value = "/updateByPrimaryKey",method = RequestMethod.POST)
