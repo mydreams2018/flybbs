@@ -35,6 +35,7 @@ public class UserCollectServiceImpl implements UserCollectService {
     public UserCollect sendCollect(UserCollect collect){
         if(collect.getId() == null){
             Assert.isTrue(collect.getClassId() != null && collect.getPortId() != null,"ID异常");
+            Assert.isTrue(collect.getPortTitle()!=null && collect.getPortTitle().length()>0,"贴子名称异常");
             collect.setUserAccount(SecurityContextHolder.getContext().getAuthentication().getName());
             collect.setCollectTime(new Date());
             userCollectMapper.insert(collect);
@@ -46,7 +47,6 @@ public class UserCollectServiceImpl implements UserCollectService {
 
     @Override
     public QueryResult queryReport(UserCollectQuery query){
-        Assert.isTrue(query.getClassId() != null,"ID异常");
         query.setUserAccount(SecurityContextHolder.getContext().getAuthentication().getName());
         Integer count = userCollectMapper.selectCount(query);
         List list  = Collections.emptyList();

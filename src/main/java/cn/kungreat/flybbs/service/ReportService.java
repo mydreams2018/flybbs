@@ -19,4 +19,6 @@ public interface ReportService {
     void decrementNumber(Report port);
 
     List<Report> lastSendPort(Report query);
+
+    QueryResult myQueryReport(ReportQuery query);
 }

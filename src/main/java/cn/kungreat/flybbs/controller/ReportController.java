@@ -55,8 +55,9 @@ public class ReportController {
 
     @RequestMapping(value = "/myQueryReport",method = RequestMethod.POST)
     public QueryResult myQueryReport(ReportQuery query){
+        query.setClassId(1);//没用的代码,防止报错
         query.setUserAccount(SecurityContextHolder.getContext().getAuthentication().getName());
-        return reportService.queryReport(query);
+        return reportService.myQueryReport(query);
     }
 
     @RequestMapping(value = "/selectByPrimaryKey",method = RequestMethod.POST)

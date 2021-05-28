@@ -15,24 +15,23 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.UserCollect" useGeneratedKeys="true">
     insert into user_collect (user_account, class_id, port_id, 
-      collect_time)
+      collect_time,port_title)
     values (#{userAccount,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER}, #{portId,jdbcType=BIGINT}, 
-      #{collectTime,jdbcType=DATE})
+      #{collectTime,jdbcType=DATE},#{portTitle})
   </insert>
   <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.UserCollect" resultMap="BaseResultMap">
-    select id, user_account, class_id, port_id, collect_time
+    select id, user_account, class_id, port_id, collect_time, port_title
     from user_collect
     where user_account = #{userAccount} and class_id = #{classId}
             and port_id=#{portId}
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
-   select * from (select id, user_account, class_id, port_id, collect_time
-    from user_collect where user_account=#{userAccount} and class_id=#{classId} limit #{start},#{pageSize}) as usercol
-    Inner join ${tableName} curPort on usercol.port_id = curPort.id order by usercol.id DESC
+    select id, user_account, class_id, port_id, collect_time, port_title
+    from user_collect where user_account=#{userAccount} limit #{start},#{pageSize}
   </select>
 
     <select id="selectCount" resultType="java.lang.Integer">
-        select count(id)  from user_collect where user_account=#{userAccount} and class_id=#{classId}
+        select count(id)  from user_collect where user_account=#{userAccount}
     </select>
 </mapper>

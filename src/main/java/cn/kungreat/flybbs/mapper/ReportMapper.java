@@ -24,4 +24,8 @@ public interface ReportMapper {
     Report selectById(Report port);
 
     List<Report> lastSendPort(Report query);
+
+    Integer mySelectCount(ReportQuery query);
+
+    List<Report> mySelectAll(ReportQuery query);
 }

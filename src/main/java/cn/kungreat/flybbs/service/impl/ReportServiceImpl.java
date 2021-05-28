@@ -149,6 +149,20 @@ public class ReportServiceImpl implements ReportService {
         }
         return ports;
     }
+//查所有个人发贴不看是否审核
+    @Override
+    public QueryResult myQueryReport(ReportQuery query){
+        Integer count = reportMapper.mySelectCount(query);
+        List list  = Collections.emptyList();
+        if (count >  0){
+            list = reportMapper.mySelectAll(query);
+        }
+        query.setData(count,query.getPageSize(),query.getCurrentPage());
+        QueryResult result = new QueryResult();
+        result.setDatas(list);
+        result.setPage(query);
+        return result;
+    }
 
     private void order(List<Report> reports){
         int size = reports.size();
