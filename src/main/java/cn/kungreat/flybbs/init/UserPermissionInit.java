@@ -20,16 +20,9 @@ public class UserPermissionInit implements ApplicationListener<ContextRefreshedE
     @Autowired
     private PermissionMapper permissionMapper;
 
-    private static boolean ones = true;
-    private static final String LK = "INITLOCK";
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        synchronized (LK){
-            if(ones){
-                permissionMapper.deleteAll();
-                ones = false;
-            }
-        }
+
         if(event.getApplicationContext() != null){
             Map<String,Object> beans = event.getApplicationContext().getBeansWithAnnotation(Controller.class);
             List<Permission> permissions = new ArrayList<>();

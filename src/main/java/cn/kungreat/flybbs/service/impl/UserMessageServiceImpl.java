@@ -48,7 +48,7 @@ public class UserMessageServiceImpl implements UserMessageService {
         return userMessageMapper.deleteByAccount(query);
     }
 
-    @Transactional//管理员用
+    @Transactional
     public int deleteByAll(UserMessageQuery query){
         return userMessageMapper.deleteByAll(query);
     }

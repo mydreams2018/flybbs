@@ -149,7 +149,7 @@ public class ReportServiceImpl implements ReportService {
         }
         return ports;
     }
-//查所有个人发贴不看是否审核
+//查所有个人发贴不看是否审核-我的发贴
     @Override
     public QueryResult myQueryReport(ReportQuery query){
         Integer count = reportMapper.mySelectCount(query);

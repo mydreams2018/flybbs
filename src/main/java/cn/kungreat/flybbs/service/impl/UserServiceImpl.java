@@ -2,10 +2,8 @@ package cn.kungreat.flybbs.service.impl;
 
 import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.UserMapper;
-import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.util.UserAccumulate;
-import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,23 +68,6 @@ public class UserServiceImpl implements UserService {
         int current = accumulatePoints + number;
         Assert.isTrue(current >= 0,"飞吻数据不足");
         return userMapper.updateAccumulatePoints(current, accumulatePoints,account, UserAccumulate.countVipLevel(current));
-    }
-
-    //现在没有使用
-    @Override
-    public QueryResult query(UserQuery query) {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        Assert.isTrue(manager.contains(name),"没有权限访问");
-        Integer count = userMapper.selectCount(query);
-        List list  = Collections.emptyList();
-        if (count >  0){
-            list = userMapper.selectAll(query);
-        }
-        query.setData(count,query.getPageSize(),query.getCurrentPage());
-        QueryResult  result = new QueryResult();
-        result.setDatas(list);
-        result.setPage(query);
-        return result;
     }
 
     @Override

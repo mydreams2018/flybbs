@@ -106,7 +106,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         query.setLikeNumber(s.getLikeNumber());
         detailsTextMapper.updateLikeAccount(query);
     }
-
+//自已删除自已的回贴
     @Transactional
     public int deleteReplyPort(DetailsTextQuery query) {
         Assert.isTrue(query.getClassId()!=null&&query.getClassId()>=1&&query.getClassId()<5,"类型ID异常");

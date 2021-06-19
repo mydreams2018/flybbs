@@ -38,7 +38,7 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/image")
-    public String image(HttpServletRequest request, HttpServletResponse response){
+    public String image(HttpServletRequest request){
         int randomStr = RandomUtils.nextInt(1,10);
         int randomMid = RandomUtils.nextInt(1,10);
         int randomend = RandomUtils.nextInt(1,10);
