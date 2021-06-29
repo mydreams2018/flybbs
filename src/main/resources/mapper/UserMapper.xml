@@ -97,11 +97,17 @@
 
     <sql id="baseQuery">
     <where>
-      <if test="category != null and category != '' ">
+      <if test="category != null and category !='' ">
         and origin_from = #{category}
       </if>
-      <if test="searchKeyword != null and searchKeyword != '' ">
-        and account like concat("%",#{searchKeyword},"%")
+      <if test="alias != null and alias !='' ">
+        and alias like concat("%",#{alias},"%")
+      </if>
+      <if test="startTime != null and startTime !='' ">
+        and register_time &gt;= #{startTime}
+      </if>
+      <if test="endTime != null and endTime !='' ">
+        and register_time &lt;=  #{endTime}
       </if>
     </where>
   </sql>

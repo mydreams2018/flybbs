@@ -2,8 +2,11 @@ package cn.kungreat.flybbs.service.impl;
 
 import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.mapper.UserMapper;
+import cn.kungreat.flybbs.query.UserQuery;
 import cn.kungreat.flybbs.service.UserService;
 import cn.kungreat.flybbs.util.UserAccumulate;
+import cn.kungreat.flybbs.vo.ManagerResult;
+import cn.kungreat.flybbs.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,5 +99,22 @@ public class UserServiceImpl implements UserService {
         Assert.isTrue(StringUtils.isNotEmpty(origin.getEmail()),"当前用户密保不存在");
         Assert.isTrue(bCryptPasswordEncoder.matches(user.getEmail(),origin.getEmail()),"密保验证失败");
         userMapper.repass(user.getAccount(),bCryptPasswordEncoder.encode(user.getRePass()));
+    }
+//管理层用的
+    @Override
+    public ManagerResult getAllUser(UserQuery userQuery) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(manager.contains(name),"没有权限查询此接口");
+        int num = userMapper.selectCount(userQuery);
+        List list  = Collections.emptyList();
+        if(num > 0){
+            list = userMapper.selectAll(userQuery);
+        }
+//        userQuery.setData(num,userQuery.getPageSize(),userQuery.getCurrentPage());
+        ManagerResult result = new ManagerResult();
+        result.setCount(num);
+        result.setData(list);
+//        result.setPage(userQuery);
+        return result;
     }
 }

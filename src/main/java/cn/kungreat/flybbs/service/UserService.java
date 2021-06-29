@@ -1,6 +1,9 @@
 package cn.kungreat.flybbs.service;
 
 import cn.kungreat.flybbs.domain.User;
+import cn.kungreat.flybbs.query.UserQuery;
+import cn.kungreat.flybbs.vo.ManagerResult;
+
 
 public interface UserService {
 
@@ -16,4 +19,6 @@ public interface UserService {
     void rePass(User user);
 
     void resetPassword(User user);
+
+    ManagerResult getAllUser(UserQuery userQuery);
 }
