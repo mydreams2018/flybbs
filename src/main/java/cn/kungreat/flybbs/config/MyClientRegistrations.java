@@ -27,8 +27,4 @@ public enum MyClientRegistrations {
     public ClientRegistration getClientRegistration() {
         return clientRegistration;
     }
-
-    public void setClientRegistration(ClientRegistration clientRegistration) {
-        this.clientRegistration = clientRegistration;
-    }
 }
