@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <property name="APP_Name" value="flybbs" />
-    <contextName>${APP_Name}</contextName>
 
+    <!-- 日志文件存放路径 当前运行目录 -->
+    <property name="log.path" value="./logs" />
+    <!-- 日志文件输出格式 -->
+    <property name="log.pattern" value="%-4relative [%thread] %-5level %logger{35} - %msg %n"/>
+    <property name="app_name" value="flybbs" />
+    <contextName>${app_name}</contextName>
+
+<!--控制台输出日志类-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+            <pattern>${log.pattern}</pattern>
             <!--<charset>UTF-8</charset>-->
         </encoder>
-        <target>:System.out</target>
+    </appender>
+
+<!--文件输出日志类-->
+    <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sys-info.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${log.path}/sys-info-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>30GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>INFO</level>
+            <!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
     <logger name="cn.kungreat.flybbs.mapper" level="ERROR" additivity="false">
@@ -16,7 +46,7 @@
     </logger>
 
     <root level="info">
-        <appender-ref ref="console" />
+        <appender-ref ref="file_info" />
     </root>
 
 </configuration>
