@@ -5,15 +5,14 @@
     <property name="log.path" value="./logs" />
     <!-- 日志文件输出格式 -->
     <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n"/>
-    <property name="app_name" value="flybbs" />
-    <contextName>${app_name}</contextName>
 
-<!--控制台输出日志类-->
+<!--控制台输出日志类  但是一般控制台输出使用layout，文件输出使用encoder -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
+        <!--展示格式 layout-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>${log.pattern}</pattern>
             <!--<charset>UTF-8</charset>-->
-        </encoder>
+        </layout>
     </appender>
 
 <!--文件输出日志类-->
