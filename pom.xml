@@ -61,6 +61,9 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<!--  idea 2022 使用此版本 -->
+			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 	<!--	<dependency>
