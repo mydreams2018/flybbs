@@ -4,9 +4,6 @@
   <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.Report">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="port_title" jdbcType="VARCHAR" property="name" />
-    <result column="dataType" jdbcType="VARCHAR" property="datatype" />
-    <result column="dataVersion" jdbcType="VARCHAR" property="dataversion" />
-    <result column="useides" jdbcType="VARCHAR" property="useides" />
     <result column="experience" jdbcType="TINYINT" property="experience" />
     <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
     <result column="is_essence" jdbcType="BIT" property="isEssence" />
@@ -28,13 +25,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.Report" useGeneratedKeys="true">
-    insert into ${tableName} (port_title, dataType, dataVersion,
-      useides, experience, user_account,
+    insert into ${tableName} (port_title,
+       experience, user_account,
       port_state,
       reply_number, look_number, create_time, 
       auth_flag,is_essence,is_top)
-    values (#{name,jdbcType=VARCHAR}, #{datatype,jdbcType=VARCHAR}, #{dataversion,jdbcType=VARCHAR}, 
-      #{useides,jdbcType=VARCHAR}, #{experience,jdbcType=TINYINT}, #{userAccount},
+    values (#{name,jdbcType=VARCHAR}, #{experience,jdbcType=TINYINT}, #{userAccount},
       '未结',
       0, 0, #{createTime,jdbcType=DATE}, #{authFlag},0,0)
   </insert>
@@ -57,7 +53,7 @@
   </update>
 
   <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
-    SELECT * FROM (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+    SELECT * FROM (select id, port_title, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}
     where id = #{id} and auth_flag = #{portIsauth}
@@ -70,21 +66,21 @@
     <include refid="baseQuery"/>
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select * from (select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+    select * from (select id, port_title, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName} <include refid="baseQuery"/> <include refid="baseOrder"/> limit #{start},#{pageSize})
     as port Inner join user us on port.user_account = us.account
   </select>
 
   <select id="selectById" resultMap="BaseResultMap">
-    select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+    select id, port_title,  experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}
     where id = #{id}
   </select>
 
   <select id="lastSendPort" resultMap="BaseResultMap">
-    select id, port_title, dataType, dataVersion, useides, experience, user_account, is_essence,
+    select id, port_title, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag, ${classId} as class_id
     from ${tableName}
     where user_account = #{userAccount} and auth_flag = #{portIsauth}
@@ -127,9 +123,6 @@
     <where>
       <if test="userAccount != null and userAccount != ''">
         and user_account = #{userAccount}
-      </if>
-      <if test="datatype != null and datatype != ''">
-        and dataType = #{datatype}
       </if>
       <if test="portState != null and portState != ''">
         and port_state = #{portState}

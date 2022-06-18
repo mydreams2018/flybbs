@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ReportQuery extends Paging{
-    private String datatype;
     private String portState;
     private Boolean isEssence;
     private String orderType;

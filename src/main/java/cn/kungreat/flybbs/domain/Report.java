@@ -13,12 +13,6 @@ public class Report {
     private Long id;
 
     private String name;
-
-    private String datatype;
-
-    private String dataversion;
-
-    private String useides;
 //飞吻
     private Byte experience;
     @JsonIgnore
@@ -51,8 +45,7 @@ public class Report {
 
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
-        if(StringUtils.isEmpty(name) || StringUtils.isEmpty(datatype)
-                ||StringUtils.isEmpty(detailsText) || classId == null){
+        if(StringUtils.isEmpty(name) || StringUtils.isEmpty(detailsText) || classId == null){
             builder.append("标题,类型,内容不能为空");
         }
         if(experience != null && experience < 0){

@@ -21,11 +21,11 @@
     <result column="authenticate"  property="authenticate" />
   </resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.User" useGeneratedKeys="true">
-    insert into user (account, password, alias, img, state, register_time, vip_level,register_year,accumulate_points,is_manager,origin_from)
+    insert into user (account, password, alias, img, state, register_time, vip_level,register_year,accumulate_points,is_manager,origin_from,description)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
       #{img,jdbcType=VARCHAR}, 1,
       #{registerTime}, 0,
-            #{registerYear}, 0, 0, #{originFrom})
+            #{registerYear}, 0, 0, #{originFrom},#{description})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.User">
     update user
