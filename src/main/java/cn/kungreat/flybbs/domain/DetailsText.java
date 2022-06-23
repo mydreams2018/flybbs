@@ -28,6 +28,7 @@ public class DetailsText {
 
     private String detailsText;
     private Boolean isPort;
+    private String replyParent;
     //标记字段
     private Integer classId;
     private String tableName;

@@ -11,6 +11,7 @@
     <result column="auth_flag" property="authFlag" />
     <result column="details_text" property="detailsText" />
     <result column="is_port" property="isPort" />
+    <result column="reply_parent" property="replyParent" />
     <result column="like_account" property="likeAccount" />
     <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="img" jdbcType="VARCHAR" property="userImg" />
@@ -25,10 +26,10 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.DetailsText" useGeneratedKeys="true">
     insert into ${tableName} (like_number,is_adoption ,port_id,
       user_account, create_data, auth_flag,
-      details_text, is_port)
+      details_text, is_port,reply_parent)
     values (0, 0,#{portId},
       #{userAccount}, #{createData}, #{authFlag},
-      #{detailsText}, #{isPort})
+      #{detailsText}, #{isPort}, #{replyParent})
   </insert>
     <update id="updateByPrimaryKey">
     update ${tableName}

@@ -78,19 +78,6 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         report.setId(record.getPortId());
         reportService.incrementNumber(report);
         userReplyPortService.updateByPrimaryKey();//用户周回贴统计
-        Set<String> set = UserAccumulate.hasReplyAlias(record.getDetailsText());//用户@信息
-        if(set.size() > 0){
-            UserMessage userMessage = new UserMessage();
-            LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            userMessage.setSrcAlias(loginUser.getAlias());
-            userMessage.setAuthFlag(portIsauth.equals(1));
-            userMessage.setClassId(record.getClassId());
-            userMessage.setPortId(record.getPortId());
-            userMessage.setDetailsId(record.getId());
-            userMessage.setReceiveDate(date);
-            userMessage.setReceiveAliasSet(set);
-            userMessageService.insertBaych(userMessage);
-        }
         return 1;
     }
 
