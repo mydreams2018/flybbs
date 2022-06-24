@@ -1,8 +1,8 @@
 package cn.kungreat.flybbs.security;
 
+import cn.kungreat.flybbs.FlybbsApplication;
 import cn.kungreat.flybbs.util.Calculator;
 import cn.kungreat.flybbs.vo.JsonResult;
-import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,7 +27,7 @@ public class ImageFilter extends OncePerRequestFilter {
                 if(isAuth != null && isAuth.length()!=0 && !"anonymousUser".equals(isAuth)){
                     re.getSession().removeAttribute("image_code");
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write(JSON.toJSONString(new JsonResult(false,"已经存在用户,请先退出",null,0,"imgCode")));
+                    response.getWriter().write(FlybbsApplication.MAP_JSON.writeValueAsString(new JsonResult(false,"已经存在用户,请先退出",null,0,"imgCode")));
                     return ;
                 }
             }
@@ -41,7 +41,7 @@ public class ImageFilter extends OncePerRequestFilter {
             Object tarCode = request.getParameter("image_code");
             if(code == null || obj ==null || time > 60000 || tarCode ==null || Calculator.count(code.toString()) != Integer.parseInt(tarCode.toString())){
                 response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(JSON.toJSONString(new JsonResult(false,"验证码错误-或者超时",null,0,"imgCode")));
+                response.getWriter().write(FlybbsApplication.MAP_JSON.writeValueAsString(new JsonResult(false,"验证码错误-或者超时",null,0,"imgCode")));
                 return;
             }
         }

@@ -1,8 +1,8 @@
 package cn.kungreat.flybbs.filter;
 
+import cn.kungreat.flybbs.FlybbsApplication;
 import cn.kungreat.flybbs.util.Calculator;
 import cn.kungreat.flybbs.vo.JsonResult;
-import com.alibaba.fastjson.JSON;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class AnotherImageFilter implements Filter {
             Object tarCode = request.getParameter("image_code");
             if(code == null || obj ==null || time > 60000 || tarCode ==null || Calculator.count(code.toString()) != Integer.parseInt(tarCode.toString())){
                 response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(JSON.toJSONString(new JsonResult(false,"验证码错误-或者超时","/user/reg.html",0,"imgCode")));
+                response.getWriter().write(FlybbsApplication.MAP_JSON.writeValueAsString(new JsonResult(false,"验证码错误-或者超时","/user/reg.html",0,"imgCode")));
                 return;
             }
         }

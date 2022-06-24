@@ -1,7 +1,8 @@
 package cn.kungreat.flybbs;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,8 +13,8 @@ public class FlybbsApplication {
 	/*
 	spring 默认使用的日志工具类
 	*/
-	private final static Log LOGGER = LogFactory.getLog(FlybbsApplication.class);
-
+	private final static Logger LOGGER = LoggerFactory.getLogger(FlybbsApplication.class);
+	public static final ObjectMapper MAP_JSON = new ObjectMapper(); //create once, reuse
 	public static void main(String[] args) {
 		SpringApplication.run(FlybbsApplication.class, args);
 		LOGGER.info("start finish");

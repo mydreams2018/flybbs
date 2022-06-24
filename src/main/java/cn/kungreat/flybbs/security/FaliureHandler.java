@@ -1,7 +1,7 @@
 package cn.kungreat.flybbs.security;
 
+import cn.kungreat.flybbs.FlybbsApplication;
 import cn.kungreat.flybbs.vo.JsonResult;
-import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -31,7 +31,7 @@ public class FaliureHandler implements AuthenticationFailureHandler {
 //        SavedRequest cache = requestCache.getRequest(request, response);
 //        String path = (cache==null?"/index":cache.getRedirectUrl());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(JSON.toJSONString(new JsonResult(false,"用户或密码出错","/user/login.html",0,"imgCode")));
+        response.getWriter().write(FlybbsApplication.MAP_JSON.writeValueAsString(new JsonResult(false,"用户或密码出错","/user/login.html",0,"imgCode")));
     /*    String accept = request.getHeader("Accept");
         if(accept.contains("text/html")){
             request.setAttribute("error",exception.getMessage());

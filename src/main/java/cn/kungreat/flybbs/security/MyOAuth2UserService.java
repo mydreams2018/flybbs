@@ -1,10 +1,10 @@
 package cn.kungreat.flybbs.security;
 
+import cn.kungreat.flybbs.FlybbsApplication;
 import cn.kungreat.flybbs.domain.Oauth2User;
 import cn.kungreat.flybbs.domain.User;
 import cn.kungreat.flybbs.service.Oauth2UserService;
 import cn.kungreat.flybbs.service.PermissionService;
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,11 +49,11 @@ public class MyOAuth2UserService implements OAuth2UserService<OAuth2UserRequest,
                     + tokenValue, String.class);
             String body = forEntity.getBody();
             String replace = body.substring(9,body.length()-4);
-            Map<String,Object> stringObjectMap = JSON.parseObject(replace,Map.class);
+            Map<String,Object> stringObjectMap = FlybbsApplication.MAP_JSON.readValue(replace,Map.class);
             openid = stringObjectMap.get("openid").toString();
             response = this.restOperations.getForEntity(clientRegistration.getProviderDetails().getUserInfoEndpoint().getUri()+"?access_token="
                     +tokenValue+"&oauth_consumer_key="+clientRegistration.getClientId()+"&openid="+ openid,String.class);
-            userAttributes = JSON.parseObject(response.getBody(),Map.class);
+            userAttributes = FlybbsApplication.MAP_JSON.readValue(response.getBody(),Map.class);
         }catch(Exception ex){
             OAuth2Error oauth2Error = new OAuth2Error("invalid_user_info_response",
                     "An error occurred while attempting to retrieve the UserInfo Resource: " + ex.getMessage(), null);
