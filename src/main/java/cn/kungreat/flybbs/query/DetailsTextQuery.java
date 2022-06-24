@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 public class DetailsTextQuery extends Paging{
     private Long id;
+    private String replyIds;
     @JsonIgnore
     private String likeAccount;
     private Integer likeNumber;

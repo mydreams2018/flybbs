@@ -81,9 +81,19 @@
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
+    select id, is_adoption, like_number, port_id, user_account, create_data, auth_flag,
+    details_text, is_port,reply_parent
+    from ${tableName} <include refid="baseQuery"/> <include refid="baseOrder"/> limit #{start},#{pageSize}
+  </select>
+
+  <select id="selectChildAnswer" resultMap="BaseResultMap">
     select * from (select id, is_adoption, like_number, port_id, user_account, create_data, auth_flag,
-    details_text, is_port
-    from ${tableName} <include refid="baseQuery"/> <include refid="baseOrder"/> limit #{start},#{pageSize})
+    details_text, is_port,reply_parent
+    from ${tableName} where find_in_set(id,get_child_list(#{replyIds})) and is_port!=1
+        <if test="portIsauth != 0">
+          and auth_flag = 1
+        </if>
+       <include refid="baseOrder"/> )
     as portDetails Inner join user us on portDetails.user_account = us.account
   </select>
 
@@ -112,14 +122,13 @@
   </select>
 
   <sql id="baseQuery">
-    <where>
+    where reply_parent is null
       <if test="portId != null">
         and port_id = #{portId} and is_port!=1
       </if>
       <if test="portIsauth != 0">
         and auth_flag = 1
       </if>
-    </where>
   </sql>
 
   <sql id="baseOrder">

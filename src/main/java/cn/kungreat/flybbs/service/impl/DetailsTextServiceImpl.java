@@ -24,10 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DetailsTextServiceImpl implements DetailsTextService {
@@ -51,15 +49,46 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         Assert.isTrue(query.getPortId()!=null,"贴子ID异常");
         query.setPortIsauth(1);
         Integer count = detailsTextMapper.selectCount(query);
-        List list  = Collections.emptyList();
+        List<DetailsText> list  = Collections.emptyList();
         if (count >  0){
             list = detailsTextMapper.selectAll(query);
         }
         query.setData(count,query.getPageSize(),query.getCurrentPage());
         QueryResult result = new QueryResult();
-        result.setDatas(list);
+        result.setDatas(linkChild(list,query));
         result.setPage(query);
         return result;
+    }
+
+    private List<DetailsText> linkChild(List<DetailsText> list,DetailsTextQuery query){
+        List<DetailsText> rt = list;
+        if(list.size()>0){
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < list.size(); i++) {
+                DetailsText detailsText = list.get(i);
+                stringBuilder.append(detailsText.getId());
+                if(i+1 < list.size()){
+                    stringBuilder.append(",");
+                }
+            }
+            query.setReplyIds(stringBuilder.toString());
+            List<DetailsText> childAnswer = detailsTextMapper.selectChildAnswer(query);
+            for (int x = 0; x < childAnswer.size()-1; x++) {
+                DetailsText outX = childAnswer.get(x);
+                for (int y = 0; y < childAnswer.size(); y++) {
+                    DetailsText innerY =  childAnswer.get(y);
+                    if(outX.getId().equals(innerY.getReplyParent())){
+                        if(outX.getChildAnswers() == null){
+                            outX.setChildAnswers(new ArrayList<>());
+                        }
+                        outX.getChildAnswers().add(innerY);
+                    }
+                }
+            }
+            rt = childAnswer.stream().
+                    filter(item->item.getReplyParent()==null).collect(Collectors.toList());
+        }
+        return rt;
     }
 
     @Transactional

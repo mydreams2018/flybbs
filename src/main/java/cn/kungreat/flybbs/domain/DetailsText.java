@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
+import java.util.List;
+
 @Setter
 @Getter
 public class DetailsText {
@@ -28,7 +30,8 @@ public class DetailsText {
 
     private String detailsText;
     private Boolean isPort;
-    private String replyParent;
+    private Long replyParent;
+    private List<DetailsText> childAnswers;
     //标记字段
     private Integer classId;
     private String tableName;

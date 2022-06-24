@@ -16,7 +16,7 @@ public interface DetailsTextMapper {
 
     Integer selectCount(DetailsTextQuery query);
     List<DetailsText> selectAll(DetailsTextQuery query);
-
+    List<DetailsText> selectChildAnswer(DetailsTextQuery query);
     int updateByPrimaryKey(DetailsTextQuery query);
 
     DetailsText selectLikeAccount(DetailsTextQuery query);
