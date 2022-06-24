@@ -25,8 +25,7 @@ public class DetailsTextController {
     public JsonResult sendReply(DetailsText detailsText){
         JsonResult jsonResult = new JsonResult();
         try{
-            detailsTextService.insert(detailsText);
-            jsonResult.setId("imgCode");
+            jsonResult.setId(String.valueOf(detailsTextService.insert(detailsText)));
         }catch (Exception e){
             jsonResult.setResult(false);
             jsonResult.setStatus(0);

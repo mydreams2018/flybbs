@@ -107,7 +107,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         report.setId(record.getPortId());
         reportService.incrementNumber(report);
         userReplyPortService.updateByPrimaryKey();//用户周回贴统计
-        return 1;
+        return record.getId();
     }
 
     @Transactional
