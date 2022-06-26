@@ -7,7 +7,8 @@
         <module>base</module>
 		<module>common</module>
 		<module>config</module>
-	</modules>
+        <module>clienttest</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -71,10 +72,7 @@
 				 <scope>test</scope>
             </dependency>
           -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
