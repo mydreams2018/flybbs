@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.kungreat.flybbs.mapper.DetailsTextMapper">
-  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.DetailsText">
+<mapper namespace="cn.kungreat.base.mapper.DetailsTextMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.base.domain.DetailsText">
     <id column="id" property="id" />
     <result column="is_adoption" property="isAdoption" />
     <result column="like_number" property="likeNumber" />
@@ -19,11 +19,11 @@
     <result column="authenticate"  property="authenticate" />
     <result column="is_manager"  property="isManager" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="cn.kungreat.flybbs.query.DetailsTextQuery">
+  <delete id="deleteByPrimaryKey" parameterType="cn.kungreat.base.query.DetailsTextQuery">
     delete from ${tableName}
     where id = #{id}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.DetailsText" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.base.domain.DetailsText" useGeneratedKeys="true">
     insert into ${tableName} (like_number,is_adoption ,port_id,
       user_account, create_data, auth_flag,
       details_text, is_port,reply_parent)
@@ -69,7 +69,7 @@
     where id = #{id,jdbcType=BIGINT} and auth_flag = #{portIsauth}
   </select>
 
-  <select id="selectByPort" parameterType="cn.kungreat.flybbs.domain.DetailsText" resultMap="BaseResultMap">
+  <select id="selectByPort" parameterType="cn.kungreat.base.domain.DetailsText" resultMap="BaseResultMap">
     select id, is_adoption, like_number, port_id, user_account, create_data, auth_flag,
     details_text, is_port
     from  ${tableName}  where port_id = #{portId} and is_port=1 and auth_flag = #{portIsauth}
@@ -101,7 +101,7 @@
     select like_account,like_number from ${tableName} where id=#{id}
   </select>
 
-  <select id="lastReplyPort" resultMap="cn.kungreat.flybbs.mapper.ReportMapper.BaseResultMap">
+  <select id="lastReplyPort" resultMap="cn.kungreat.base.mapper.ReportMapper.BaseResultMap">
         select id, port_title,is_essence, reply_number, create_time, class_id,create_data from (
         (select t2.id, t2.port_title,t2.is_essence, t2.reply_number, t2.create_time,t1.port_id,t1.create_data,'4' as class_id
         from (select port_id,create_data from details_text_talk where user_account = #{userAccount} and auth_flag = #{portIsauth} and is_port!=1

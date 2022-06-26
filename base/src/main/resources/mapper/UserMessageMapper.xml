@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.kungreat.flybbs.mapper.UserMessageMapper">
-  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.UserMessage">
+<mapper namespace="cn.kungreat.base.mapper.UserMessageMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.base.domain.UserMessage">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="class_id" jdbcType="INTEGER" property="classId" />
     <result column="port_id" jdbcType="BIGINT" property="portId" />
@@ -38,7 +38,7 @@
     </where>
   </delete>
 
-  <insert id="insertBaych" parameterType="cn.kungreat.flybbs.domain.UserMessage">
+  <insert id="insertBaych" parameterType="cn.kungreat.base.domain.UserMessage">
     insert into user_message (class_id, port_id, details_id,
     src_alias, receive_alias, receive_date, auth_flag) values
     <foreach collection="receiveAliasSet" item="var" separator=",">

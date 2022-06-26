@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.kungreat.flybbs.mapper.ReportMapper">
-  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.Report">
+<mapper namespace="cn.kungreat.base.mapper.ReportMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.base.domain.Report">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="port_title" jdbcType="VARCHAR" property="name" />
     <result column="experience" jdbcType="TINYINT" property="experience" />
@@ -24,7 +24,7 @@
     delete from ${tableName}
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.Report" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.base.domain.Report" useGeneratedKeys="true">
     insert into ${tableName} (port_title,
        experience, user_account,
       port_state,
@@ -34,7 +34,7 @@
       '未结',
       0, 0, #{createTime,jdbcType=DATE}, #{authFlag},0,0)
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report">
+  <update id="updateByPrimaryKey" parameterType="cn.kungreat.base.domain.Report">
     update ${tableName}
     set port_title = #{name,jdbcType=VARCHAR},
         auth_flag = #{authFlag}
@@ -52,7 +52,7 @@
     update ${tableName} set port_state = #{portState,jdbcType=VARCHAR}  where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.Report" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.kungreat.base.domain.Report" resultMap="BaseResultMap">
     SELECT * FROM (select id, port_title, experience, user_account, is_essence,
     port_state, is_top, reply_number, look_number, create_time, auth_flag
     from ${tableName}

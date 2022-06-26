@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.kungreat.flybbs.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.User">
+<mapper namespace="cn.kungreat.base.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.base.domain.User">
     <id column="id" property="id" />
     <result column="account" property="account" />
     <result column="password" property="password" />
@@ -20,14 +20,14 @@
     <result column="from_city"  property="fromCity" />
     <result column="authenticate"  property="authenticate" />
   </resultMap>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.User" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.base.domain.User" useGeneratedKeys="true">
     insert into user (account, password, alias, img, state, register_time, vip_level,register_year,accumulate_points,is_manager,origin_from,description)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
       #{img,jdbcType=VARCHAR}, 1,
       #{registerTime}, 0,
             #{registerYear}, 0, 0, #{originFrom},#{description})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.User">
+  <update id="updateByPrimaryKey" parameterType="cn.kungreat.base.domain.User">
     update user
     set from_city = #{fromCity,jdbcType=VARCHAR},
     <if test="email != null and email != ''">

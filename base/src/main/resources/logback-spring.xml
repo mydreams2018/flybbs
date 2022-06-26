@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-
+    <contextName>base</contextName>
     <!-- 日志文件存放路径 当前运行目录 -->
     <property name="log.path" value="./logs" />
     <!-- 日志文件输出格式 -->
@@ -64,7 +64,7 @@
         </filter>
     </appender>
 
-    <logger name="cn.kungreat.flybbs" level="info" additivity="false">
+    <logger name="cn.kungreat.base" level="info" additivity="false">
         <appender-ref ref="file_error" />
         <appender-ref ref="file_info" />
     </logger>

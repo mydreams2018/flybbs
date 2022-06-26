@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.kungreat.flybbs.mapper.UserReplyPortMapper">
-  <resultMap id="BaseResultMap" type="cn.kungreat.flybbs.domain.UserReplyPort">
+<mapper namespace="cn.kungreat.base.mapper.UserReplyPortMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.base.domain.UserReplyPort">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
     <result column="reply_year" jdbcType="INTEGER" property="replyYear" />
@@ -13,14 +13,14 @@
     <result column="authenticate" jdbcType="VARCHAR" property="authenticate" />
   </resultMap>
 
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.flybbs.domain.UserReplyPort" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.base.domain.UserReplyPort" useGeneratedKeys="true">
     insert into user_reply_port (user_account, reply_year, reply_week, 
       reply_number)
     values (#{userAccount,jdbcType=VARCHAR}, #{replyYear,jdbcType=INTEGER}, #{replyWeek,jdbcType=INTEGER}, 
       #{replyNumber,jdbcType=INTEGER})
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="cn.kungreat.flybbs.domain.UserReplyPort">
+  <update id="updateByPrimaryKey" parameterType="cn.kungreat.base.domain.UserReplyPort">
     update user_reply_port
     set reply_number = reply_number+1
     where id = #{id}
