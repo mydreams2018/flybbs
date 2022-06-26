@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 "/image","/register","/userImg/**"
                 ,"/report/queryReport","/report/selectByPrimaryKey","/detailsText/queryDetails"
-        ,"/user/home","/user/lastSendPort","/user/lastReplyPort","/userReplyPort/selectAll","/user/resetPassword");
+        ,"/user/home","/user/lastSendPort","/user/lastReplyPort","/userReplyPort/selectAll","/user/resetPassword"
+        ,"/actuator/**");
     }
 
     @Override
