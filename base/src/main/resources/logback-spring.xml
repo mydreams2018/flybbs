@@ -11,7 +11,6 @@
         <!--展示格式 layout-->
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>${log.pattern}</pattern>
-            <!--<charset>UTF-8</charset>-->
         </layout>
     </appender>
 
