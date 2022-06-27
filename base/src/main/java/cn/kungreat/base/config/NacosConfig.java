@@ -8,13 +8,12 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class NacosConfig {
     /**
-     * 用于改变程序自动获取的本机ip
+     *初始化 NacosDiscoveryProperties 手动指定ip > 再走配置文件读取 >  后续再走 postConstruct
      */
     @Bean
     @Primary
     public NacosDiscoveryProperties nacosProperties() {
         NacosDiscoveryProperties nacosDiscoveryProperties = new NacosDiscoveryProperties();
-        //此处我只改了ip，其他参数可以根据自己的需求改变
         nacosDiscoveryProperties.setIp("www.kungreat.cn");
         return nacosDiscoveryProperties;
     }
