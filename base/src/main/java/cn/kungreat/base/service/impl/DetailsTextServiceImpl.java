@@ -75,7 +75,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
             }
             query.setReplyIds(stringBuilder.toString());
             List<DetailsText> childAnswer = detailsTextMapper.selectChildAnswer(query);
-            for (int x = 0; x < childAnswer.size()-1; x++) {
+            for (int x = 0; x < childAnswer.size(); x++) {
                 DetailsText outX = childAnswer.get(x);
                 for (int y = 0; y < childAnswer.size(); y++) {
                     DetailsText innerY =  childAnswer.get(y);
