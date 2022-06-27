@@ -19,6 +19,7 @@ import cn.kungreat.base.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@RefreshScope
 public class DetailsTextServiceImpl implements DetailsTextService {
     @Autowired
     private DetailsTextMapper detailsTextMapper;
@@ -35,7 +37,7 @@ public class DetailsTextServiceImpl implements DetailsTextService {
     private ReportService reportService;
     @Autowired
     private ReportMapper reportMapper;
-    @Value("${port.isauth}")
+    @Value("${portIsauth:1}")
     private Integer portIsauth;
     @Autowired
     private UserMapper userMapper;
@@ -197,20 +199,6 @@ public class DetailsTextServiceImpl implements DetailsTextService {
         UserMessageQuery messageQuery = new UserMessageQuery();
         messageQuery.setClassId(query.getClassId());
         messageQuery.setDetailsId(detailsText.getId());
-        userMessageService.deleteByAll(messageQuery);//删除@信息
-        Set<String> set = UserAccumulate.hasReplyAlias(query.getDetailsText());//查看是否有@信息
-        if(set.size() > 0){
-            UserMessage userMessage = new UserMessage();
-            LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            userMessage.setSrcAlias(loginUser.getAlias());
-            userMessage.setAuthFlag(portIsauth.equals(1));
-            userMessage.setClassId(query.getClassId());
-            userMessage.setPortId(detailsText.getPortId());
-            userMessage.setDetailsId(detailsText.getId());
-            userMessage.setReceiveDate(new Date());
-            userMessage.setReceiveAliasSet(set);
-            userMessageService.insertBaych(userMessage);//添加@信息
-        }
         detailsTextMapper.updateByPrimaryKey(query);
     }
 //用户首页最近的回贴

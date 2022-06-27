@@ -12,6 +12,7 @@ import cn.kungreat.base.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 @Service
+@RefreshScope
 public class ReportServiceImpl implements ReportService {
     @Autowired
     private UserService userService;
@@ -29,7 +31,7 @@ public class ReportServiceImpl implements ReportService {
     private ReportMapper reportMapper;
     @Autowired
     private DetailsTextMapper detailsTextMapper;
-    @Value("${port.isauth}")
+    @Value("${portIsauth:1}")
     private Integer portIsauth;
     @Override
     public int deleteByPrimaryKey(Long id) {
