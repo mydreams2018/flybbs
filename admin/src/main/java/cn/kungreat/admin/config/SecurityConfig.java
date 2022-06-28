@@ -1,7 +1,10 @@
 package cn.kungreat.admin.config;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,9 +20,11 @@ import java.util.UUID;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AdminServerProperties adminServer;
+    private final SecurityProperties security;
 
-    public SecurityConfig(AdminServerProperties adminServer) {
+    public SecurityConfig(AdminServerProperties adminServer,SecurityProperties security) {
         this.adminServer = adminServer;
+        this.security = security;
     }
 
     @Override
@@ -48,17 +53,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl(this.adminServer.getContextPath() + "/logout")
                 .and()
-                .httpBasic()
-                .and()
+                .httpBasic(Customizer.withDefaults())
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .ignoringRequestMatchers(
-                        new AntPathRequestMatcher(this.adminServer.getContextPath() + "/instances", HttpMethod.POST.toString()),
-                        new AntPathRequestMatcher(this.adminServer.getContextPath() + "/instances/*", HttpMethod.DELETE.toString()))
+                        new AntPathRequestMatcher(this.adminServer.path("/instances"),
+                                HttpMethod.POST.toString()),
+                        new AntPathRequestMatcher(this.adminServer.path("/instances/*"),
+                                HttpMethod.DELETE.toString()))
                 .and()
                 .rememberMe()
                 .key(UUID.randomUUID().toString())
                 .tokenValiditySeconds(1209600);
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser(security.getUser().getName())
+                .password("{noop}" + security.getUser().getPassword()).roles("USER");
+    }
+
 
 }
