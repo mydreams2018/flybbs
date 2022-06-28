@@ -2,7 +2,7 @@ package cn.kungreat.base.controller;
 
 import cn.kungreat.base.domain.User;
 import cn.kungreat.base.service.UserService;
-import cn.kungreat.base.vo.JsonResult;
+import cn.kungreat.common.vo.JsonResult;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;

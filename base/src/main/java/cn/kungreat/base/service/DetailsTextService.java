@@ -3,7 +3,7 @@ package cn.kungreat.base.service;
 import cn.kungreat.base.domain.DetailsText;
 import cn.kungreat.base.domain.Report;
 import cn.kungreat.base.query.DetailsTextQuery;
-import cn.kungreat.base.vo.QueryResult;
+import cn.kungreat.common.vo.QueryResult;
 
 import java.util.List;
 

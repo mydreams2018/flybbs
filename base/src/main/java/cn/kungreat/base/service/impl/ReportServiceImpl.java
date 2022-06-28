@@ -8,7 +8,7 @@ import cn.kungreat.base.mapper.ReportMapper;
 import cn.kungreat.base.query.ReportQuery;
 import cn.kungreat.base.service.ReportService;
 import cn.kungreat.base.service.UserService;
-import cn.kungreat.base.vo.QueryResult;
+import cn.kungreat.common.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

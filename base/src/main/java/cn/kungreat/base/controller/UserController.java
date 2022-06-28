@@ -6,7 +6,7 @@ import cn.kungreat.base.query.UserQuery;
 import cn.kungreat.base.service.DetailsTextService;
 import cn.kungreat.base.service.ReportService;
 import cn.kungreat.base.service.UserService;
-import cn.kungreat.base.vo.JsonResult;
+import cn.kungreat.common.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;

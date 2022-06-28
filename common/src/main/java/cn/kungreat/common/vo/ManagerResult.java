@@ -1,4 +1,4 @@
-package cn.kungreat.base.vo;
+package cn.kungreat.common.vo;
 
 import lombok.Getter;
 import lombok.Setter;

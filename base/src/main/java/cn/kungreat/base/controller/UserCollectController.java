@@ -3,7 +3,7 @@ package cn.kungreat.base.controller;
 import cn.kungreat.base.domain.UserCollect;
 import cn.kungreat.base.query.UserCollectQuery;
 import cn.kungreat.base.service.UserCollectService;
-import cn.kungreat.base.vo.QueryResult;
+import cn.kungreat.common.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

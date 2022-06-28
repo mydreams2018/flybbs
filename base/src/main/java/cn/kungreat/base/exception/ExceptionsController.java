@@ -1,6 +1,6 @@
 package cn.kungreat.base.exception;
 
-import cn.kungreat.base.vo.JsonResult;
+import cn.kungreat.common.vo.JsonResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

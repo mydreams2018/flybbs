@@ -15,7 +15,7 @@ import cn.kungreat.base.service.ReportService;
 import cn.kungreat.base.service.UserMessageService;
 import cn.kungreat.base.service.UserReplyPortService;
 import cn.kungreat.base.util.UserAccumulate;
-import cn.kungreat.base.vo.QueryResult;
+import cn.kungreat.common.vo.QueryResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -5,7 +5,7 @@ import cn.kungreat.base.mapper.UserMapper;
 import cn.kungreat.base.query.UserQuery;
 import cn.kungreat.base.service.UserService;
 import cn.kungreat.base.util.UserAccumulate;
-import cn.kungreat.base.vo.ManagerResult;
+import cn.kungreat.common.vo.ManagerResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

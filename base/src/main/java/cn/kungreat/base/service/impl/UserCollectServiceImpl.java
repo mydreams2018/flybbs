@@ -4,7 +4,7 @@ import cn.kungreat.base.domain.UserCollect;
 import cn.kungreat.base.mapper.UserCollectMapper;
 import cn.kungreat.base.query.UserCollectQuery;
 import cn.kungreat.base.service.UserCollectService;
-import cn.kungreat.base.vo.QueryResult;
+import cn.kungreat.common.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

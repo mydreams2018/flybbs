@@ -1,7 +1,7 @@
 package cn.kungreat.base.security;
 
 import cn.kungreat.base.FlybbsApplication;
-import cn.kungreat.base.vo.JsonResult;
+import cn.kungreat.common.vo.JsonResult;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;

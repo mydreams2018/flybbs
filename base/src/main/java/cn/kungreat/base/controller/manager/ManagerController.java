@@ -2,7 +2,7 @@ package cn.kungreat.base.controller.manager;
 
 import cn.kungreat.base.query.UserQuery;
 import cn.kungreat.base.service.UserService;
-import cn.kungreat.base.vo.ManagerResult;
+import cn.kungreat.common.vo.ManagerResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

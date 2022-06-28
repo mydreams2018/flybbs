@@ -2,7 +2,7 @@ package cn.kungreat.base.filter;
 
 import cn.kungreat.base.FlybbsApplication;
 import cn.kungreat.base.util.Calculator;
-import cn.kungreat.base.vo.JsonResult;
+import cn.kungreat.common.vo.JsonResult;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

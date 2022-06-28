@@ -2,7 +2,7 @@ package cn.kungreat.base.service;
 
 import cn.kungreat.base.domain.User;
 import cn.kungreat.base.query.UserQuery;
-import cn.kungreat.base.vo.ManagerResult;
+import cn.kungreat.common.vo.ManagerResult;
 
 
 public interface UserService {

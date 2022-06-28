@@ -2,7 +2,7 @@ package cn.kungreat.base.security;
 
 import cn.kungreat.base.FlybbsApplication;
 import cn.kungreat.base.util.Calculator;
-import cn.kungreat.base.vo.JsonResult;
+import cn.kungreat.common.vo.JsonResult;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
