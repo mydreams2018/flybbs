@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.web.*;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         ).successHandler(new MyOauth2SuccessHandler()).failureHandler(new MyOauth2FailHandler())
                 )
                 .addFilterBefore(new ImageFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new TokenManagerFilter(myUserDetails), SessionManagementFilter.class)
                 .authorizeRequests()
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/index").loginProcessingUrl("/defaultLogin").permitAll()
@@ -94,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(new LogoutHandler())
                 .and()
                 .rememberMe().tokenRepository(tokenRepository)
-                .tokenValiditySeconds(60 * 6000)
+                .tokenValiditySeconds(60 * 10080)
                 .userDetailsService(myUserDetails).authenticationSuccessHandler(new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

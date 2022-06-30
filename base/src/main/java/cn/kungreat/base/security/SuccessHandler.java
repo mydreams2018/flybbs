@@ -1,8 +1,10 @@
 package cn.kungreat.base.security;
 
 import cn.kungreat.base.FlybbsApplication;
+import cn.kungreat.base.util.JwtToken;
 import cn.kungreat.common.vo.JsonResult;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +29,18 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(FlybbsApplication.MAP_JSON.writeValueAsString(new JsonResult(true,authentication.getName(),"/index.html",1,"")));
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        JsonResult jsonResult = new JsonResult(true, authentication.getName(), "/index.html", 1, "");
+        String jwtToken = JwtToken.getJwtToken(loginUser);
+        if(jwtToken.isEmpty()){
+            SecurityContextHolder.clearContext();
+            jsonResult.setStatus(0);
+            jsonResult.setResult(false);
+            jsonResult.setMsg("生成token失败");
+        }
+        jsonResult.setRememberMe(request.getParameter("remember-me"));
+        jsonResult.setJwtToken(jwtToken);
+        response.getWriter().write(FlybbsApplication.MAP_JSON.writeValueAsString(jsonResult));
 
    /*     SavedRequest cache = requestCache.getRequest(request, response);
         String path = (cache==null?"/index.html":cache.getRedirectUrl());

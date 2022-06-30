@@ -11,6 +11,8 @@ public class JsonResult {
     private String action;
     private int status = 1;
     private String id;
+    private String jwtToken;
+    private String rememberMe;
     public JsonResult(boolean result, String msg,String path,int sta,String id) {
         this.result = result;
         this.msg = msg;
