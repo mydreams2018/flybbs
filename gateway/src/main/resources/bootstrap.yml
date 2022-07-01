@@ -1,0 +1,35 @@
+server:
+  port: 10022
+  servlet:
+    context-path: /gateway
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 127.0.0.1:8848
+        namespace: 58cf8b9a-7351-40c4-87db-84624241f7c9
+        metadata:
+          management:
+            context-path: ${server.servlet.context-path}/actuator
+  main:
+    allow-bean-definition-overriding: true
+# 自定义配置 连接nacos 配置中心需要的数据  代码 GatewayConfig.java 中读取被监听
+nacos:
+  gateway:
+    route:
+      config:
+        data-id: gateway-flybbs-base
+        group: DEFAULT_GROUP
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

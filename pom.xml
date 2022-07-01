@@ -9,7 +9,8 @@
 		<module>config</module>
         <module>clienttest</module>
 		<module>admin</module>
-	</modules>
+        <module>gateway</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
