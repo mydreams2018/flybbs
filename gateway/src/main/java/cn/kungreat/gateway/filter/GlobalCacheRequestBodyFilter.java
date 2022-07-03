@@ -47,7 +47,7 @@ public class GlobalCacheRequestBodyFilter implements GlobalFilter,Ordered {
                             return cachedFlux;
                         }
                     };
-            // 将包装之后的 ServerHttpRequest 向下继续传递
+            // 将包装之后的 ServerHttpRequest 向下继续传递  exchange.mutate()  构造新的 ServerWebExchange
             return chain.filter(exchange.mutate().request(mutatedRequest).build());
         });
     }

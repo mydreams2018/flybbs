@@ -1,0 +1,71 @@
+[
+  {
+    "id": "flybbs-base",
+    "predicates": [
+      {
+        "args": {
+          "pattern": "/gateway/flybbs-base/**"
+        },
+        "name": "Path"
+      }
+    ],
+    "uri": "lb://flybbs-base",
+     "filters": [
+      {
+        "name": "HeaderToken"
+      },
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "2"
+        }
+      }
+    ]
+  },
+    {
+    "id": "client-test",
+    "predicates": [
+      {
+        "args": {
+          "pattern": "/gateway/client-test/**"
+        },
+        "name": "Path"
+      }
+    ],
+    "uri": "lb://client-test",
+     "filters": [
+      {
+        "name": "HeaderToken"
+      },
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "2"
+        }
+      }
+    ]
+  },
+    {
+    "id": "gateway-self",
+    "predicates": [
+      {
+        "args": {
+          "pattern": "/gateway/actuator/**"
+        },
+        "name": "Path"
+      }
+    ],
+    "uri": "lb://gateway",
+     "filters": [
+      {
+        "name": "HeaderToken"
+      },
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      }
+    ]
+  }
+]
