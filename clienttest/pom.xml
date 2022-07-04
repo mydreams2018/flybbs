@@ -35,6 +35,16 @@
             <artifactId>spring-kafka</artifactId>
             <version>2.8.2</version>
         </dependency>
+        <!-- open feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- feign 使用 httpclient  okhttp -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
         <!-- swagger 用于定义 API 文档 -->
         <dependency>
             <groupId>io.springfox</groupId>
