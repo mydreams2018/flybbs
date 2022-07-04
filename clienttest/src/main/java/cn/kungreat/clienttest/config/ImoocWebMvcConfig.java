@@ -24,12 +24,11 @@ public class ImoocWebMvcConfig extends WebMvcConfigurationSupport {
 
 
     /**
-     *  让 MVC加载 Swagger 的静态资源
+     *  让 MVC加载 Swagger 的静态资源   registry.addResourceHandler("/**")
+     *                 .addResourceLocations("classpath:/static/");
      * */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("doc.html")
