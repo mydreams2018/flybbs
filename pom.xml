@@ -108,16 +108,21 @@
 			</plugin>
 		</plugins>
 	</build>
-	<!-- 配置远程仓库 -->
-	<repositories>
+	<!-- 在pom文件中加入distributionManagement节点
+	 repository里的id需要和    .m2中setting.xml里的 server id名称保持一致
+	 若项目版本号末尾带有 -SNAPSHOT，则会发布到snapshots快照版本仓库
+     若项目版本号末尾带有 -RELEASES 或什么都不带，则会发布到releases正式版本仓库 -->
+	<distributionManagement>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+			<id>releases</id>
+			<name>Nexus Release Repository</name>
+			<url>http://127.0.0.1:8081/repository/maven-releases/</url>
 		</repository>
-	</repositories>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>http://127.0.0.1:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
