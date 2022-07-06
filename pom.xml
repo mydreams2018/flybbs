@@ -10,6 +10,7 @@
         <module>clienttest</module>
 		<module>admin</module>
         <module>gateway</module>
+        <module>dashboard</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>

@@ -2,7 +2,9 @@ package cn.kungreat.clienttest.controller;
 
 
 import cn.kungreat.clienttest.hystrix.*;
+import cn.kungreat.clienttest.service.NacosClientAnnoService;
 import cn.kungreat.clienttest.service.NacosClientService;
+import cn.kungreat.clienttest.service.merge.NacosClientCollapseCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.ServiceInstance;
@@ -29,11 +31,12 @@ public class NacosClientHystrixController {
     private final NacosClientService nacosClientServiceSrc;
 
     private final CacheHystrixCommandAnnotation cacheHystrixCommandAnnotation;
-
-    public NacosClientHystrixController(UseHystrixCommandAnnotation nacosClientService, NacosClientService nacosClientServiceSrc, CacheHystrixCommandAnnotation cacheHystrixCommandAnnotation) {
+    private final NacosClientAnnoService nacosClientAnnoService;
+    public NacosClientHystrixController(UseHystrixCommandAnnotation nacosClientService, NacosClientService nacosClientServiceSrc, CacheHystrixCommandAnnotation cacheHystrixCommandAnnotation, NacosClientAnnoService nacosClientAnnoService) {
         this.nacosClientService = nacosClientService;
         this.nacosClientServiceSrc = nacosClientServiceSrc;
         this.cacheHystrixCommandAnnotation = cacheHystrixCommandAnnotation;
+        this.nacosClientAnnoService = nacosClientAnnoService;
     }
 
     /**
@@ -142,5 +145,46 @@ public class NacosClientHystrixController {
                 cacheHystrixCommandAnnotation.useCacheByAnnotation02(serviceId);
         // 这里有第四次调用
         return cacheHystrixCommandAnnotation.useCacheByAnnotation02(serviceId);
+    }
+
+    /**
+     * 编程方式实现请求合并
+     * */
+    @GetMapping("/request-merge")
+    public List<ServiceInstance> requestMerge() throws Exception {
+        // 前三个请求会被合并
+        NacosClientCollapseCommand collapseCommand01 = new NacosClientCollapseCommand(
+                nacosClientServiceSrc, "flybbs-base");
+        NacosClientCollapseCommand collapseCommand02 = new NacosClientCollapseCommand(
+                nacosClientServiceSrc, "client-test");
+        NacosClientCollapseCommand collapseCommand04 = new NacosClientCollapseCommand(
+                nacosClientServiceSrc, "flybbs-base2");
+// queue =  toObservable().toBlocking().toFuture();
+        Future<List<ServiceInstance>> future01 = collapseCommand01.queue();
+        Future<List<ServiceInstance>> future02 = collapseCommand02.queue();
+        Future<List<ServiceInstance>> future04 = collapseCommand04.queue();
+        future01.get();
+        future04.get();
+        return future02.get();
+    }
+
+    /**
+     * 注解的方式实现请求合并
+     * */
+    @GetMapping("/request-merge-annotation")
+    public List<ServiceInstance> requestMergeAnnotation() throws Exception {
+        Future<List<ServiceInstance>> future01 = nacosClientAnnoService.getNacosClientInfo(
+                "flybbs-base"
+        );
+        Future<List<ServiceInstance>> future02 = nacosClientAnnoService.getNacosClientInfo(
+                "client-test"
+        );
+        future01.get();
+        future02.get();
+        Thread.sleep(2000);
+        Future<List<ServiceInstance>> future04 = nacosClientAnnoService.getNacosClientInfo(
+                "flybbs-base"
+        );
+        return future04.get();
     }
 }
