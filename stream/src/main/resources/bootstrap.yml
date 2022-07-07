@@ -23,7 +23,7 @@ spring:
         binder:
           brokers: 127.0.0.1:9092
           auto-create-topics: true  # 如果设置为false, 就不会自动创建Topic, 你在使用之前需要手动创建好
-          auto-add-partitions: false
+          auto-add-partitions: true
       # SpringCloud Stream + RocketMQ
       #      rocketmq:
       #        binder:
@@ -33,18 +33,18 @@ spring:
       instanceIndex: 0  #当前消费者的索引
       bindings:
         # 默认发送方
-        output:      # 这里用 Stream 给我们提供的默认 output 信道
+        output: # 这里用 Stream 给我们提供的默认 output 信道
           destination: stream-client-default    #消息发往的目的地, Kafka 中就是 Topic
           content-type: text/plain    # 消息发送的格式, 接收端不用指定格式, 但是发送端要
           # 消息分区
           producer:
             # partitionKeyExpression: payload.author  #分区关键字, payload 指的是发送的对象, author 是对象中的属性
-            partitionCount: 1   #分区大小
+            partitionCount: 12 #必须预配该主题以使其具有足够的分区，以实现所有使用者组所需的并发性。上述配置最多支持 12 个使用者实例（如果使用者实例为 2，则为 6;如果并发为 3，则为 4，依此类推）。通常，最好“过度预配”分区，以允许将来增加使用者或并发性。
             # 使用自定义的分区策略, 注释掉 partitionKeyExpression
             partitionKeyExtractorName: kunPartitionKeyExtractorStrategy
             partitionSelectorName: kunPartitionSelectorStrategy
         # 默认接收方
-        input:      # 这里用 Stream 给我们提供的默认 input 信道
+        input: # 这里用 Stream 给我们提供的默认 input 信道
           destination: stream-client-default
           group: stream-default
           # 消费者开启分区支持

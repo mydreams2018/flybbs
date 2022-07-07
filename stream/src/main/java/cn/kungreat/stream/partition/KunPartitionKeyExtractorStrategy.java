@@ -25,7 +25,7 @@ public class KunPartitionKeyExtractorStrategy implements PartitionKeyExtractorSt
             throw new RuntimeException(e);
         }
         //自定义提取key
-        String key = kunMessage.getProjectName();
+        Integer key = kunMessage.getId();
         log.info("SpringCloud Stream kun Partition Key: [{}]", key);
         return key;
     }
