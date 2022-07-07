@@ -19,6 +19,9 @@ mybatis-generator插件一键生成基本CURD代码
 1. 模块化拆分
 2. 加入nacos 注册中心
 3. 加入admin 监控
+4. 加入gateway 模块
+5. 加入slueth-zipkin 
+6. 加入kafka spring-cloud-stream
 
 #### 安装教程
 
