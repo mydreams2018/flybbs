@@ -16,7 +16,7 @@ public class KunPartitionSelectorStrategy implements PartitionSelectorStrategy {
      * */
     @Override
     public int selectPartition(Object key, int partitionCount) {
-        int partition = key.hashCode() & partitionCount-1;
+        int partition = key.hashCode() & partitionCount;
         log.info("SpringCloud Stream kun Selector info: [{}], [{}], [{}]",
                 key, partitionCount, partition);
         return partition;

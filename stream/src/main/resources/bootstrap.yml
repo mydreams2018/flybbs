@@ -39,7 +39,8 @@ spring:
           # 消息分区
           producer:
             # partitionKeyExpression: payload.author  #分区关键字, payload 指的是发送的对象, author 是对象中的属性
-            partitionCount: 12 #必须预配该主题以使其具有足够的分区，以实现所有使用者组所需的并发性。上述配置最多支持 12 个使用者实例（如果使用者实例为 2，则为 6;如果并发为 3，则为 4，依此类推）。通常，最好“过度预配”分区，以允许将来增加使用者或并发性。
+            #必须预配该主题以使其具有足够的分区，以实现所有使用者组所需的并发性。上述配置最多支持 12 个使用者实例（如果使用者实例为 2，则为 6;如果并发为 3，则为 4，依此类推）。通常，最好“过度预配”分区，以允许将来增加使用者或并发性。
+            partitionCount: 6
             # 使用自定义的分区策略, 注释掉 partitionKeyExpression
             partitionKeyExtractorName: kunPartitionKeyExtractorStrategy
             partitionSelectorName: kunPartitionSelectorStrategy
