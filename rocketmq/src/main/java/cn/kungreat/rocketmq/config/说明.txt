@@ -1,0 +1,4 @@
+topic  是消息 的唯一标识
+group  组之间是隔离的、比如同一个topic 同一个consumerGroup 它们之间的数据消费是竟争关系、一个消息被一个消费者消费
+                    同一个topic 不同的consumerGroup  它们之间是隔离的 不影响各自的消费
+tag    可以用来作一些消费的过滤、

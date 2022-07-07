@@ -12,7 +12,9 @@
         <module>gateway</module>
         <module>dashboard</module>
         <module>kafka</module>
-    </modules>
+        <module>rocketmq</module>
+		<module>stream</module>
+	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
