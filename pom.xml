@@ -15,6 +15,7 @@
         <module>rocketmq</module>
 		<module>stream</module>
         <module>seata</module>
+        <module>sentinel</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
