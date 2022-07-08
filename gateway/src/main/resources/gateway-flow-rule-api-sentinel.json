@@ -1,0 +1,14 @@
+[
+  {
+    "apiName": "nacos-client-api",
+    "predicateItems": [
+      {
+        "pattern": "/flybbs/nacos-client/nacos-client/project-config"
+      },
+      {
+        "pattern": "/flybbs/nacos-client/**",
+        "matchStrategy": 1
+      }
+    ]
+  }
+]
