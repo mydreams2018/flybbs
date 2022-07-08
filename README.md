@@ -22,8 +22,10 @@ mybatis-generator插件一键生成基本CURD代码
 4. 加入gateway 模块
 5. 加入slueth-zipkin 
 6. 加入kafka spring-cloud-stream
+7. 加入sentinel 
+8. 加入seata 
 
 #### 安装教程
 
 1.  下载此项目源代码.
-2.  使用idea 开工具打开运行、使用maven找包后运行jar包
+2.  太重了、
