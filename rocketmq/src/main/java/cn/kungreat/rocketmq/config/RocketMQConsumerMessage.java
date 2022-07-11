@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RocketMQMessageListener(
-        topic = "kungreat-study-rocketmq",
+        topic = RocketMQProducer.TOPIC,
         consumerGroup = "kun-rocketmq-message-ext"
 )
 public class RocketMQConsumerMessage implements RocketMQListener<MessageExt> {
@@ -23,6 +23,6 @@ public class RocketMQConsumerMessage implements RocketMQListener<MessageExt> {
         String value = new String(message.getBody());
         log.info("consume message in RocketMQConsumerMessageExt: [{}], [{}]",
                 message.getKeys(), value);
-        log.info("MessageExt: [{}]", JSON.toJSONString(message));   // 会慢一些
+        log.info("MessageExt: [{}]", JSON.toJSONString(message));
     }
 }

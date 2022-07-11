@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class RocketMQProducer {
 
     /** 类似 Kafka 中的 topic, 默认的读写队列都是4个 */
-    private static final String TOPIC = "kungreat-study-rocketmq";
+    public static final String TOPIC = "kungreat-study-rocketmq";
 
     /** RocketMQ 客户端 */
     private final RocketMQTemplate rocketMQTemplate;

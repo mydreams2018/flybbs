@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RocketMQMessageListener(
-        topic = "kungreat-study-rocketmq",
+        topic = RocketMQProducer.TOPIC,
         consumerGroup = "kun-rocketmq-tag-string",
-        selectorExpression = "qinyi" // 根据tag过滤
+        selectorExpression = "qinyi" //根据tag过滤
 )
 public class RocketMQConsumerTagString implements RocketMQListener<String> {
 
